@@ -1,0 +1,39 @@
+.ui-slider {
+  border-color: #84004c;
+}
+.ui-slider .ui-state-default {
+  background: none;
+  background-color: #360f4f;
+  color: #360f4f;
+  border-color: #360f4f;
+}
+.ui-slider .ui-state-focus {
+  background: none;
+  background-color: #83004c;
+  color: #83004c;
+  border-color: #83004c;
+}
+.ui-slider .ui-slider-range {
+  background: none;
+  background-color: #84004c;
+  opacity: 0.8;
+}
+.ui-datepicker-calendar .ui-state-default {
+  background: none;
+  background-color: #360f4f;
+  border-color: #360f4f;
+  color: white;
+  text-align: center;
+  text-weight: bold;
+  border-radius: 5px;
+}
+.ui-datepicker-calendar .ui-state-default:hover {
+  background-color: #83004c;
+  border-color: #83004c;
+}
+.ui-datepicker-calendar .ui-state-active {
+  background: none;
+  background-color: #84004c;
+  border-color: #84004c;
+  color: white;
+}
