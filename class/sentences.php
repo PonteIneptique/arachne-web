@@ -46,31 +46,21 @@ class Sentences {
 			return false;
 		}
 	}
-	static function Word($id, $active = 1) {
+	static function Word($id, $active = 1) {				#DONE - Miss author and book information
 		$exec = array();
 		$query = "
 			SELECT
-				s.text_sentence as sentence,
-				a.name_author as author,
-				b.name_book as book,
-				b.url_book as url
+				s.text_sentence as sentence
 			FROM 
-				word_has_lemma wl,
-				word_has_phrase wp,
-				sentence s,
-				author a,
-				book b
+				lemma_has_form lf,
+				sentence s
 			WHERE
-				wl.uid_lemma = ? AND
-				wl.uid_word = wp.uid_word AND
-				wp.uid_sentence = s.uid_sentence AND
-				s.active = ? AND
-				a.uid_author = s.uid_author AND
-				b.uid_book = s.uid_book
-			GROUP BY s.uid_sentence
+				lf.id_lemma = ? AND
+				lf.id_sentence = s.id_sentence
+			GROUP BY s.id_sentence
 			";
 		$query = self::DB()->prepare($query);
-		$query->execute(array($id, $active));
+		$query->execute(array($id));
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $data;
 	}

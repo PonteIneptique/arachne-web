@@ -31,20 +31,25 @@ class Lemma {
 			SELECT
 				l.text_lemma as ".$name.",
 				l.id_lemma as uid";
+		/*
 		if($options["count"]) {
 		$query .= ",
-				COUNT(wl.uid_word) count
+				COUNT(lf.id_form) count
 				";
 		}
+		*/
 		$query .= "
 			FROM 
 				lemma l
 				";
+		/*
 		if($options["count"]) {
 		$query .= "
-				LEFT JOIN lemma_has_form wl ON wl.id_lemma = l.id_lemma
+				LEFT JOIN lemma_has_form lf ON lf.id_lemma = lf.id_lemma
 				";
-		} if($options["query"]) {
+		} 
+		*/
+		if(isset($options["query"])) {
 		$query .= "
 			WHERE
 				l.text_lemma LIKE ?
@@ -119,8 +124,8 @@ class Lemma {
 		$exec= array();
 		$query = "
 			SELECT 
-				wl.id_lemma,
-				s.uid_sentence,
+				fl.id_lemma,
+				s.id_sentence,
 				s.text_sentence
 			FROM
 				sentence s,
