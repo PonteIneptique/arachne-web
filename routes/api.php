@@ -24,4 +24,10 @@
 		json($data);
 	});
 
+	#Gets data about vote on a specific sentence and form
+	$app->get('/API/sentence/:sentence/form/:form', function ($sentence, $form)  use($app) {
+		$data = Sentence::Lemma($sentence, $form);
+		json($data);
+	});
+
 ?>

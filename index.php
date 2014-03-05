@@ -27,6 +27,7 @@
 	
 	require_once("./routes/viz.php");
 	require_once("./routes/api.php");
+	require_once("./routes/sentence.php");
 	
 
 	#Run

@@ -1,5 +1,5 @@
 <?php
-	$app->get('/', function () use($app) {
+	$app->get('/viz', function () use($app) {
 		$metadata = Metadata::Get();
 		
 		$author = Author::Get();
