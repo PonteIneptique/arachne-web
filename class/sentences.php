@@ -10,7 +10,8 @@ class Sentence {
 		$query = "
 			SELECT 
 				s.text_sentence as sentence, 
-				s.id_sentence as uid
+				s.id_sentence as uid,
+				s.id_document as document
 			FROM 
 				sentence s";
 		if(is_numeric($id)) {
@@ -91,5 +92,20 @@ class Sentence {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	static function Metadata($document) {
+		$exec = array($document);
+		$query = "SELECT key_name, value FROM metadata WHERE document_id = ?";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetchall(PDO::FETCH_ASSOC);
+		$r = array();
+
+		foreach( $data as $index => $value ) {
+			$r[$value["key_name"]] = $value["value"];
+		}
+
+		return $r;
 	}
 }

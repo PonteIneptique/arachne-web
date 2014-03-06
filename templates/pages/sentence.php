@@ -1,5 +1,5 @@
-<h2 class="sentence-book">Title</h2>
-<h3 class="sentence-author">Book</h3>
+<h2 class="sentence-book"><?=$sentence["metadata"]["dc:Title"]?></h2>
+<h3 class="sentence-author"><?=$sentence["metadata"]["dc:Creator"]?></h3>
 <a href="#" class="sentence-link">Link</a>
 
 
