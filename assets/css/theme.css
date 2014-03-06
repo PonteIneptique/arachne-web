@@ -272,6 +272,16 @@
 .popover .popover-category-form.popover-category-lemmas {
   display: block;
 }
+.popover a.lemma {
+  color: white;
+}
+.popover .active a.lemma {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.popover .active a.lemma:before {
+  content: "»";
+}
 .sentence-lemma.red {
   color: red;
 }
