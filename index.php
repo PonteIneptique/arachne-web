@@ -26,6 +26,7 @@
 	require_once("./class/sentences.php");
 	
 	require_once("./routes/general.php");
+	require_once("./routes/lemma.php");
 	require_once("./routes/viz.php");
 	require_once("./routes/api.php");
 	require_once("./routes/sentence.php");

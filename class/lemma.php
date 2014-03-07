@@ -133,5 +133,30 @@ class Lemma {
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $data;
 	}
+	static function All() {
+		$exec= array();
+		$query = "
+			SELECT
+				l.id_lemma,
+				l.text_lemma,
+				COUNT(lf.id_form) forms,
+				COALESCE(SUM(fv.value), 0) as votes
+			FROM 
+				lemma l,
+				lemma_has_form lf
+				LEFT OUTER JOIN form_vote fv ON (fv.id_lemma_has_form = lf.id_lemma_has_form)
+			WHERE
+				l.id_lemma = lf.id_lemma
+			GROUP BY
+				l.id_lemma
+		";
+		/*
+		*	Options
+		*/
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetchAll(PDO::FETCH_ASSOC);
+		return $data;
+	}
 }
 ?>
