@@ -10,4 +10,10 @@
 		display("./pages/sentence.php", $data, $scripts = array("sentence"));
 	});
 
+	$app->get('/sentence/', function () use($app)  {
+		$data = array();
+		$data["sentences"] = Sentence::All();
+		display("./pages/sentence.all.php", $data, $scripts = array("sentence"));
+	});
+
 ?>

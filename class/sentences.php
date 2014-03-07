@@ -108,4 +108,28 @@ class Sentence {
 
 		return $r;
 	}
+
+	static function All($group = False) {
+		$exec = array();
+		$query = "
+			SELECT
+				s.id_sentence,
+				s.id_document,
+				mOne.value as book,
+				COALESCE(mTwo.value, 'Unknown') as author
+			FROM 
+				sentence s
+				LEFT JOIN metadata mOne ON (mOne.key_name = 'DC:Title' AND mOne.document_id = s.id_document)
+				LEFT JOIN metadata mTwo ON (mTwo.key_name = 'DC:Creator' AND mTwo.document_id = s.id_document) ";
+		if($group) { $query .= " GROUP BY s.id_document "; }
+		$query .=
+			" ORDER BY
+				author,
+				book
+			";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
 }

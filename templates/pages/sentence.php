@@ -1,6 +1,6 @@
 <h2 class="sentence-book"><?=$sentence["metadata"]["dc:Title"]?></h2>
 <h3 class="sentence-author"><?=$sentence["metadata"]["dc:Creator"]?></h3>
-<a href="#" class="sentence-link">Link</a>
+<a href="http://www.perseus.tufts.edu/hopper/text?doc=<?=$sentence["document"];?>" target="_blank" class="sentence-link">Link</a>
 
 
 <p class="sentence-text" data-id="<?=$sentence["uid"];?>">

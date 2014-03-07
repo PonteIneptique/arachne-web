@@ -94,24 +94,15 @@ class Lemma {
 	static function Links($options = array("group" => true)) {
 		$exec= array();
 		$query = "
-			SELECT
-				l.id_lemma as lemma,
-				s.uid_author as author,
-				count(s.uid_sentence) weight
+			SELECT 
+			    lfOne.id_lemma, lfTwo.id_lemma, lfOne.id_sentence 
 			FROM 
-				lemma l,
-				word_has_lemma wl,
-				word_has_phrase wp,
-				sentence s
+			    lemma_has_form lfOne, lemma_has_form lfTwo
 			WHERE
-				l.uid_lemma = wl.uid_lemma AND
-				wl.uid_word = wp.uid_word AND
-				wp.uid_sentence = s.uid_sentence AND 
-				s.active = 1
-				";
-		$query .= "
-			GROUP BY  l.uid_lemma
-				;";
+			    lfOne.id_sentence = lfTwo.id_sentence AND
+			    lfOne.id_form != lfTwo.id_form AND
+			    lfOne.id_lemma != lfTwo.id_lemma
+			";
 		/*
 		*	Options
 		*/

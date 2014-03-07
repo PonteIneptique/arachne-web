@@ -19,7 +19,7 @@
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
 							<li><a href="/">Annotations</a></li>
 							<li><a href="/">Lemma</a></li>
-							<li><a href="/">Sentences</a></li>
+							<li><a href="/sentence/">Sentences</a></li>
 							<li><a href="/">Visualisation</a></li>
 						</ul>
 					</div>
