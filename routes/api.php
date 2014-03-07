@@ -30,4 +30,22 @@
 		json($data);
 	});
 
+	#Get data for sigma
+	$app->get('/API/Sigma', function () use($app) {
+		$nodes = array();
+		$nodesImport = Lemma::All();
+		$range = Lemma::MaxMin();
+		foreach($nodesImport as $index => $node) {
+			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+		}
+
+		$edges = array();
+		$edgesImport = Lemma::Links();
+		foreach ($edgesImport as $key => &$value) {
+			$value["id"] = strval($key + 1);
+			$edges[] = $value;
+		}
+		json(array("nodes"=>$nodes, "edges" => $edges));
+	});
+
 ?>

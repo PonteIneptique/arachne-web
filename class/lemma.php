@@ -91,17 +91,63 @@ class Lemma {
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $data;
 	}
+
+	static function MaxMin() {
+		$exec= array();
+		$query = "
+			SELECT 
+			    Max(counted) as maximum,
+			    Min(counted) as minimum
+			FROM 
+			    (
+			        SELECT 
+			        COUNT(id_sentence) as counted
+			        FROM
+			        lemma_has_form
+			         GROUP BY
+			        id_lemma
+			    )
+			    as counts
+			";
+		/*
+		*	Options
+		*/
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+		return $data;
+	}
+
+	static function RelativeWeight($weight, $min, $max, $baseMax = 50, $baseMin = 2) {
+		$weight = ($weight / $max) * $baseMax;
+		if($weight < $baseMin) { $weight = $baseMin; }
+		if($weight > $baseMax) { $weight = $baseMax; }
+		return strval($weight);
+	}
+
+	static function RelativeColor($weight, $min, $max, $baseMax = 100, $baseMin = 20) {
+		$weight = ($weight / $max) * $baseMax;
+		if($weight < $baseMin) { $weight = $baseMin; }
+		if($weight > $baseMax) { $weight = $baseMax; }
+		return "rgb(50,50,".intval($weight).")";
+	}
+
+
 	static function Links($options = array("group" => true)) {
 		$exec= array();
 		$query = "
 			SELECT 
-			    lfOne.id_lemma, lfTwo.id_lemma, lfOne.id_sentence 
+			    lfOne.id_lemma as source, 
+			    lfTwo.id_lemma as target, 
+			    COUNT(lfOne.id_sentence) as weight
 			FROM 
 			    lemma_has_form lfOne, lemma_has_form lfTwo
 			WHERE
 			    lfOne.id_sentence = lfTwo.id_sentence AND
 			    lfOne.id_form != lfTwo.id_form AND
 			    lfOne.id_lemma != lfTwo.id_lemma
+			GROUP BY
+				lfOne.id_lemma, lfTwo.id_lemma
 			";
 		/*
 		*	Options
@@ -139,7 +185,8 @@ class Lemma {
 			SELECT
 				l.id_lemma,
 				l.text_lemma,
-				COUNT(lf.id_form) forms,
+				COUNT(lf.id_form) as sentences,
+				COUNT(lf.id_sentence) as forms,
 				COALESCE(SUM(fv.value), 0) as votes
 			FROM 
 				lemma l,
