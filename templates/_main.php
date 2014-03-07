@@ -17,7 +17,7 @@
 					
 					<div class="col-md-9">
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
-							<li><a href="/annotations">Annotations</a></li>
+							<li><a href="/annotationsgit ">Annotations</a></li>
 							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>
 							<li><a href="/viz">Visualisation</a></li>
