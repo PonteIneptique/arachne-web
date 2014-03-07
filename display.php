@@ -7,7 +7,7 @@
 	* @param string $template name of template
 	* @param string $variables variables to pass to template
 	*/
-	function display($template, $variables, $scripts = array()) {
+	function display($template, $variables =array() , $scripts = array()) {
 		$app = Slim\Slim::getInstance();
 		
 		ob_start();
