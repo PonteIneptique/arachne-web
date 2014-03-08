@@ -139,8 +139,12 @@ class Lemma {
 
 	static function Links($lemma = False,$options = array("group" => true)) {
 		$exec= array();
+		$where = array("lfOne.id_sentence = lfTwo.id_sentence AND
+			    lfOne.id_form != lfTwo.id_form AND
+			    lfOne.id_lemma != lfTwo.id_lemma");
 		if($lemma) {
 			$exec["idLemma"] = $lemma;
+			$where[] = "(lfOne.id_lemma = :idLemma OR lfTwo.id_lemma = :idLemma)";
 		}
 		$query = "
 			SELECT 
@@ -150,11 +154,7 @@ class Lemma {
 			FROM 
 			    lemma_has_form lfOne, lemma_has_form lfTwo
 			WHERE
-			    lfOne.id_sentence = lfTwo.id_sentence AND
-			    lfOne.id_form != lfTwo.id_form AND
-			    lfOne.id_lemma != lfTwo.id_lemma
-			    AND
-			    (lfOne.id_lemma = :idLemma OR lfTwo.id_lemma = :idLemma)
+				" . implode(" AND ", $where) . "
 			GROUP BY
 				lfOne.id_lemma, lfTwo.id_lemma
 			";

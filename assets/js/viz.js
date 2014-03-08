@@ -20,19 +20,23 @@ $(document).ready(function() {
 
 			// Refresh the display:
 			s.refresh();
-		}
-		//s.startForceAtlas2();
+
+	
+		}	
+
 		s.bind('doubleClickNode', function(event) {
 			if (!event.data.node.center) {
 				refreshGraph(event.data.node.id);
 			}
 		});
+	});
+	js = sigma.parsers.json('/API/Sigma', function(graph) {
+		s.graph.read(graph);
+		s.refresh();
+	});
 
-		s.bind('clickNode', function(event) {
-			console.log(event.data.node.id);
-		});
 
-		//Lets start it
-		refreshGraph('1');
+	s.bind('clickNode', function(event) {
+		console.log(event.data.node.id);
 	});
 });
