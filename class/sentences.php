@@ -162,7 +162,7 @@ class Sentence {
 		if(count($id_lemma) == 0) { $id_lemma = Lemma::Insert($lemma); } else { $id_lemma = $id_lemma["uid"]; }
 
 		$id_form = Forms::Get(false, $options = array("query" => $form, "strict" => true));
-		if(count($id_form) == 0) { $id_form = Forms::Insert($form); } else { $id_form = $id_form["uid"]; }
+		if(count($id_form) == 0) { $id_form = Forms::Insert($form); } else { $id_form = $id_form["id_form"]; }
 
 
 		$exec = array("id_sentence" => $sentence, "id_form" => $id_form, "id_lemma" => $id_lemma);
