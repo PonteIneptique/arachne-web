@@ -113,14 +113,32 @@ class Sentence {
 		$exec = array();
 		$query = "
 			SELECT
-				s.id_sentence,
-				s.id_document,
-				mOne.value as book,
-				COALESCE(mTwo.value, 'Unknown') as author
+			    s.id_sentence,
+			    s.id_document,
+			    s.text_sentence,
+			    mOne.value as book,
+			    COALESCE(mTwo.value, 'Unknown') as author,
+			    COALESCE(count_votes, 0) as votes,
+			    COALESCE(count_annotation, 0) as annotations
 			FROM 
-				sentence s
-				LEFT JOIN metadata mOne ON (mOne.key_name = 'DC:Title' AND mOne.document_id = s.id_document)
-				LEFT JOIN metadata mTwo ON (mTwo.key_name = 'DC:Creator' AND mTwo.document_id = s.id_document) ";
+			    sentence s
+			    LEFT JOIN metadata mOne ON (mOne.key_name = 'DC:Title' AND mOne.document_id = s.id_document)
+			    LEFT JOIN metadata mTwo ON (mTwo.key_name = 'DC:Creator' AND mTwo.document_id = s.id_document)
+			    LEFT JOIN (
+			        SELECT 
+			            id_target_annotation,
+			            COUNT(*) as count_annotation 
+			        FROM annotation a 
+			        WHERE a.table_target_annotation='sentence'
+			        ) anno ON (anno.id_target_annotation = s.id_sentence)
+			    LEFT JOIN (
+			    	SELECT 
+			    		lf.id_sentence, 
+			    		COUNT(*) as count_votes 
+			    	FROM form_vote fv, lemma_has_form lf 
+			    	WHERE fv.id_lemma_has_form = lf.id_lemma_has_form GROUP BY lf.id_sentence
+			    	) vtes ON (vtes.id_sentence = s.id_sentence)
+				";
 		if($group) { $query .= " GROUP BY s.id_document "; }
 		$query .=
 			" ORDER BY

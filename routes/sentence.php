@@ -13,7 +13,7 @@
 	$app->get('/sentence/', function () use($app)  {
 		$data = array();
 		$data["sentences"] = Sentence::All();
-		display("./pages/sentence.all.php", $data, $scripts = array("sentence"));
+		display("./pages/sentence.all.php", $data, $scripts = array("sentence.all"));
 	});
 
 ?>

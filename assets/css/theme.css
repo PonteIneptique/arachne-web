@@ -301,6 +301,33 @@
 .thumbs-down {
   color: white;
 }
+.sentence-list li {
+  height: 16px;
+  line-height: 14px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sentence-list li:before {
+  content: " - ";
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 18px;
+}
+.sentence-stack .sentence-author {
+  cursor: pointer;
+}
+.sentence-stack .sentence-book,
+.sentence-stack .sentence-list {
+  display: none;
+  cursor: pointer;
+}
+.sentence-stack .sentence-book {
+  margin-left: 1em;
+}
 body {
   background-color: #ecedee;
   font-family: "news-gothic-std", sans-serif;

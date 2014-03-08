@@ -31,7 +31,7 @@
 		}
 
 		?>
-			<li><a href="/sentence/<?=$sentence["id_sentence"]?>"><?=$sentence["id_sentence"]?></a></li>
+			<li><a data-toggle="tooltip" title="<?=$sentence['annotations'];?> Annotations, <?=$sentence['votes'];?> form votes, " href="/sentence/<?=$sentence["id_sentence"]?>"><?=$sentence["text_sentence"]?></a></li>
 		<?
 
 	}

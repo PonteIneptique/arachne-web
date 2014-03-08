@@ -1,7 +1,11 @@
 <div class="row">
 	<article class="col-md-6" data-target="<?=$lemma["uid"]?>" style="padding:10px;" id="lemma">
 		<h1><?=$lemma["lemma"]?></h1>
-		<ul class="list-unstyled">
+		<h2>Polarity</h2>
+		<h2>Annotation</h2>
+		<h2>Saved forms</h2>
+		<h2>Sentences</h2>
+		<ul class="list-unstyled sentence-list">
 			<?foreach($sentences as $sentence):?>
 				<li><a href="/sentence/<?=$sentence["id_sentence"];?>"><?=$sentence["text_sentence"];?></a></li>
 			<?endforeach;?>

@@ -4,7 +4,8 @@ $(document).ready(function() {
 		container: document.getElementById('svg-container'),
 		settings: {
 			edgeColor: 'default',
-			defaultEdgeColor: 'rgb(222,222,222)'
+			defaultEdgeColor: 'rgb(222,222,222)',
+			labelThreshold : 1
 		}
     });
 	

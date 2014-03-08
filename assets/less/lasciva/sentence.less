@@ -16,3 +16,35 @@
 .thumbs-down {
 	color:white;
 }
+
+.sentence-list {
+	li {
+		height:16px;
+		line-height:14px;
+		display:block;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		&:before {
+			content:" - ";
+		}
+	}
+}
+
+h2 {
+	font-size:20px;
+}
+h3 {
+	font-size:18px;
+}
+.sentence-stack {
+	.sentence-author {
+		cursor:pointer;
+	}
+	.sentence-book, .sentence-list {
+		display:none;
+		cursor:pointer;
+	}
+	.sentence-book {
+		margin-left:1em;
+	}
+}
