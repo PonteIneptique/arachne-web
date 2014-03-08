@@ -48,4 +48,21 @@
 		json(array("nodes"=>$nodes, "edges" => $edges));
 	});
 
+	$app->get('/API/Sigma/:lemmaId', function ($lemmaId) use($app) {
+		$nodes = array();
+		$nodesImport = Lemma::All($lemma = $lemmaId);
+		$range = Lemma::MaxMin($lemma = $lemmaId);
+		foreach($nodesImport as $index => $node) {
+			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+		}
+
+		$edges = array();
+		$edgesImport = Lemma::Links($lemma = $lemmaId);
+		foreach ($edgesImport as $key => &$value) {
+			$value["id"] = strval($key + 1);
+			$edges[] = $value;
+		}
+		json(array("nodes"=>$nodes, "edges" => $edges));
+	});
+
 ?>
