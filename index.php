@@ -22,7 +22,7 @@
 	require_once("./display.php");
 	require_once("./class/elements.php");
 	require_once("./class/lemma.php");
-	require_once("./class/author.php");
+	require_once("./class/forms.php");
 	require_once("./class/sentences.php");
 	
 	require_once("./routes/general.php");

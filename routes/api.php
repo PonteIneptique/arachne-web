@@ -27,7 +27,7 @@
 	#Gets data about vote on a specific sentence and form
 	$app->get('/API/sentence/:sentence/form/:form', function ($sentence, $form)  use($app) {
 		$data = Sentence::Lemma($sentence, $form);
-		json($data);
+		json($data,$methods = "OPTIONS, GET");
 	});
 
 	#Get data for sigma
@@ -45,7 +45,7 @@
 			$value["id"] = strval($key + 1);
 			$edges[] = $value;
 		}
-		json(array("nodes"=>$nodes, "edges" => $edges));
+		json(array("nodes"=>$nodes, "edges" => $edges),$methods = "OPTIONS, GET");
 	});
 
 	$app->get('/API/Sigma/:lemmaId', function ($lemmaId) use($app) {
@@ -62,7 +62,19 @@
 			$value["id"] = strval($key + 1);
 			$edges[] = $value;
 		}
-		json(array("nodes"=>$nodes, "edges" => $edges));
+		json(array("nodes"=>$nodes, "edges" => $edges), $methods = "OPTIONS, GET");
 	});
+
+	$app->post('/API/sentence/lemma', function () use($app)  {
+		$data = array();
+		$req = $app->request();
+		$data["status"] = "success";
+		$data["results"] = Sentence::NewForm($req->post("lemma"),$req->post("form"),$req->post("sentence"));
+		if($data["results"] == false) { $data["status"] = "error"; }
+		$data["parameters"] = array("lemma" => $req->post("lemma"),"sentence" => $req->post("sentence"),"form" => $req->post("form"));
+		
+		json($data, $methods = "OPTIONS, POST");
+	});
+
 
 ?>

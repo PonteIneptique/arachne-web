@@ -13,7 +13,7 @@
 	<div class="popover-category popover-category-form popover-category-lemmas">
 		<div class="append-in">
 		</div>
-		<ul class="nav nav-pills nav-ehri nav-ehri-grey nav-justified">
+		<ul class="nav nav-pills nav-ehri nav-ehri-grey nav-justified newlemma">
 			<li>
 				<button class="nav-ehri nav-ehri-grey nav-ehri-input">New</button>
 			</li>
@@ -21,7 +21,7 @@
 				<input type="text" name="Test" placeholder="Text of lemma" class="nav-ehri nav-ehri-grey nav-ehri-input" />
 			</li>
 			<li class="col-xs-3">
-				<input type="button" name="Send" value="Save" class="nav-ehri nav-ehri-grey nav-ehri-input" />
+				<input type="button" name="Send" value="Save" class="nav-ehri nav-ehri-grey nav-ehri-input submit" />
 			</li>
 
 			</li>

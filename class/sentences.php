@@ -151,4 +151,31 @@ class Sentence {
 
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	static function NewForm($lemma, $form, $sentence) {
+
+		if(count(self::Get($sentence)) == 0) {
+			return false;
+		}
+
+		$id_lemma = Lemma::Get(false, $options = array("query" => $lemma, "strict" => true));
+		if(count($id_lemma) == 0) { $id_lemma = Lemma::Insert($lemma); } else { $id_lemma = $id_lemma["uid"]; }
+
+		$id_form = Forms::Get(false, $options = array("query" => $form, "strict" => true));
+		if(count($id_form) == 0) { $id_form = Forms::Insert($form); } else { $id_form = $id_form["uid"]; }
+
+
+		$exec = array("id_sentence" => $sentence, "id_form" => $id_form, "id_lemma" => $id_lemma);
+		$query = "
+			INSERT INTO
+				lemma_has_form
+			(id_sentence, id_form, id_lemma)
+			VALUES
+			(:id_sentence, :id_form, :id_lemma)
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		return array("lemma" => $id_lemma, "form" => $id_form, "sentence" => $sentence, "id_lemma_has_form" => self::DB()->lastInsertId());
+	}
 }

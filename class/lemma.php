@@ -25,50 +25,51 @@ class Lemma {
 		}
 	}
 	
-	static function Get($lemmaid = false, $options = array("count" => true), $name = "lemma") {
+	static function Get($lemmaid = false, $options = array("query" => false, "strict" => false, "count" => true), $name = "lemma") {
 		$exec= array();
-		if($lemmaid) { $exec["lemmaId"] = $lemmaid; }
+		$where = array();
+		if($lemmaid) { 
+			$exec["lemmaId"] = $lemmaid; 
+			$where[] = " l.id_lemma = :lemmaId ";
+		}
+		if($options["query"]) {
+			$exec["query"] = $options["query"];
+			if(is_numeric($exec["query"])) {
+				$where[] = " l.id_lemma = :query ";
+			}
+			elseif($options["strict"]) {
+				$where[] = " l.text_lemma = :query ";
+			}
+			else {
+				$exec["query"] = "%".$exec["query"]."%";
+				$where[] = " l.text_lemma LIKE :query ";
+			}
+		}
 		$query = "
 			SELECT
 				l.text_lemma as ".$name.",
-				l.id_lemma as uid";
-		/*
-		if($options["count"]) {
-		$query .= ",
-				COUNT(lf.id_form) count
-				";
-		}
-		*/
-		$query .= "
+				l.id_lemma as uid
 			FROM 
 				lemma l
 				";
-		/*
-		if($options["count"]) {
-		$query .= "
-				LEFT JOIN lemma_has_form lf ON lf.id_lemma = lf.id_lemma
-				";
-		} 
-		*/
-		if($lemmaid) {
-			$query .= " WHERE l.id_lemma = :lemmaId ";
+
+		if(count($where) > 0) {
+			$query .= " WHERE " . implode(" AND ", $where) . " ";
 		}
-		if(isset($options["query"])) {
-		$query .= "
-			WHERE
-				l.text_lemma LIKE ?
-				";
-				$exec[] = "%".$options["query"]."%";
-		}
+
 		$query .= "
 			GROUP BY l.id_lemma
 			;";
-		/*
-		*	Options
-		*/
+
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
-		$data = $query->fetch(PDO::FETCH_ASSOC);
+
+		if($query->rowCount() == 1) {
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+		} else {
+			$data = $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		
 		return $data;
 	}
 	static function Weight($options = array(), $name = "lemma") {
