@@ -279,8 +279,8 @@
   text-decoration: underline;
   font-weight: bold;
 }
-.popover .active a.lemma:before {
-  content: "»";
+.sentence-lemma {
+  cursor: pointer;
 }
 .sentence-lemma.red {
   color: red;
@@ -290,6 +290,9 @@
 }
 .sentence-lemma.green {
   color: green;
+}
+.sentence-lemma.neutral {
+  color: black;
 }
 .thumbs-up,
 .thumbs-down {
