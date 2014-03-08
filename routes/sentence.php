@@ -7,13 +7,13 @@
 		$data["sentence"]["metadata"] = Sentence::Metadata($data["sentence"]["document"]);
 		$data["forms"] = Sentence::Forms($id);
 		$data["sentence"]["processed"] = Sentence::Process($data["sentence"], $data["forms"]);
-		display("./pages/sentence.php", $data, $scripts = array("sentence"));
+		display("./pages/sentence.php", $data, $scripts = array("sentence"), $title = "Sentence " . $data["sentence"]["uid"]);
 	});
 
 	$app->get('/sentence/', function () use($app)  {
 		$data = array();
 		$data["sentences"] = Sentence::All();
-		display("./pages/sentence.all.php", $data, $scripts = array("sentence.all"));
+		display("./pages/sentence.all.php", $data, $scripts = array("sentence.all"), $title = "Sentences");
 	});
 
 ?>

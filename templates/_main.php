@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lasciva Roma : A crowdsourcing project</title>
-        <base href="http://localhost/"></base>
+        <title>Lasciva Roma : A crowdsourcing project | <?=$title;?></title>
+        <base href="http://<?=$_SERVER['HTTP_HOST']?>/"></base>
         <link rel="stylesheet" media="screen" href="./assets/css/bootstrap.css">
         <link rel="stylesheet" media="screen" href="./assets/css/theme.css">
     </head>
@@ -11,7 +11,7 @@
 			<div class="container">
 				<div class="row top-menu">
 					<div class="col-md-3 text-center">
-						<img src="./assets/images/text-logo.png" class="img-responsive" alt="EHRI" />
+						<a href="/"><img src="./assets/images/text-logo.png" class="img-responsive" alt="Lasciva Roma" /></a>
 						
 					</div>
 					
@@ -33,7 +33,7 @@
 							<a href="#" style="display:block; color:white; font-variant: small-caps; font-weight: bold; margin-bottom:20px;margin-top:25px;">Account</a>
 						</div>
 						<div class="col-md-8 col-md-pull-4">
-							<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;">Annotation</h1>
+							<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
 						</div>
 					</div>
 				</div>

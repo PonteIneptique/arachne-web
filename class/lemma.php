@@ -185,7 +185,6 @@ class Lemma {
 				" . implode(" AND ", $where) . "
 			ORDER BY 
 				s.id_sentence";
-				print $query;
 		/*
 		*	Options
 		*/
