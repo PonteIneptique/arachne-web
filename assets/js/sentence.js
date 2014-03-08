@@ -48,9 +48,9 @@ $(document).ready(function() {
 									"class" : "col-xs-3",
 									html : function() {
 										if( vote > 0 ) {
-											return ' <a href="#" class="thumbs-up">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
+											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
 										} else {
-											return ' <a href="#" class="thumbs-up">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
+											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
 										}
 									}
 								})
@@ -59,9 +59,9 @@ $(document).ready(function() {
 									"class" : "col-xs-3",
 									html : function() {
 										if( vote <= 0 ) {
-											return ' <a href="#" class="thumbs-down">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
+											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
 										} else {
-											return ' <a href="#" class="thumbs-down">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
+											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
 										}
 									}
 								})
@@ -102,6 +102,28 @@ $(document).ready(function() {
 				a = parent.parents(".popover").prev("a");
 				a.attr("data-id", data["results"]["form"]);
 				a.removeClass("neutral").addClass("red");
+				a.popover("hide");
+				a.trigger("click");
+			}
+		});
+	});
+
+	$(".sentence-text").on("click", ".thumbs-down, .thumbs-up", function(e) {
+		e.preventDefault();
+		that = $(this);
+		if(that.hasClass("thumbs-up")) { val = 1; } else { val = -1; }
+
+		sentence = $(".sentence-text").attr("data-id");
+		lemma = that.attr("data-target");
+		form = that.attr("data-src");
+		$.post("/API/forms/vote", {
+			"sentence" : sentence,
+			"form" : form,
+			"lemma" : lemma,
+			"value" : val
+		}, function(data) {
+			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
+				a = that.parents(".popover").prev("a");
 				a.popover("hide");
 				a.trigger("click");
 			}

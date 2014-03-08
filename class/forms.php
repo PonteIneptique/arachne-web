@@ -68,6 +68,58 @@ class Forms {
 		
 		return $data;
 	}
+
+	static function LemmaHasForm($id_lemma, $id_form, $id_sentence) {
+		$exec = array(
+			"id_lemma" => $id_lemma,
+			"id_form" => $id_form,
+			"id_sentence" => $id_sentence,
+		);
+		$query = "
+			SELECT 
+				id_lemma_has_form
+			FROM 
+				lemma_has_form
+			WHERE
+				id_lemma = :id_lemma
+				AND id_sentence = :id_sentence
+				AND id_form = :id_form
+			LIMIT 1
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+		if(count($data) > 0) {
+			return $data["id_lemma_has_form"];
+		} else {
+			return false;
+		}
+	}
+
+	static function Vote($id_lemma_has_form, $value, $user = 0) {
+		$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $user, "value" => $value);
+		$query = "
+			INSERT INTO `form_vote`
+			(
+			`id_lemma_has_form`,
+			`id_user`,
+			`value`)
+			VALUES
+			(
+			:id_lemma_has_form,
+			:id_user,
+			:value
+			)
+		";
+		$query = self::DB()->prepare($query);
+		 $query->execute($exec);
+		if($query->rowCount() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 ?>
