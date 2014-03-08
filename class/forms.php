@@ -30,15 +30,15 @@ class Forms {
 		$where = array();
 		if($formId) { 
 			$exec["formId"] = $formId; 
-			$where[] = " l.id_form = :formId ";
+			$where[] = " f.id_form = :formId ";
 		}
 		if($options["query"]) {
 			$exec["query"] = $options["query"];
 			if(is_numeric($exec["query"])) {
-				$where[] = " l.id_form = :query ";
+				$where[] = " f.id_form = :query ";
 			}
 			elseif($options["strict"]) {
-				$where[] = " l.text_form = :query ";
+				$where[] = " f.text_form = :query ";
 			}
 			else {
 				$exec["query"] = "%".$exec["query"]."%";

@@ -1,5 +1,16 @@
 <?php
 	
+	$app->post('/API/lemma/', function () use($app)  {
+
+		$query = $app->request->post("query");
+		$options = array("count" => false);
+		if(strlen($query) > 0) {
+			$options["query"] = $query;
+		}
+		$data = Lemma::Get($options);
+		json($data, $methods = "POST, GET, OPTIONS");
+	});
+
 	#DONE
 	$app->get('/API/lemme/', function () use($app)  {
 
