@@ -1,5 +1,20 @@
 <?php
 	
+	$app->get('/API/annotations/lemma/:id', function ($id) use($app)  {
+		$data = Annotations::Get("lemma", $id);
+		json($data, $methods = "GET, OPTIONS");
+	});
+
+	$app->get('/API/annotations/list', function () use($app)  {
+		$data = Annotations::Available();
+		json($data, $methods = "GET, OPTIONS");
+	});
+
+	$app->get('/API/annotations/list/:target', function ($target) use($app)  {
+		$data = Annotations::Available($target);
+		json($data, $methods = "GET, OPTIONS");
+	});
+
 	$app->post('/API/lemma/', function () use($app)  {
 
 		$query = $app->request->post("query");
@@ -38,6 +53,11 @@
 	#Gets data about vote on a specific sentence and form
 	$app->get('/API/sentence/:sentence/form/:form', function ($sentence, $form)  use($app) {
 		$data = Sentence::Lemma($sentence, $form);
+
+		foreach($data as $key => &$value) {
+			$value["annotations"] = Annotations::Get("lemma", $value["id_lemma"]);
+			$value["context"] = Annotations::Get("lemma_has_form",  $value["id_lemma_has_form"]);
+		}
 		json($data,$methods = "OPTIONS, GET");
 	});
 

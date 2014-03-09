@@ -78,6 +78,7 @@ class Sentence {
             SELECT
 				l.id_lemma,
 				l.text_lemma,
+				lf.id_lemma_has_form,
 				COALESCE(SUM(fv.value), 0) as votes
 			FROM
 				lemma l,

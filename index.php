@@ -20,11 +20,13 @@
 	
 	#Requires class
 	require_once("./display.php");
+	
 	require_once("./class/elements.php");
 	require_once("./class/lemma.php");
 	require_once("./class/forms.php");
 	require_once("./class/sentences.php");
 	require_once("./class/user.php");
+	require_once("./class/annotations.php");
 	
 	require_once("./routes/general.php");
 	require_once("./routes/lemma.php");
