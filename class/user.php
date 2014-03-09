@@ -44,7 +44,7 @@
 		 */
 		static function userExist($post){
 			try {
-				$req = self::DB()->prepare("SELECT * FROM user WHERE mail_user = ?");
+				$req = self::DB()->prepare("SELECT id_user FROM user WHERE email_user = ?");
 				$req->execute(array($post["mail"]));    
 			} catch (Exception $e) {
 				Die('Need to handle this error. $e has all the details');
