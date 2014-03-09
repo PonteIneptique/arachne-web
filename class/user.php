@@ -49,15 +49,14 @@
 		 * @return Status
 		 */
 		static function signup($post, $id = false) {
-			if(isset($post["mail"]) && isset($post["password"]) && isset($post["name"]) && isset($post["user"])) {
-				$req = "INSERT INTO user (`user_uid`,`name`,`mail`,`login`,`password`,`active`,`admin`) VALUES (NULL, ?, ? , ? , ?, NULL, NULL )";
+			if(isset($post["mail"]) && isset($post["password"]) && isset($post["name"])) {
+				$req = "INSERT INTO user (`name_user`,`email_user`,`password_user`) VALUES (? , ? , ?)";
 				$req = self::DB()->prepare($req);
-				$req->execute(array($post["name"], $post["mail"], $post["user"], hash("sha256", $post["password"])));
+				$req->execute(array($post["name"], $post["mail"], hash("sha256", $post["password"])));
 				
 				if($req->rowCount() == 1) {
 					if($id == true) {
 						$uid = self::DB()->lastInsertId();
-						Log::insert("insert", $uid, "user", $uid);
 						return array("status" => "success", "uid" => $uid);
 					} else {
 						return array("status" => "success", "message" => "You have now signed up");
@@ -87,19 +86,18 @@
 			if(!isset($data["email"])) {
 				$data["email"] = $data["nickname"];
 			}
-			$req = self::DB()->prepare("SELECT u.name as Name, u.mail as Mail, u.user_uid as UID FROM user_oauth uo, user u WHERE u.user_uid = uo.user_uid AND uo.provider = ? AND uo.external_uid = ? LIMIT 1");
+			$req = self::DB()->prepare("SELECT u.name_user as Name, u.email_user as Mail, u.id_user as UID FROM user_oauth uo, user u WHERE u.id_user = uo.id_user AND uo.provider = ? AND uo.external_uid = ? LIMIT 1");
 			$req->execute(array($provider, $data["uid"]));
 			if($req->rowCount() >= 1) {
 				$d = $req->fetch(PDO::FETCH_ASSOC);
 				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
 				return array("signin" => true, "data" => $d);
 			} else {
-				$sign = self::signup(array("mail" => $data["email"], "name" => $data["name"], "user" => $data["email"], "password" => time()), true);
+				$sign = self::signup(array("mail" => $data["email"], "name" => $data["name"], "password" => time()), true);
 				if($sign["status"] == "success") {
 					$req = self::DB()->prepare("INSERT INTO user_oauth VALUES (NULL, ?, ?, ?)");
 					$req->execute(array($sign["uid"], $provider, $data["uid"]));
 					$_SESSION["user"] = array("id" => $sign["uid"], "name" => $data["name"], "mail" => $data["email"]);
-					Log::insert("insert", $sign["uid"], "user", self::DB()->lastInsertId());
 					return array("signin" => true, "data" => array("UID" => $sign, "Name" => $data["name"], "Mail" => $data["email"]));
 				} else {
 					return array("signin" => false, "status" => "error", "message" => $sign["message"]);
@@ -145,14 +143,10 @@
 
 				// If we don't have an authorization code then get one
 				if($return == true) {
-					if(isset($GET["callback"])) {
-						$_SESSION["callback"] = $GET["callback"];
-					} else {
-						$_SESSION["callback"] = false;
-					}
-					return array("popup" => $provider->authorize(array(), $return), "callback" => $_SESSION["callback"]);
+
+					$d["Auth"] = $provider->authorize(array(), $return);
+					return $d;
 				}
-				$provider->authorize(array(), $return);
 
 			} else {
 
@@ -166,9 +160,8 @@
 						// We got an access token, let's now get the user's details
 						$userDetails = $provider->getUserDetails($t);
 						$d = self::oAuthLogin($userDetails, $server);
-						if(isset($_SESSION["callback"])) {
-							$d["Location"] = $_SESSION["callback"];
-						}
+
+						$d["Location"] = ROOT_URI;
 						return $d;
 						//return $userDetails;
 
@@ -243,7 +236,7 @@
 				session_write_close();
 
 				// Redirect to the user page
-				header("Location: ".API_URI."/oAuth/".ucfirst($prov)."?user=user");
+				header("Location: /oAuth/".ucfirst($prov)."?user=user");
 				exit;
 
 			// Step 2.5 - denied request to authorize client
@@ -262,12 +255,8 @@
 				session_write_close();
 
 				if($return == true) {
-					if(isset($GET["callback"])) {
-						$_SESSION["callback"] = $GET["callback"];
-					} else {
-						$_SESSION["callback"] = false;
-					}
-					return array("popup" => $server->authorize($temporaryCredentials, $return), "callback" => $_SESSION["callback"]);
+					$d["Auth"] = $server->authorize($temporaryCredentials, $return);
+					return $d;
 				}
 				
 				// Second part of OAuth 1.0 authentication is to redirect the

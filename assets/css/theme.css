@@ -338,6 +338,17 @@ body {
 body > .container {
   background-color: #ffffff;
 }
+.login-link {
+  display: block;
+  color: white;
+  font-variant: small-caps;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.login-link a {
+  color: white;
+}
 #main article {
   background-color: #ffffff;
   padding: 0px;

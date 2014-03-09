@@ -24,12 +24,15 @@
 	require_once("./class/lemma.php");
 	require_once("./class/forms.php");
 	require_once("./class/sentences.php");
+	require_once("./class/user.php");
 	
 	require_once("./routes/general.php");
 	require_once("./routes/lemma.php");
 	require_once("./routes/viz.php");
 	require_once("./routes/api.php");
 	require_once("./routes/sentence.php");
+	require_once("./routes/oauth.php");
+	require_once("./routes/profile.php");
 	
 
 	#Run

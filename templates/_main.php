@@ -30,7 +30,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-4 col-md-push-8 text-right">
-							<a href="#" style="display:block; color:white; font-variant: small-caps; font-weight: bold; margin-bottom:20px;margin-top:25px;">Account</a>
+							<?if(isset($_SESSION["user"])):?>
+								<div class="login-link">
+									<a href="/account/profile"><?=$_SESSION["user"]["name"]?></a>
+									<a href="/account/signout">Sign out</a>
+								</div>
+							<?else:?>
+								<a href="/account/login" class="login-link">Login</a>
+							<?endif;?>
 						</div>
 						<div class="col-md-8 col-md-pull-4">
 							<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
