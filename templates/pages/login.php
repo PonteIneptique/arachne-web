@@ -33,24 +33,28 @@
 				<label for="name" class="control-label">Name</label>
 				<div class="input">
 					<input class="form-control" placeholder=" Name" type="text" id="name" name="name" value="" >
+       				<?if(isset($error["signup"]) && isset($error["signup"]["name"])):?><span class="help-block text-muted"><?=$error["signup"]["name"]?></span><?endif;?>
 				</div>
 			</div>
 			<div class="form-group  field">
-				<label for="email" class="control-label">Email</label>
+				<label for="mail" class="control-label">Email</label>
 				<div class="input">
-					<input class="form-control" placeholder=" Email" type="email" id="email" name="email" value="" >
+					<input class="form-control" placeholder=" Email" type="email" id="mail" name="mail" value="" >
+       				<?if(isset($error["signup"]) && isset($error["signup"]["mail"])):?><span class="help-block text-muted"><?=$error["signup"]["mail"]?></span><?endif;?>
 				</div>
 			</div>
 			<div class="form-group  field">
 				<label for="password" class="control-label">Password</label>
 				<div class="input">
 					<input class="form-control" placeholder=" Password" type="password" id="password" name="password" >
+       				<?if(isset($error["signup"]) && isset($error["signup"]["password"])):?><span class="help-block text-muted"><?=$error["signup"]["password"]?></span><?endif;?>
 				</div>
 			</div>
 			<div class="form-group  field">
 				<label for="confirm" class="control-label">Confirm Password</label>
 				<div class="input">
 					<input class="form-control" placeholder=" Confirm Password" type="password" id="confirm" name="confirm" >
+       				<?if(isset($error["signup"]) && isset($error["signup"]["confirm"])):?><span class="help-block text-muted"><?=$error["signup"]["confirm"]?></span><?endif;?>
 				</div>
 			</div>
 			<div class="form-group field">

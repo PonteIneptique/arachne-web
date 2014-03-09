@@ -48,7 +48,7 @@
 		 * @param $post["name"]			User's name
 		 * @return Status
 		 */
-		static function signup($post, $id = false) {
+		static function signup($post, $id = true) {
 			if(isset($post["mail"]) && isset($post["password"]) && isset($post["name"])) {
 				$req = "INSERT INTO user (`name_user`,`email_user`,`password_user`) VALUES (? , ? , ?)";
 				$req = self::DB()->prepare($req);
@@ -57,12 +57,13 @@
 				if($req->rowCount() == 1) {
 					if($id == true) {
 						$uid = self::DB()->lastInsertId();
+						$_SESSION["user"] = array("id" => $uid, "name" => $post["name"], "mail" => $post["mail"]);
 						return array("status" => "success", "uid" => $uid);
 					} else {
 						return array("status" => "success", "message" => "You have now signed up");
 					}
 				} else {
-					return array("status" => "error", "message" => "Error during sign up. Please contact DASISH or retry.");
+					return array("status" => "error", "message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.");
 				}
 			} else {
 				return array("status" => "error", "message" => "A field is missing");
