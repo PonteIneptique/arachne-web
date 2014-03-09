@@ -40,6 +40,23 @@
 		}
 		
 		/**
+		 *	Check if an email address already exist in database
+		 *
+		 * @param $post["mail"]			User's mail
+		 * @return Status
+		 */
+		static function userExist($post){
+			try {
+				$req = self::DB()->prepare("SELECT * FROM user WHERE mail_user = ?");
+				$req->execute(array($post["mail"]));    
+			} catch (Exception $e) {
+				Die('Need to handle this error. $e has all the details');
+			}
+			
+			return $req->rowCount() == 1;
+		}
+		
+		/**
 		 *	Sign a user up
 		 *
 		 * @param $post["password"]		User's Password
@@ -49,25 +66,29 @@
 		 * @return Status
 		 */
 		static function signup($post, $id = true) {
-			if(isset($post["mail"]) && isset($post["password"]) && isset($post["name"])) {
-				$req = "INSERT INTO user (`name_user`,`email_user`,`password_user`) VALUES (? , ? , ?)";
-				$req = self::DB()->prepare($req);
-				$req->execute(array($post["name"], $post["mail"], hash("sha256", $post["password"])));
-				
-				if($req->rowCount() == 1) {
-					if($id == true) {
-						$uid = self::DB()->lastInsertId();
-						$_SESSION["user"] = array("id" => $uid, "name" => $post["name"], "mail" => $post["mail"]);
-						return array("status" => "success", "uid" => $uid);
-					} else {
-						return array("status" => "success", "message" => "You have now signed up");
-					}
-				} else {
-					return array("status" => "error", "message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.");
-				}
-			} else {
+			if(!isset($post["mail"]) || !isset($post["password"]) || *isset($post["name"])) {
 				return array("status" => "error", "message" => "A field is missing");
 			}
+			
+			if($self::userExist($post)){
+				return array("status" => "error", "message" => "An account with the same email address already exist");
+			}
+
+			$req = "INSERT INTO user (`name_user`,`email_user`,`password_user`) VALUES (? , ? , ?)";
+			$req = self::DB()->prepare($req);
+			$req->execute(array($post["name"], $post["mail"], hash("sha256", $post["password"])));
+			
+			if($req->rowCount() > 1) {
+				return array("status" => "error", "message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.");
+			}
+
+			if($id == true) {
+				$uid = self::DB()->lastInsertId();
+				$_SESSION["user"] = array("id" => $uid, "name" => $post["name"], "mail" => $post["mail"]);
+				return array("status" => "success", "uid" => $uid);
+			}
+				
+			return array("status" => "success", "message" => "You have now signed up");
 		}
 		
 		/**
