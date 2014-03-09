@@ -63,12 +63,12 @@
 		 * @return Status
 		 */
 		static function signup($post, $id = true) {
-			if(!isset($post["mail"]) || !isset($post["password"]) || *isset($post["name"])) {
-				return array("status" => "error", "message" => "A field is missing");
+			if(!isset($post["mail"]) || !isset($post["password"]) || !isset($post["name"])) {
+				return array("status" => "error", "error" => array("signup" => array("message" => "A field is missing")));
 			}
 			
-			if($self::userExist($post)){
-				return array("status" => "error", "message" => "An account with the same email address already exist");
+			if(self::userExist($post)){
+				return array("status" => "error", "error" => array("signup" => array("message" => "An account with the same email address already exist")));
 			}
 
 			$req = "INSERT INTO user (`name_user`,`email_user`,`password_user`) VALUES (? , ? , ?)";
@@ -76,7 +76,7 @@
 			$req->execute(array($post["name"], $post["mail"], hash("sha256", $post["password"])));
 			
 			if($req->rowCount() > 1) {
-				return array("status" => "error", "message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.");
+				return array("status" => "error", "error" => array("signup" => array("message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.")));
 			}
 
 			if($id == true) {
@@ -85,7 +85,7 @@
 				return array("status" => "success", "uid" => $uid);
 			}
 				
-			return array("status" => "success", "message" => "You have now signed up");
+			return array("status" => "success", "error" => array("signup" => array("message" => "You have now signed up")));
 		}
 		
 		/**

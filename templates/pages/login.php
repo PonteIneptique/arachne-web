@@ -36,6 +36,12 @@
 	<div class="col-md-6">
 		<form action="/account/signup" method="POST" class="login-form signup-form" role="form">
 			<h1 class="text-center">Create an Account</h1>
+			<?if(isset($error["signup"]) && isset($error["signup"]["message"]) ):?>
+				<div class="alert alert-warning">
+					<?=$error["signup"]["message"];?>
+				</div>
+			<?endif;?>
+
 			<div class="form-group  field">
 				<label for="name" class="control-label">Name</label>
 				<div class="input">
