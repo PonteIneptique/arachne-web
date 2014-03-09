@@ -8,9 +8,9 @@
 
 		<form action="/account/signin" method="POST" class="login-form signup-form" role="form">
 			<div class="form-group  field">
-				<label for="email" class="control-label">Email</label>
+				<label for="mail" class="control-label">Email</label>
 				<div class="input">
-					<input class="form-control" placeholder=" Email" type="email" id="email" name="email" value="" >
+					<input class="form-control" placeholder=" Email" type="email" id="mail" name="mail" value="" >
 				</div>
 			</div>
 			<div class="form-group  field">
