@@ -19,13 +19,13 @@
 		 *	Log a user in
 		 *
 		 * @param $post["password"]		Password User
-		 * @param $post["user"]			User identifier
+		 * @param $post["mail"]			Mail identifier
 		 * @return Status
 		 */
 		static function login($post) {
 			$pw = hash('sha256', $post["password"]);
 			try {
-				$req = self::DB()->prepare("SELECT name as Name, mail as Mail, user_uid as UID FROM user WHERE login = ? AND password = ?");
+				$req = self::DB()->prepare("SELECT name_user as Name, mail_user as Mail, id_user as UID FROM user WHERE mail_user = ? AND password = ?");
 				$req->execute(array($post["user"], $pw));    
 			} catch (Exception $e) {
 				Die('Need to handle this error. $e has all the details');
