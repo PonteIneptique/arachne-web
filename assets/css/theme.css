@@ -275,6 +275,10 @@
 .popover a.lemma {
   color: white;
 }
+.popover a.thumbs-up,
+.popover a.thumbs-down {
+  display: inline!important;
+}
 .popover .active a.lemma {
   text-decoration: underline;
   font-weight: bold;

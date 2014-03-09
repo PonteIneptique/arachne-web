@@ -68,7 +68,42 @@ $(document).ready(function() {
 							)
 						)
 					);
+					
+
+					annoContainer = $("<div />", {
+						"class" :"popover-category"
+					}).append($("<ul />", {
+						"class" : "nav nav-pills nav-ehri nav-ehri-black nav-justified"
+					}).html('<li><a class="popover-category-title" href="#">Annotation for ' + item["text_lemma"] + '</a></li>'));
+					$ul = $("<ul />", {
+						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified popover-category-form"
+					});
+					$.each(item["annotations"], function(i, annData) {
+						anno = $("<li/>").append(
+								$("<div />", {
+									"class" : "row"
+								}).append(
+									$("<div/>", {
+										"class" : "col-xs-8",
+										html : annData["text_type"] + " : " + annData["text_value"]
+									})
+								).append(
+									$("<div/>", {
+										"class" : "col-xs-4",
+										html : function() {
+											if( vote > 0 ) {
+												return '<a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+											} else {
+												return '<a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+											}
+										}
+									})
+								)
+							);
+						$ul.append(anno);
+					});
 					that.next(".popover").find(".append-in").append(lemma);
+					that.next(".popover").find(".annotations-containers").append(annoContainer.append($ul))
 				}); //End each
 			}
 		});
