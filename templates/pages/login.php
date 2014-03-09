@@ -2,8 +2,8 @@
 	<div class="col-md-6">
 		<h1 class="text-center">Login</h1>
 		<p class="text-center">
-		<a href="/oAuth/Facebook">Login via Facebook</a>
-		<br />or
+			<a href="/oAuth/Facebook">Login via Facebook</a>
+			<br />or
 		</p>
 
 		<form action="/account/signin" method="POST" class="login-form signup-form" role="form">

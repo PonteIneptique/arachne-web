@@ -35,36 +35,6 @@
 		}
 	})->via('POST')->name('login');
 	
-	$app->map('/signup/', function () use ($app, $require) {
-		$require->req(array("user", "log"));
-		// Don't forget to set the correct attributes in your form (name="user" + name="password")
-		
-		if(count($app->request->post()) > 0) {
-			$input = $app->request->post();
-		} elseif(count($app->request()->getBody()) > 0) {
-			$input = $app->request()->getBody();
-		} else {
-			$app->response()->status(400);
-		}
-		
-		if(isset($input["mail"]) && isset($input["password"]) && isset($input["name"]) && isset($input["user"]))
-		{
-			$data = User::signup($input);
-			
-			if(isset($data["Success"])) {
-				return jP($data);
-			} else {
-				return jP($data);
-			}
-		}
-		else
-		{
-			$app->response()->status(401);
-		}
-	})->via('POST')->name('signup');
+
 	
-	$app->get('/account/signout', function () use ($app) { 
-		session_destroy();
-		display("home.php", array());
-	} );
 ?>
