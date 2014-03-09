@@ -230,5 +230,6 @@ class Lemma {
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $data;
 	}
+	
 }
 ?>
