@@ -45,4 +45,26 @@
 			}
 		}
 	});
+
+	$app->post('/account/signin', function () use ($app) {
+		// Don't forget to set the correct attributes in your form (name="user" + name="password")
+		$input = $app->request->post();
+		
+		if(isset($input["mail"]) && isset($input["password"]))
+		{
+			$data = User::login($input);
+			
+			if($data["signin"] == true) {
+				$d = $data["data"];				
+				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				display("pages/home.php", $data, array(), "Home");
+			} else {
+				display("pages/login.php", $data, array(), "login");
+			}
+			
+		} else {
+			display("pages/login.php", array("status" => "error", "message" => "Missing field"), array(), "Login");
+		}
+	});
+	
 ?>
