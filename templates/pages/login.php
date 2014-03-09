@@ -7,6 +7,13 @@
 		</p>
 
 		<form action="/account/signin" method="POST" class="login-form signup-form" role="form">
+
+			<?if(isset($error["signin"]) && isset($error["signin"]["message"]) ):?>
+				<div class="alert alert-warning">
+					<?=$error["signin"]["message"];?>
+				</div>
+			<?endif;?>
+
 			<div class="form-group  field">
 				<label for="mail" class="control-label">Email</label>
 				<div class="input">

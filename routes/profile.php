@@ -63,7 +63,7 @@
 			}
 			
 		} else {
-			display("pages/login.php", array("status" => "error", "message" => "Missing field"), array(), "Login");
+			display("pages/login.php", array("status" => "error", "error" => array("signup" => array("message" => "Missing fields."))), array(), "Login");
 		}
 	});
 	

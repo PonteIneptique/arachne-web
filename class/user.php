@@ -24,14 +24,14 @@
 		 */
 		static function login($post) {
 			$pw = hash('sha256', $post["password"]);
-			
-			$req = self::DB()->prepare("SELECT name_user as Name, mail_user as Mail, id_user as UID FROM user WHERE mail_user = ? AND password = ?");
+
+			$req = self::DB()->prepare("SELECT name_user as Name, email_user as Mail, id_user as UID FROM user WHERE email_user = ? AND password_user = ?");
 			$req->execute(array($post["mail"], $pw));
 			
 			if($req->rowCount() == 1) {
 				return array("signin" => true, "data" => $req->fetch(PDO::FETCH_ASSOC));
 			} else {
-				return array("signin" => false);
+				return array("signin" => false, "error" => array("signin" => array("message" => "Account not recognized.")));
 			}
 
 		}
