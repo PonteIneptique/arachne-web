@@ -20,8 +20,6 @@
 			<li>
 				<input type="button" name="Send" value="Save" class="nav-ehri nav-ehri-grey nav-ehri-input submit" />
 			</li>
-
-			</li>
 		</ul>
 	</div>
 	<div class="annotations-containers">
@@ -40,4 +38,20 @@
 			</ul>
 		</div>
 	</div>
+</div>
+
+<div class="hidden" id="lemma-annotation">
+	<select class="types nav-ehri nav-ehri-grey nav-ehri-input">
+		<?foreach ($annotations["lemma"] as $key => $value):?>
+			<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
+		<?endforeach;?>
+	</select>
+
+	<?foreach ($annotations["lemma"] as $value):?>
+		<select class="value" data-target="<?=$value["id"];?>">
+			<?foreach ($value["options"] as $items):?>
+				<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
+			<?endforeach;?>
+		</select>
+	<?endforeach;?>
 </div>

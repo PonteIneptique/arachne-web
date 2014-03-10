@@ -7,6 +7,8 @@
 		$data["sentence"]["metadata"] = Sentence::Metadata($data["sentence"]["document"]);
 		$data["forms"] = Sentence::Forms($id);
 		$data["sentence"]["processed"] = Sentence::Process($data["sentence"], $data["forms"]);
+		$data["annotations"]["lemma"] =  Annotations::Available("lemma", $format = true);
+		$data["annotations"]["sentence"] =  Annotations::Available("sentence", $format = true);
 		display("./pages/sentence.php", $data, $scripts = array("sentence"), $title = "Sentence " . $data["sentence"]["uid"]);
 	});
 

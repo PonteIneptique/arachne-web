@@ -4,11 +4,11 @@ class Annotations {
 		global $DB;
 		return $DB;
 	}
-	static function Available($target = false) {
+	static function Available($target = false, $format = false) {
 		$exec= array();
 		$where = array();
 		$where[] = "at.id_annotation_type = av.id_annotation_type";
-		if($target) {
+		if(gettype ($target) == "string") {
 			$exec["target"] = $target;
 			$where[] = "at.target_annotation_type = :target";
 		}
@@ -32,7 +32,21 @@ class Annotations {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
-		return $data;
+
+		if($format == false && (gettype($target) == "string" || $target = false)) {
+			return $data;
+		}
+		$returned = array();
+		$actual = false;
+		if(count($data) >= 1) {
+			foreach ($data as $key => $value) {
+				if(!isset($returned[$value["id_type"]])) {
+					$returned[$value["id_type"]] = array("id" => $value["id_type"], "text" => $value["text_type"], "options" => array());
+				}
+				$returned[$value["id_type"]]["options"][] = array("id" => $value["id_value"], "text" => $value["text_value"]);
+			}
+		}
+		return $returned;
 	}
 
 	static function Get($target, $id) {

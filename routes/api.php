@@ -6,12 +6,13 @@
 	});
 
 	$app->get('/API/annotations/list', function () use($app)  {
-		$data = Annotations::Available();
+		$data = Annotations::Available($format = true);
 		json($data, $methods = "GET, OPTIONS");
 	});
 
 	$app->get('/API/annotations/list/:target', function ($target) use($app)  {
-		$data = Annotations::Available($target);
+		$data = Annotations::Available($target, $format = true);
+
 		json($data, $methods = "GET, OPTIONS");
 	});
 

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
 	$('a.sentence-lemma').
 	on("click", function(e) { 
 		e.preventDefault(); 
@@ -78,6 +77,9 @@ $(document).ready(function() {
 					$ul = $("<ul />", {
 						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified popover-category-form"
 					});
+					$ulnew = $ul;
+					/*Adding new annotation form*/
+
 					$.each(item["annotations"], function(i, annData) {
 						anno = $("<li/>").append(
 								$("<div />", {
@@ -101,9 +103,27 @@ $(document).ready(function() {
 								)
 							);
 						$ul.append(anno);
-					});
+					});	
+
+					anno = $ulnew.append(
+						$("<li />")
+						.append(
+							$("#lemma-annotation select.types").clone()
+						)
+					).append($("<li />")
+						.append($("<div />", {
+								"class" : "target-type"
+							})
+						)
+					).append($("<li />")
+						.append($("<button />", {
+								"class" : "nav-ehri nav-ehri-grey nav-ehri-input submit",
+								html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+							})
+						)
+					);
 					that.next(".popover").find(".append-in").append(lemma);
-					that.next(".popover").find(".annotations-containers").append(annoContainer.append($ul))
+					that.next(".popover").find(".annotations-containers").append(annoContainer.append($ul).append($ulnew))
 				}); //End each
 			}
 		});
