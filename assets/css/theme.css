@@ -24,6 +24,29 @@
 .nav-ehri.nav-ehri-input.nav-ehri-black:hover {
   background-color: #4d4d4d;
 }
+.nav-ehri.nav-ehri-select {
+  border: 0;
+  height: 40px;
+  line-height: 20px;
+  margin: 0 0;
+  padding: 10px 10px;
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  line-height: 20px!important;
+}
+.nav-ehri.nav-ehri-select.nav-ehri-light-grey:hover {
+  background-color: #808080;
+}
+.nav-ehri.nav-ehri-select.nav-ehri-grey:hover {
+  background-color: #666666;
+}
+.nav-ehri.nav-ehri-select.nav-ehri-black:hover {
+  background-color: #4d4d4d;
+}
+.nav-ehri.nav-ehri-select option {
+  line-height: 20px!important;
+}
 .nav-ehri.nav-ehri-border-top {
   border-top: 1px solid #e6e6e6;
 }
@@ -31,6 +54,7 @@
   margin: 0;
   padding: 0;
   min-height: 40px;
+  vertical-align: middle;
 }
 .nav-ehri > li:last-child {
   border-right: 0!important;

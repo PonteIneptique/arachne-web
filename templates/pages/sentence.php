@@ -41,7 +41,7 @@
 </div>
 
 <div class="hidden" id="lemma-annotation">
-	<select class="types nav-ehri nav-ehri-grey nav-ehri-input">
+	<select class="types nav-ehri nav-ehri-grey nav-ehri-input nav-ehri-select">
 		<?foreach ($annotations["lemma"] as $key => $value):?>
 			<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
 		<?endforeach;?>
