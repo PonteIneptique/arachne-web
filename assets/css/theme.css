@@ -290,6 +290,15 @@
 .popover .popover-category:first-child {
   border-top: 0px solid white;
 }
+.popover .annotation-vote {
+  text-align: center;
+}
+.popover .annotation-vote a,
+.popover .annotation-vote a:hover,
+.popover .annotation-vote a:focus,
+.popover .annotation-vote a:visited {
+  color: white;
+}
 .popover .popover-category-form {
   display: none;
 }

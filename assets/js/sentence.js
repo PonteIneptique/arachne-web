@@ -75,6 +75,7 @@ $(document).ready(function() {
 						"class" : "nav nav-pills nav-ehri nav-ehri-black nav-justified"
 					}).html('<li><a class="popover-category-title" href="#">Annotation for ' + item["text_lemma"] + '</a></li>'));
 					
+					annoContainer.append($("<div />", { "class" : "popover-category-form" }));
 					$ul = $("<ul />", {
 						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified"
 					});
@@ -103,7 +104,7 @@ $(document).ready(function() {
 									})
 								)
 							);
-						annoContainer.append(
+						annoContainer.find(".popover-category-form").append(
 							$ul
 							.clone()
 							.addClass("annotation-vote")
@@ -133,7 +134,7 @@ $(document).ready(function() {
 							})
 						)
 					);
-					annoContainer.append($ulnew);
+					annoContainer.find(".popover-category-form").append($ulnew);
 					that.next(".popover").find(".append-in").append(lemma);
 					that.next(".popover").find(".annotations-containers").append(annoContainer)
 				}); //End each
