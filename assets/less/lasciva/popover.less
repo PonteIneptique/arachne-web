@@ -37,8 +37,11 @@
 	a.lemma {
 		color:white;
 	}
-	a.thumbs-up, a.thumbs-down {
+	a.thumbs-up, a.thumbs-down, a.annotations-thumbs-up,  a.annotations-thumbs-down {
 		display:inline!important;
+		&:after {
+			content : " ";
+		}
 	}
 	.active {
 		a.lemma {

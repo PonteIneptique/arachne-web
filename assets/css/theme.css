@@ -300,8 +300,16 @@
   color: white;
 }
 .popover a.thumbs-up,
-.popover a.thumbs-down {
+.popover a.thumbs-down,
+.popover a.annotations-thumbs-up,
+.popover a.annotations-thumbs-down {
   display: inline!important;
+}
+.popover a.thumbs-up:after,
+.popover a.thumbs-down:after,
+.popover a.annotations-thumbs-up:after,
+.popover a.annotations-thumbs-down:after {
+  content: " ";
 }
 .popover .active a.lemma {
   text-decoration: underline;

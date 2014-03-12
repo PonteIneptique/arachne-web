@@ -67,7 +67,7 @@ class Annotations {
 			at.legend_annotation_type as text_type,
 			at.id_annotation_type as id_type,
 			a.id_annotation as id_annotation,
-			COALESCE(SUM(votes.id_annotation_vote), 0) as votes
+			COALESCE(SUM(votes.value), 0) as votes
 		FROM 
 			annotation_value av,
 			annotation_type at,
@@ -98,9 +98,9 @@ class Annotations {
 			FROM
 				annotation
 			WHERE
-				id_annotation_type = :type,
-				id_annotation_value = :value,
-				table_target_annotation = :table,
+				id_annotation_type = :type AND 
+				id_annotation_value = :value AND 
+				table_target_annotation = :table AND 
 				id_target_annotation = :id
 			LIMIT 1
 		";
@@ -163,7 +163,7 @@ class Annotations {
 			FROM
 				annotation_vote
 			WHERE
-				id_annotation = :id_annotation,
+				id_annotation = :id_annotation AND
 				id_user = :user
 			LIMIT 1
 		";

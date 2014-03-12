@@ -41,14 +41,14 @@
 </div>
 
 <div class="hidden" id="lemma-annotation">
-	<select class="types nav-ehri nav-ehri-grey nav-ehri-input nav-ehri-select">
+	<select class="types nav-ehri nav-ehri-grey nav-ehri-select">
 		<?foreach ($annotations["lemma"] as $key => $value):?>
 			<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
 		<?endforeach;?>
 	</select>
 
 	<?foreach ($annotations["lemma"] as $value):?>
-		<select class="value" data-target="<?=$value["id"];?>">
+		<select class="value nav-ehri nav-ehri-grey nav-ehri-select" data-target="<?=$value["id"];?>">
 			<?foreach ($value["options"] as $items):?>
 				<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
 			<?endforeach;?>

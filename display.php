@@ -17,7 +17,17 @@
 		$app->render('_main.php', array('content' => $content, "title" => $title, 'scripts' => $scripts));
 	}
 	
-	
+
+	/**
+	*	Render a json success or error only
+	*
+	*
+	*
+	*/
+	function status($status, $methods = "OPTIONS, GET, POST") {
+		json(array("status" => $status), $methods);
+		return true;
+	}
 	/**
 	* Render variables in JSON using Controls and methods, with application type automatically
 	*

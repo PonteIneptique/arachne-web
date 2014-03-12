@@ -1,8 +1,29 @@
 <?php
+
+	/*
+	*
+	*
+	*		Annotations
+	*
+	*/
+
+	$app->post("/API/annotations/lemma/:id", function($lemma) use($app) {
+		$type = $app->request->post("type");
+		$value = $app->request->post("value");
+
+		if(!isset($_SESSION["user"]) || $type == "" || $value == "") {
+			return status("error");
+		}
+		$data = Annotations::Insert("lemma", $lemma, $type, $value, $_SESSION["user"]["id"]);
+		if($data) {
+			return status("success");
+		}
+		return status("error");
+	});
 	
 	$app->get('/API/annotations/lemma/:id', function ($id) use($app)  {
 		$data = Annotations::Get("lemma", $id);
-		json($data, $methods = "GET, OPTIONS");
+		json($data, $methods = "GET, POST, OPTIONS");
 	});
 
 	$app->get('/API/annotations/list', function () use($app)  {
@@ -16,6 +37,14 @@
 		json($data, $methods = "GET, OPTIONS");
 	});
 
+
+	/*
+	*
+	*
+	*		Lemma
+	*
+	*/
+
 	$app->post('/API/lemma/', function () use($app)  {
 
 		$query = $app->request->post("query");
@@ -27,29 +56,13 @@
 		json($data, $methods = "POST, GET, OPTIONS");
 	});
 
-	#DONE
-	$app->get('/API/lemme/', function () use($app)  {
 
-		$query = $app->request->get("query");
-		$options = array("count" => false);
-		if(strlen($query) > 0) {
-			$options["query"] = $query;
-		}
-		$data = Lemma::Get($options);
-		json($data);
-	});
-
-	#DONE
-	$app->get('/API/lemme/:id/sentence', function ($id) use($app)  {
-		$data = Sentences::Word($id);
-		json($data);
-	});
-	
-	#DONE without count
-	$app->get('/API/lemme/item', function ()  use($app) {
-		$data = Lemma::Get();
-		json($data);
-	});
+	/*
+	*
+	*
+	*	Sentence
+	*
+	*/
 
 	#Gets data about vote on a specific sentence and form
 	$app->get('/API/sentence/:sentence/form/:form', function ($sentence, $form)  use($app) {
@@ -62,40 +75,6 @@
 		json($data,$methods = "OPTIONS, GET");
 	});
 
-	#Get data for sigma
-	$app->get('/API/Sigma', function () use($app) {
-		$nodes = array();
-		$nodesImport = Lemma::All();
-		$range = Lemma::MaxMin();
-		foreach($nodesImport as $index => $node) {
-			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
-		}
-
-		$edges = array();
-		$edgesImport = Lemma::Links();
-		foreach ($edgesImport as $key => &$value) {
-			$value["id"] = strval($key + 1);
-			$edges[] = $value;
-		}
-		json(array("nodes"=>$nodes, "edges" => $edges),$methods = "OPTIONS, GET");
-	});
-
-	$app->get('/API/Sigma/:lemmaId', function ($lemmaId) use($app) {
-		$nodes = array();
-		$nodesImport = Lemma::All($lemma = $lemmaId);
-		$range = Lemma::MaxMin($lemma = $lemmaId);
-		foreach($nodesImport as $index => $node) {
-			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
-		}
-
-		$edges = array();
-		$edgesImport = Lemma::Links($lemma = $lemmaId);
-		foreach ($edgesImport as $key => &$value) {
-			$value["id"] = strval($key + 1);
-			$edges[] = $value;
-		}
-		json(array("nodes"=>$nodes, "edges" => $edges), $methods = "OPTIONS, GET");
-	});
 
 	$app->post('/API/sentence/lemma', function () use($app)  {
 		$data = array();
@@ -131,5 +110,47 @@
 		}
 	});
 
+
+	/*
+	*
+	*
+	*	Visualisation
+	*
+	*/
+
+	#Get data for sigma
+	$app->get('/API/Sigma', function () use($app) {
+		$nodes = array();
+		$nodesImport = Lemma::All();
+		$range = Lemma::MaxMin();
+		foreach($nodesImport as $index => $node) {
+			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+		}
+
+		$edges = array();
+		$edgesImport = Lemma::Links();
+		foreach ($edgesImport as $key => &$value) {
+			$value["id"] = strval($key + 1);
+			$edges[] = $value;
+		}
+		json(array("nodes"=>$nodes, "edges" => $edges),$methods = "OPTIONS, GET");
+	});
+
+	$app->get('/API/Sigma/:lemmaId', function ($lemmaId) use($app) {
+		$nodes = array();
+		$nodesImport = Lemma::All($lemma = $lemmaId);
+		$range = Lemma::MaxMin($lemma = $lemmaId);
+		foreach($nodesImport as $index => $node) {
+			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+		}
+
+		$edges = array();
+		$edgesImport = Lemma::Links($lemma = $lemmaId);
+		foreach ($edgesImport as $key => &$value) {
+			$value["id"] = strval($key + 1);
+			$edges[] = $value;
+		}
+		json(array("nodes"=>$nodes, "edges" => $edges), $methods = "OPTIONS, GET");
+	});
 
 ?>

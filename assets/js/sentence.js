@@ -74,11 +74,11 @@ $(document).ready(function() {
 					}).append($("<ul />", {
 						"class" : "nav nav-pills nav-ehri nav-ehri-black nav-justified"
 					}).html('<li><a class="popover-category-title" href="#">Annotation for ' + item["text_lemma"] + '</a></li>'));
+					
 					$ul = $("<ul />", {
-						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified popover-category-form"
+						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified"
 					});
-					$ulnew = $ul;
-					/*Adding new annotation form*/
+
 
 					$.each(item["annotations"], function(i, annData) {
 						anno = $("<li/>").append(
@@ -93,18 +93,28 @@ $(document).ready(function() {
 									$("<div/>", {
 										"class" : "col-xs-4",
 										html : function() {
+											vote = annData["votes"];
 											if( vote > 0 ) {
-												return '<a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+												return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
 											} else {
-												return '<a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+												return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
 											}
 										}
 									})
 								)
 							);
-						$ul.append(anno);
+						annoContainer.append(
+							$ul
+							.clone()
+							.addClass("annotation-vote")
+							.append(
+								anno
+							)
+						);
 					});	
 
+					/*Adding new annotation form*/
+					$ulnew = $ul.clone().addClass("new-annotation").attr("data-target", item["id_lemma"]);
 					anno = $ulnew.append(
 						$("<li />")
 						.append(
@@ -114,6 +124,7 @@ $(document).ready(function() {
 						.append($("<div />", {
 								"class" : "target-type"
 							})
+								.append($(".value[data-target='" + $("#lemma-annotation select.types").val() + "']").clone())
 						)
 					).append($("<li />")
 						.append($("<button />", {
@@ -122,15 +133,46 @@ $(document).ready(function() {
 							})
 						)
 					);
+					annoContainer.append($ulnew);
 					that.next(".popover").find(".append-in").append(lemma);
-					that.next(".popover").find(".annotations-containers").append(annoContainer.append($ul).append($ulnew))
+					that.next(".popover").find(".annotations-containers").append(annoContainer)
 				}); //End each
 			}
 		});
 	})
 
+	$(".sentence-text").on("change", ".types", function(e) {
+		e.preventDefault();
+		that = $(this);
+		parent = that.parents(".new-annotation");
+		target = parent.find(".target-type");
+		target.children().remove();
+		target.append(
+			$(".value[data-target='" + that.val() + "']").clone()
+		);
+	});
+
+	$(".sentence-text").on("click", ".new-annotation .submit", function(e) {
+		e.preventDefault();
+		that = $(this);
+		form = that.parents(".new-annotation");
+
+		$.post("/API/annotations/lemma/" + form.attr("data-target"), {
+			"type" : form.find(".types").val(),
+			"value" : form.find(".value").val()
+		}, function(data) {
+			if(typeof data["status"] === "undefined" || data["status"] == "error") {
+				//Do something ?
+			} else {
+				a = that.parents(".popover").prev("a");
+				a.popover("hide");
+				a.trigger("click");
+			}
+		});
+
+	});
+
 	$(".sentence-text").on("click", ".popover-category-title", function(e) {
-	console.log($(this).parent())
 		e.preventDefault();
 		$(".popover-category-form").hide();
 		$(this).parent().parent().parent().find(".popover-category-form").show();
