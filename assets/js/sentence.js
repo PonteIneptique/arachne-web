@@ -1,17 +1,10 @@
 $(document).ready(function() {
 	$('a.sentence-lemma').
 	on("click", function(e) { 
-		e.preventDefault(); 
-	}).
-	popover({
-		html: true,
-		placement : "bottom",
-		content : function() {
-
-			popover = $("#popover");
-			$(this).trigger("json");
-			return popover.html();
-		}
+		e.preventDefault();
+		$(".sentence-lemma").attr("data-active", 0);
+		$(this).attr("data-active", 1);
+		$(this).trigger("json");
 	});
 
 	$(".sentence-text").on("json", "a.sentence-lemma", function(e) {
@@ -21,6 +14,11 @@ $(document).ready(function() {
 		form = that.attr("data-id");
 		sentence = $(".sentence-text").attr("data-id");
 		url = "/API/sentence/" + sentence + "/form/" + form;
+		$("#forms-container .sidebar-category-title").text(that.text());
+
+
+		$("#lemma-sidebar").find(".append-in").empty();
+		$("#lemma-sidebar").find(".annotations-containers").empty();
 
 		var json = $.getJSON(url, function(data) {
 			if(typeof data !== "undefined" && data != null) {
@@ -31,68 +29,62 @@ $(document).ready(function() {
 					} else {
 						cl = "";
 					}
-					lemma = $( "<ul/>", {
-						"class": "nav nav-pills nav-ehri nav-ehri-grey nav-justified" + cl
+					lemma = $( "<div/>", {
+						"class": "nav-stack nav-stack-grey" + cl
 					}).append(
-						$("<li/>").append(
-							$("<div />", {
-								"class" : "row"
-							}).append(
-								$("<div/>", {
-									"class" : "col-xs-6",
-									html : "<a class='lemma' data-id='" + item["id_lemma"] + "'>" + item["text_lemma"] + "</a>"
-								})
-							).append(
-								$("<div/>", {
-									"class" : "col-xs-3",
-									html : function() {
-										if( vote > 0 ) {
-											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
-										} else {
-											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
-										}
+						$("<div/>", {
+								"class" : "nav-6",
+								html : "<a class='lemma' data-id='" + item["id_lemma"] + "'>" + item["text_lemma"] + "</a>"
+							})
+						).append(
+							$("<div/>", {
+								"class" : "nav-3",
+								html : function() {
+									if( vote > 0 ) {
+										return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
+									} else {
+										return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
 									}
-								})
-							).append(
-								$("<div/>", {
-									"class" : "col-xs-3",
-									html : function() {
-										if( vote <= 0 ) {
-											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
-										} else {
-											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
-										}
+								}
+							})
+						).append(
+							$("<div/>", {
+								"class" : "nav-3",
+								html : function() {
+									if( vote <= 0 ) {
+										return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
+									} else {
+										return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
 									}
-								})
-							)
-						)
+								}
+							})
 					);
 					
 
 					annoContainer = $("<div />", {
-						"class" :"popover-category"
-					}).append($("<ul />", {
-						"class" : "nav nav-pills nav-ehri nav-ehri-black nav-justified"
-					}).html('<li><a class="popover-category-title" href="#">Annotation for ' + item["text_lemma"] + '</a></li>'));
+						"class" :"sidebar-category"
+					}).append($("<a />", {
+						"class" : "nav-stack nav-stack-black full sidebar-category-title",
+						"href" : "#",
+						"text" : 'Annotation for ' + item["text_lemma"]
+						})
+					);
 					
-					annoContainer.append($("<div />", { "class" : "popover-category-form" }));
-					$ul = $("<ul />", {
-						"class" : "nav nav-pills nav-ehri nav-ehri-grey nav-justified"
+					annoContainer.append($("<div />", { "class" : "sidebar-category-content" }));
+					$navstack = $("<div />", {
+						"class" : "nav-stack nav-stack-grey"
 					});
 
 
 					$.each(item["annotations"], function(i, annData) {
-						anno = $("<li/>").append(
-								$("<div />", {
-									"class" : "row"
-								}).append(
+						anno = $navstack.clone().append(
 									$("<div/>", {
-										"class" : "col-xs-8",
+										"class" : "nav-8",
 										html : annData["text_type"] + " : " + annData["text_value"]
 									})
 								).append(
 									$("<div/>", {
-										"class" : "col-xs-4",
+										"class" : "nav-4",
 										html : function() {
 											vote = annData["votes"];
 											if( vote > 0 ) {
@@ -102,47 +94,56 @@ $(document).ready(function() {
 											}
 										}
 									})
-								)
-							);
-						annoContainer.find(".popover-category-form").append(
-							$ul
-							.clone()
-							.addClass("annotation-vote")
-							.append(
-								anno
-							)
-						);
+								).addClass("annotation-vote");
+						annoContainer.find(".sidebar-category-content").append(anno);
 					});	
 
 					/*Adding new annotation form*/
-					$ulnew = $ul.clone().addClass("new-annotation").attr("data-target", item["id_lemma"]);
-					anno = $ulnew.append(
-						$("<li />")
-						.append(
-							$("#lemma-annotation select.types").clone()
-						)
-					).append($("<li />")
-						.append($("<div />", {
-								"class" : "target-type"
-							})
-								.append($(".value[data-target='" + $("#lemma-annotation select.types").val() + "']").clone())
-						)
-					).append($("<li />")
-						.append($("<button />", {
-								"class" : "nav-ehri nav-ehri-grey nav-ehri-input submit",
-								html : '<span class="glyphicon glyphicon-plus-sign"></span>'
-							})
-						)
-					);
-					annoContainer.find(".popover-category-form").append($ulnew);
-					that.next(".popover").find(".append-in").append(lemma);
-					that.next(".popover").find(".annotations-containers").append(annoContainer)
+					$annotation_form = 
+						$navstack.
+							clone().
+							addClass("new-annotation").
+							attr("data-target", item["id_lemma"]).
+							append(
+									$("<div />", {
+										"class" : "nav-4"
+									})
+									.append(
+										$("#lemma-annotation select.types").clone()
+									)
+								).append($("<div />", {
+										"class" : "nav-4"
+									})
+									.append($("<div />", {
+											"class" : "target-type"
+										})
+											.append(
+													$("#lemma-annotation .value[data-target='" + $("#lemma-annotation select.types").val() + "']")
+													.clone()
+												)
+									)
+								).append($("<div />", {
+										"class" : "nav-4"
+									})
+									.append($("<button />", {
+											"class" : "nav-stack-input submit",
+											html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+										})
+									)
+								);
+					console.log($("#lemma-annotation select.types").val());
+					annoContainer.find(".sidebar-category-content").append($annotation_form);
+
+
+					$("#lemma-sidebar").find(".append-in").append(lemma);
+					$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
+					$("#lemma-sidebar").show();
 				}); //End each
 			}
 		});
 	})
 
-	$(".sentence-text").on("change", ".types", function(e) {
+	$("#lemma-sidebar").on("change", ".types", function(e) {
 		e.preventDefault();
 		that = $(this);
 		parent = that.parents(".new-annotation");
@@ -153,7 +154,7 @@ $(document).ready(function() {
 		);
 	});
 
-	$(".sentence-text").on("click", ".new-annotation .submit", function(e) {
+	$("#lemma-sidebar").on("click", ".new-annotation .submit", function(e) {
 		e.preventDefault();
 		that = $(this);
 		form = that.parents(".new-annotation");
@@ -165,31 +166,20 @@ $(document).ready(function() {
 			if(typeof data["status"] === "undefined" || data["status"] == "error") {
 				//Do something ?
 			} else {
-				a = that.parents(".popover").prev("a");
-				a.popover("hide");
-				a.trigger("click");
+				$("a.sentence-lemma[data-active='1']").trigger("click");
 			}
 		});
 
 	});
 
-	$(".sentence-text").on("click", ".popover-category-title", function(e) {
-		e.preventDefault();
-		$(".popover-category-form").hide();
-		$(this).parent().parent().parent().find(".popover-category-form").show();
-	});
 
-	$(".sentence-text").on("click", ".popover-title", function(e) {
-		$(".popover-category-form").hide();
-		$(".popover-category-lemmas").show();
-	});
 
-	$(".sentence-text").on("click", ".newlemma .submit", function() {
+	$("#lemma-sidebar").on("click", ".newlemma .submit", function() {
 		parent = $(this).parents(".newlemma");
 
 		lemma = parent.find("input[type='text']").val();
 		sentence = $(".sentence-text").attr("data-id");
-		form = parent.parents(".popover").children(".popover-title").text();
+		form = $("a.sentence-lemma[data-active='1']").text();
 
 		$.post("/API/sentence/lemma", {
 			"lemma" : lemma,
@@ -197,16 +187,15 @@ $(document).ready(function() {
 			"sentence" : sentence
 		}, function(data) {
 			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
-				a = parent.parents(".popover").prev("a");
+				a = $("a.sentence-lemma[data-active='1']");
 				a.attr("data-id", data["results"]["form"]);
 				a.removeClass("neutral").addClass("red");
-				a.popover("hide");
 				a.trigger("click");
 			}
 		});
 	});
 
-	$(".sentence-text").on("click", ".thumbs-down, .thumbs-up", function(e) {
+	$("#lemma-sidebar").on("click", ".thumbs-down, .thumbs-up", function(e) {
 		e.preventDefault();
 		that = $(this);
 		if(that.hasClass("thumbs-up")) { val = 1; } else { val = -1; }
@@ -221,11 +210,20 @@ $(document).ready(function() {
 			"value" : val
 		}, function(data) {
 			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
-				a = that.parents(".popover").prev("a");
-				a.popover("hide");
+				a = $("a.sentence-lemma[data-active='1']");
 				a.trigger("click");
 			}
 		});
 	});
 
+	/*
+
+		Toggles
+
+	*/
+	$("#lemma-sidebar").on("click", ".sidebar-category-title", function(e) {
+		e.preventDefault();
+		$(".sidebar-category-content").hide();
+		$(this).parents(".sidebar-category").find(".sidebar-category-content").show();
+	});
 });
