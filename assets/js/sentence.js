@@ -150,7 +150,7 @@ $(document).ready(function() {
 		target = parent.find(".target-type");
 		target.children().remove();
 		target.append(
-			$(".value[data-target='" + that.val() + "']").clone()
+			$("#lemma-annotation .value[data-target='" + that.val() + "']").clone()
 		);
 	});
 
