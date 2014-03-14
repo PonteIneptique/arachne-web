@@ -1,11 +1,57 @@
 <?php
 
+
+
+	/*
+	*
+	*
+	*		Votes
+	*
+	*/
+	
+	$app->post('/API/vote/forms', function () use($app)  {
+		$req = $app->request();
+
+		//Getting the id of the link
+		$id_lemma_has_form = Forms::LemmaHasForm($req->post("lemma"),$req->post("form"),$req->post("sentence"));
+
+		if($id_lemma_has_form == false) {
+			//Exit if we ddont retrieve anything
+			json(array("status" => "error"), $methods = "POST, OPTIONS");
+		} else {
+			//Inserting vote
+			$status = Forms::Vote($id_lemma_has_form, $req->post("value"));
+
+			//Returning values
+			if($status == true) {
+				$data = array("status" => "success");
+			} else {
+				$data = array("status" => "error");
+			}
+			json($data, $methods = "POST, OPTIONS");
+		}
+	});
+	$app->post("/API/vote/annotations/:target", function($target) use($app) {
+		$vote = $app->request->post("vote");
+
+		if(!isset($_SESSION["user"]) || $vote == "") {
+			return status("error");
+		}
+		$data = Annotations::Vote($target, $_SESSION["user"]["id"], $vote);
+		if($data) {
+			return status("success");
+		}
+		return status("error");
+	});
+
+
 	/*
 	*
 	*
 	*		Annotations
 	*
 	*/
+
 
 	$app->post("/API/annotations/lemma/:id", function($lemma) use($app) {
 		$type = $app->request->post("type");
@@ -85,29 +131,6 @@
 		$data["parameters"] = array("lemma" => $req->post("lemma"),"sentence" => $req->post("sentence"),"form" => $req->post("form"));
 		
 		json($data, $methods = "OPTIONS, POST");
-	});
-	
-	$app->post('/API/forms/vote', function () use($app)  {
-		$req = $app->request();
-
-		//Getting the id of the link
-		$id_lemma_has_form = Forms::LemmaHasForm($req->post("lemma"),$req->post("form"),$req->post("sentence"));
-
-		if($id_lemma_has_form == false) {
-			//Exit if we ddont retrieve anything
-			json(array("status" => "error"), $methods = "POST, OPTIONS");
-		} else {
-			//Inserting vote
-			$status = Forms::Vote($id_lemma_has_form, $req->post("value"));
-
-			//Returning values
-			if($status == true) {
-				$data = array("status" => "success");
-			} else {
-				$data = array("status" => "error");
-			}
-			json($data, $methods = "POST, OPTIONS");
-		}
 	});
 
 

@@ -154,6 +154,7 @@ $(document).ready(function() {
 		);
 	});
 
+
 	$("#lemma-sidebar").on("click", ".new-annotation .submit", function(e) {
 		e.preventDefault();
 		that = $(this);
@@ -195,6 +196,9 @@ $(document).ready(function() {
 		});
 	});
 
+
+
+
 	$("#lemma-sidebar").on("click", ".thumbs-down, .thumbs-up", function(e) {
 		e.preventDefault();
 		that = $(this);
@@ -203,11 +207,27 @@ $(document).ready(function() {
 		sentence = $(".sentence-text").attr("data-id");
 		lemma = that.attr("data-target");
 		form = that.attr("data-src");
-		$.post("/API/forms/vote", {
+		$.post("/API/vote/forms", {
 			"sentence" : sentence,
 			"form" : form,
 			"lemma" : lemma,
 			"value" : val
+		}, function(data) {
+			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
+				a = $("a.sentence-lemma[data-active='1']");
+				a.trigger("click");
+			}
+		});
+	});
+
+	$("#lemma-sidebar").on("click", ".annotations-thumbs-down, .annotations-thumbs-up", function(e) {
+		e.preventDefault();
+
+		that = $(this);
+		if(that.hasClass("annotations-thumbs-up")) { val = 1; } else { val = -1; }
+		target = that.attr("data-target");
+		$.post("/API/vote/annotations/"+ target, {
+			"vote" : val
 		}, function(data) {
 			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
 				a = $("a.sentence-lemma[data-active='1']");
