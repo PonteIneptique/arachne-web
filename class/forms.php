@@ -96,25 +96,64 @@ class Forms {
 			return false;
 		}
 	}
+	
+	static function VoteExists($id_lemma_has_form, $user) {
+		$exec = array("id_lemma_has_form" => $id_lemma_has_form, "user" => $user);
+		$query = "
+			SELECT 
+				id_form_vote
+			FROM
+				form_vote
+			WHERE
+				id_lemma_has_form = :id_lemma_has_form AND
+				id_user = :user
+			LIMIT 1
+		";
+
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		if($query->rowCount() == 1) {
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			return $data["id_form_vote"];
+		} else {
+			return false;
+		}
+
+	}
 
 	static function Vote($id_lemma_has_form, $value, $user = 0) {
-		$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $user, "value" => $value);
-		$query = "
-			INSERT INTO `form_vote`
-			(
-			`id_lemma_has_form`,
-			`id_user`,
-			`value`)
-			VALUES
-			(
-			:id_lemma_has_form,
-			:id_user,
-			:value
-			)
-		";
+		$id_form_vote = self::VoteExists($id_lemma_has_form, $user);
+		if($id_form_vote != false) {
+			$exec= array("id_form_vote" => $id_form_vote, "id_user" => $user, "value" => $value);
+			$query = "
+				UPDATE
+					form_vote
+				SET
+					value = :value
+				WHERE
+					id_user = :id_user AND
+					id_form_vote = :id_form_vote
+				LIMIT 1
+			";
+		} else {
+			$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $user, "value" => $value);
+			$query = "
+				INSERT INTO `form_vote`
+				(
+				`id_lemma_has_form`,
+				`id_user`,
+				`value`)
+				VALUES
+				(
+				:id_lemma_has_form,
+				:id_user,
+				:value
+				)
+			";
+		}
 		$query = self::DB()->prepare($query);
 		 $query->execute($exec);
-		if($query->rowCount() == 1) {
+		if($query->rowCount() == 1 || $query->rowCount() == 2) {
 			return true;
 		} else {
 			return false;

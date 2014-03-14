@@ -10,23 +10,28 @@
 	*/
 	
 	$app->post('/API/vote/forms', function () use($app)  {
+
+		if(!isset($_SESSION["user"])) {
+			return status("error");
+		}
+
 		$req = $app->request();
 
 		//Getting the id of the link
 		$id_lemma_has_form = Forms::LemmaHasForm($req->post("lemma"),$req->post("form"),$req->post("sentence"));
 
 		if($id_lemma_has_form == false) {
-			//Exit if we ddont retrieve anything
-			json(array("status" => "error"), $methods = "POST, OPTIONS");
+			//Exit if we dont retrieve anything
+			return status("error", "POST, OPTIONS");
 		} else {
 			//Inserting vote
-			$status = Forms::Vote($id_lemma_has_form, $req->post("value"));
+			$status = Forms::Vote($id_lemma_has_form, $req->post("value", $_SESSION["user"]["id"]));
 
 			//Returning values
 			if($status == true) {
-				$data = array("status" => "success");
+				return status("success", "POST, OPTIONS");
 			} else {
-				$data = array("status" => "error");
+				return status("error", "POST, OPTIONS");
 			}
 			json($data, $methods = "POST, OPTIONS");
 		}
