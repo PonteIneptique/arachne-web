@@ -53,6 +53,22 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+.nav-stack > .nav-2 {
+  position: relative;
+  float: left;
+  width: 16.666666666666664%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.nav-stack > .nav-5 {
+  position: relative;
+  float: left;
+  width: 41.66666666666667%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .nav-stack > .nav-6,
 .nav-stack > .nav-3,
 .nav-stack > .nav-8,
@@ -164,9 +180,7 @@
     cursor: pointer;
   }
 }
-#lemma-sidebar,
-#sidebar,
-#sentence-sidebar {
+#sidebar {
   border-radius: 0;
   padding: 4px;
   /* Sidebars */
@@ -179,19 +193,13 @@
 */
   /* Votes and anchors */
 }
-#lemma-sidebar .sidebar-category,
-#sidebar .sidebar-category,
-#sentence-sidebar .sidebar-category {
+#sidebar .sidebar-category {
   border-top: 1px solid white;
 }
-#lemma-sidebar .sidebar-category:first-child,
-#sidebar .sidebar-category:first-child,
-#sentence-sidebar .sidebar-category:first-child {
+#sidebar .sidebar-category:first-child {
   border-top: 0px solid white;
 }
-#lemma-sidebar .sidebar-category .sidebar-category-title,
-#sidebar .sidebar-category .sidebar-category-title,
-#sentence-sidebar .sidebar-category .sidebar-category-title {
+#sidebar .sidebar-category .sidebar-category-title {
   background-color: #333333;
   color: white;
   font-size: 1.2em;
@@ -200,77 +208,41 @@
   text-align: center;
   text-decoration: none;
 }
-#lemma-sidebar .sidebar-category .sidebar-category-title:hover,
-#sidebar .sidebar-category .sidebar-category-title:hover,
-#sentence-sidebar .sidebar-category .sidebar-category-title:hover {
+#sidebar .sidebar-category .sidebar-category-title:hover {
   text-decoration: none;
 }
-#lemma-sidebar .sidebar-category .sidebar-category-content,
-#sidebar .sidebar-category .sidebar-category-content,
-#sentence-sidebar .sidebar-category .sidebar-category-content {
+#sidebar .sidebar-category .sidebar-category-content {
   /* ??? */
   display: none;
 }
-#lemma-sidebar .sidebar-category #forms-lemma,
-#sidebar .sidebar-category #forms-lemma,
-#sentence-sidebar .sidebar-category #forms-lemma {
+#sidebar .sidebar-category #forms-lemma {
   display: block;
 }
-#lemma-sidebar .annotation-vote,
-#sidebar .annotation-vote,
-#sentence-sidebar .annotation-vote {
+#sidebar .annotation-vote {
   text-align: center;
 }
-#lemma-sidebar .annotation-vote a,
 #sidebar .annotation-vote a,
-#sentence-sidebar .annotation-vote a,
-#lemma-sidebar .annotation-vote a:hover,
 #sidebar .annotation-vote a:hover,
-#sentence-sidebar .annotation-vote a:hover,
-#lemma-sidebar .annotation-vote a:focus,
 #sidebar .annotation-vote a:focus,
-#sentence-sidebar .annotation-vote a:focus,
-#lemma-sidebar .annotation-vote a:visited,
-#sidebar .annotation-vote a:visited,
-#sentence-sidebar .annotation-vote a:visited {
+#sidebar .annotation-vote a:visited {
   color: white;
 }
-#lemma-sidebar a.lemma,
-#sidebar a.lemma,
-#sentence-sidebar a.lemma {
+#sidebar a.lemma {
   color: white;
 }
-#lemma-sidebar a.thumbs-up,
 #sidebar a.thumbs-up,
-#sentence-sidebar a.thumbs-up,
-#lemma-sidebar a.thumbs-down,
 #sidebar a.thumbs-down,
-#sentence-sidebar a.thumbs-down,
-#lemma-sidebar a.annotations-thumbs-up,
 #sidebar a.annotations-thumbs-up,
-#sentence-sidebar a.annotations-thumbs-up,
-#lemma-sidebar a.annotations-thumbs-down,
-#sidebar a.annotations-thumbs-down,
-#sentence-sidebar a.annotations-thumbs-down {
+#sidebar a.annotations-thumbs-down {
   display: inline!important;
 }
-#lemma-sidebar a.thumbs-up:after,
 #sidebar a.thumbs-up:after,
-#sentence-sidebar a.thumbs-up:after,
-#lemma-sidebar a.thumbs-down:after,
 #sidebar a.thumbs-down:after,
-#sentence-sidebar a.thumbs-down:after,
-#lemma-sidebar a.annotations-thumbs-up:after,
 #sidebar a.annotations-thumbs-up:after,
-#sentence-sidebar a.annotations-thumbs-up:after,
-#lemma-sidebar a.annotations-thumbs-down:after,
-#sidebar a.annotations-thumbs-down:after,
-#sentence-sidebar a.annotations-thumbs-down:after {
+#sidebar a.annotations-thumbs-down:after {
   content: " ";
 }
-#lemma-sidebar .active a.lemma,
-#sidebar .active a.lemma,
-#sentence-sidebar .active a.lemma {
+#sidebar .active a.lemma {
   text-decoration: underline;
   font-weight: bold;
 }

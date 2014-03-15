@@ -37,7 +37,7 @@
 						</div>
 
 						<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
-							<div class="nav-4">
+							<div class="nav-5">
 								<select class="types nav-stack-select">
 									<?foreach ($annotations["sentence"] as $key => $value):?>
 										<? if (!isset($firstchild)) { $firstchild = $key; } ?>
@@ -45,7 +45,7 @@
 									<?endforeach;?>
 								</select>
 							</div>
-							<div class="nav-4">
+							<div class="nav-5">
 								<div class="target-type">
 									<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
 										<?foreach ($annotations["sentence"][$firstchild]["options"] as $items):?>
@@ -54,7 +54,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="nav-4">
+							<div class="nav-2">
 								<button class="nav-stack-input submit">
 									<span class="glyphicon glyphicon-plus-sign"></span>
 								</button>
