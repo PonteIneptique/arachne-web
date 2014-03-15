@@ -57,6 +57,20 @@
 	*
 	*/
 
+	$app->post("/API/annotations/value/:type", function($type) use($app) {
+		$name = $app->request->post("name");
+
+		if(!isset($_SESSION["user"]) || $type == "" || $name == "") {
+			return status("error");
+		}
+		$data = Annotations::ValueNew($name, $type, $_SESSION["user"]["id"]);
+		if($data != false) {
+			json(array("status" => "success", "id" => $data), "POST, OPTIONS");
+			return true;
+		}
+		return status("error");
+	});
+
 
 	$app->post("/API/annotations/type", function() use($app) {
 		$type = $app->request->post("type_name");
@@ -67,7 +81,7 @@
 		}
 		$data = Annotations::TypeNew($type, $target, $_SESSION["user"]["id"]);
 		if($data != false) {
-			json(array("status" => "success", "newtype" => $data), "POST, OPTIONS");
+			json(array("status" => "success", "id" => $data), "POST, OPTIONS");
 			return true;
 		}
 		return status("error");

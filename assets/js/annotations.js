@@ -1,4 +1,37 @@
 $(document).ready(function() {
+	$("#annotations-list").on("submit", ".new-value", function(e) {
+		e.preventDefault();
+		form = $(this);
+		url = form.attr("action");
+		name = form.find('input[name="name"]').val();
+		$.post(
+			url, 
+			{
+				"name" : name
+			}, 
+			function(data) {
+				if(typeof data["id"] !== "undefined") {
+					par = form.parent();
+					par.empty();
+
+					par.append(
+						$("<a />", {
+							"class" : "add-value",
+							"data-target" : target,
+							"href" : "#",
+							"html" : '<span class="glyphicon glyphicon-plus-sign"></span>'
+						})
+					);
+
+					par.before(
+						$("<li />", {
+							"html" : name
+						})
+					);
+				}
+			}
+		);
+	});
 	$("#new-type").on("submit", function(e) {
 		e.preventDefault();
 		that = $(this);
@@ -10,15 +43,15 @@ $(document).ready(function() {
 				"target" : that.find('select[name="target"]').val()
 			}, 
 			function(data) {
-				if(typeof data["newtype"] !== "undefined") {
+				if(typeof data["id"] !== "undefined") {
 					$("#annotations-list tbody").prepend(
 						$("<tr />").append(
 							$("<td />", {
-								"html" : that.find('input[name="type_name"]').val()
+								"html" : that.find('select[name="target"]').val()
 							})
 						).append(
 							$("<td />", {
-								"html" : that.find('select[name="target"]').val()
+								"html" : that.find('input[name="type_name"]').val()
 							})
 						).append(
 							$("<td />").append(
@@ -30,7 +63,7 @@ $(document).ready(function() {
 									}).append(
 										$("<a />", {
 											"class" : "add-value",
-											"data-target" : data["newtype"],
+											"data-target" : data["id"],
 											"href" : "#",
 											"html" : '<span class="glyphicon glyphicon-plus-sign"></span>'
 										})
@@ -53,9 +86,9 @@ $(document).ready(function() {
 
 		par.append(
 			$("<form />", {
-				"class" : "form-inline",
+				"class" : "form-inline new-value",
 				"data-target" : target,
-				"action" : "/API/annotations/type/" + target
+				"action" : "/API/annotations/value/" + target
 			}).append(
 				$("<div />", {
 					"class" : "form-group"

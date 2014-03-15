@@ -269,5 +269,58 @@ class Annotations {
 		return false;
 
 	}
+
+	static function ValueExists($name, $type) {
+		$exec = array("name" => $name, "type" => $type);
+		$query = "
+			SELECT
+				id_annotation_value
+			FROM
+				annotation_value
+			WHERE
+				text_annotation_value = :name AND
+				id_annotation_type = :type
+			LIMIT 1
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		if($query->rowCount() == 1) {
+			return true;
+		}
+		return false;
+
+	}
+
+	static function ValueNew($name, $type, $user) {
+		if(self::ValueExists($name, $type)) {
+			return false;
+		}
+		$exec = array("name" => $name, "type" => $type);
+		$query = "
+			INSERT INTO 
+				`annotation_value`
+			(
+				`text_annotation_value`,
+				`legend_annotation_value`,
+				`id_annotation_type`
+			)
+				VALUES
+			(
+				:name,
+				:name,
+				:type
+			);
+
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		if($query->rowCount() == 1) {
+			return self::DB()->lastInsertId();
+		}
+		return false;
+
+	}
 }
 ?>
