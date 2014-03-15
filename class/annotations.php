@@ -17,7 +17,8 @@ class Annotations {
 			av.id_annotation_value as id_value,
 			av.legend_annotation_value as text_value,
 			at.legend_annotation_type as text_type,
-			at.id_annotation_type as id_type
+			at.id_annotation_type as id_type,
+			at.target_annotation_type as target_type
 		FROM 
 			annotation_value av,
 			annotation_type at
@@ -41,7 +42,7 @@ class Annotations {
 		if(count($data) >= 1) {
 			foreach ($data as $key => $value) {
 				if(!isset($returned[$value["id_type"]])) {
-					$returned[$value["id_type"]] = array("id" => $value["id_type"], "text" => $value["text_type"], "options" => array());
+					$returned[$value["id_type"]] = array("id" => $value["id_type"], "target" => $value["target_type"], "text" => $value["text_type"], "options" => array());
 				}
 				$returned[$value["id_type"]]["options"][] = array("id" => $value["id_value"], "text" => $value["text_value"]);
 			}
