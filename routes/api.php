@@ -39,7 +39,7 @@
 	$app->post("/API/vote/annotations/:target", function($target) use($app) {
 		$vote = $app->request->post("vote");
 
-		if(!isset($_SESSION["user"]) || $vote == "") {
+		if(!isset($_SESSION["user"]) || $vote === "") {
 			return status("error");
 		}
 		$data = Annotations::Vote($target, $_SESSION["user"]["id"], $vote);
@@ -58,22 +58,22 @@
 	*/
 
 
-	$app->post("/API/annotations/lemma/:id", function($lemma) use($app) {
+	$app->post("/API/annotations/:table/:id", function($table, $lemma) use($app) {
 		$type = $app->request->post("type");
 		$value = $app->request->post("value");
 
-		if(!isset($_SESSION["user"]) || $type == "" || $value == "") {
+		if(!isset($_SESSION["user"]) || $type == "" || $value == "" || ($table != "sentence" && $table != "lemma")) {
 			return status("error");
 		}
-		$data = Annotations::Insert("lemma", $lemma, $type, $value, $_SESSION["user"]["id"]);
+		$data = Annotations::Insert($table, $lemma, $type, $value, $_SESSION["user"]["id"]);
 		if($data) {
 			return status("success");
 		}
 		return status("error");
 	});
 	
-	$app->get('/API/annotations/lemma/:id', function ($id) use($app)  {
-		$data = Annotations::Get("lemma", $id);
+	$app->get('/API/annotations/:table/:id', function ($table, $id) use($app)  {
+		$data = Annotations::Get($table, $id);
 		json($data, $methods = "GET, POST, OPTIONS");
 	});
 

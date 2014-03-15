@@ -114,7 +114,7 @@ class Annotations {
 		}
 	}
 
-	static function Vote($target, $user = 0, $vote) {
+	static function Vote($target, $user, $vote) {
 		$id_vote = self::VoteExists($target, $user);
 		if($id_vote) {
 			$exec = array("id_vote" => $id_vote, "vote" => $vote);
@@ -159,7 +159,7 @@ class Annotations {
 		$exec = array("id_annotation" => $target, "user" => $user);
 		$query = "
 			SELECT 
-				id_annotation
+				id_annotation_vote
 			FROM
 				annotation_vote
 			WHERE
@@ -172,7 +172,7 @@ class Annotations {
 		$query->execute($exec);
 		if($query->rowCount() == 1) {
 			$data = $query->fetch(PDO::FETCH_ASSOC);
-			return $data["id_annotation"];
+			return $data["id_annotation_vote"];
 		} else {
 			return false;
 		}

@@ -9,6 +9,7 @@
 		$data["sentence"]["processed"] = Sentence::Process($data["sentence"], $data["forms"]);
 		$data["annotations"]["lemma"] =  Annotations::Available("lemma", $format = true);
 		$data["annotations"]["sentence"] =  Annotations::Available("sentence", $format = true);
+		$data["annotations"]["sentence-applied"] =  Annotations::Get("sentence", $id);
 		display("./pages/sentence.php", $data, $scripts = array("sentence"), $title = "Sentence " . $data["sentence"]["uid"]);
 	});
 
