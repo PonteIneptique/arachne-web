@@ -53,129 +53,131 @@ $(document).ready(function() {
 
 		$("#lemma-sidebar").find(".append-in").empty();
 		$("#lemma-sidebar").find(".annotations-containers").empty();
-
-		var json = $.getJSON(url, function(data) {
-			if(typeof data !== "undefined" && data != null) {
-				$.each(data, function(i, item) {
-					vote = parseInt(item["votes"]);
-					if (i === 0) {
-						cl = " active ";
-					} else {
-						cl = "";
-					}
-					lemma = $( "<div/>", {
-						"class": "nav-stack nav-stack-grey" + cl
-					}).append(
-						$("<div/>", {
-								"class" : "nav-6",
-								html : "<a class='lemma' data-id='" + item["id_lemma"] + "'>" + item["text_lemma"] + "</a>"
-							})
-						).append(
+		if(form != "0") {
+			var json = $.getJSON(url, function(data) {
+				if(typeof data !== "undefined" && data != null) {
+					$.each(data, function(i, item) {
+						vote = parseInt(item["votes"]);
+						if (i === 0) {
+							cl = " active ";
+						} else {
+							cl = "";
+						}
+						lemma = $( "<div/>", {
+							"class": "nav-stack nav-stack-grey" + cl
+						}).append(
 							$("<div/>", {
-								"class" : "nav-3",
-								html : function() {
-									if( vote > 0 ) {
-										return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
-									} else {
-										return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
-									}
-								}
-							})
-						).append(
-							$("<div/>", {
-								"class" : "nav-3",
-								html : function() {
-									if( vote <= 0 ) {
-										return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
-									} else {
-										return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
-									}
-								}
-							})
-					);
-					
-
-					annoContainer = $("<div />", {
-						"class" :"sidebar-category"
-					}).append($("<a />", {
-						"class" : "nav-stack nav-stack-black full sidebar-category-title",
-						"href" : "#",
-						"text" : 'Annotation for ' + item["text_lemma"]
-						})
-					);
-					
-					annoContainer.append($("<div />", { "class" : "sidebar-category-content" }));
-					$navstack = $("<div />", {
-						"class" : "nav-stack nav-stack-grey"
-					});
-
-
-					$.each(item["annotations"], function(i, annData) {
-						anno = $navstack.clone().append(
-									$("<div/>", {
-										"class" : "nav-8",
-										html : annData["text_type"] + " : " + annData["text_value"]
-									})
-								).append(
-									$("<div/>", {
-										"class" : "nav-4",
-										html : function() {
-											vote = annData["votes"];
-											if( vote > 0 ) {
-												return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
-											} else {
-												return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
-											}
+									"class" : "nav-6",
+									html : "<a class='lemma' data-id='" + item["id_lemma"] + "'>" + item["text_lemma"] + "</a>"
+								})
+							).append(
+								$("<div/>", {
+									"class" : "nav-3",
+									html : function() {
+										if( vote > 0 ) {
+											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
+										} else {
+											return ' <a href="#" class="thumbs-up" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a> ';
 										}
-									})
-								).addClass("annotation-vote");
-						annoContainer.find(".sidebar-category-content").append(anno);
-					});	
+									}
+								})
+							).append(
+								$("<div/>", {
+									"class" : "nav-3",
+									html : function() {
+										if( vote <= 0 ) {
+											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
+										} else {
+											return ' <a href="#" class="thumbs-down" data-src="'+form+'" data-target="' + item["id_lemma"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a> ';
+										}
+									}
+								})
+						);
+						
 
-					/*Adding new annotation form*/
-					$annotation_form = 
-						$navstack.
-							clone().
-							addClass("new-annotation").
-							attr("data-target", item["id_lemma"]).
-							attr("data-table", "lemma").
-							append(
-									$("<div />", {
-										"class" : "nav-4"
-									})
-									.append(
-										$("#lemma-annotation-source select.types").clone()
-									)
-								).append($("<div />", {
-										"class" : "nav-4"
-									})
-									.append($("<div />", {
-											"class" : "target-type"
+						annoContainer = $("<div />", {
+							"class" :"sidebar-category"
+						}).append($("<a />", {
+							"class" : "nav-stack nav-stack-black full sidebar-category-title",
+							"href" : "#",
+							"text" : 'Annotation for ' + item["text_lemma"]
+							})
+						);
+						
+						annoContainer.append($("<div />", { "class" : "sidebar-category-content" }));
+						$navstack = $("<div />", {
+							"class" : "nav-stack nav-stack-grey"
+						});
+
+
+						$.each(item["annotations"], function(i, annData) {
+							anno = $navstack.clone().append(
+										$("<div/>", {
+											"class" : "nav-8",
+											html : annData["text_type"] + " : " + annData["text_value"]
 										})
-											.append(
-													$("#lemma-annotation-source .value[data-target='" + $("#lemma-annotation-source select.types").val() + "']")
-													.clone()
-												)
-									)
-								).append($("<div />", {
-										"class" : "nav-4"
-									})
-									.append($("<button />", {
-											"class" : "nav-stack-input submit",
-											html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+									).append(
+										$("<div/>", {
+											"class" : "nav-4",
+											html : function() {
+												vote = annData["votes"];
+												if( vote > 0 ) {
+													return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+												} else {
+													return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+												}
+											}
 										})
-									)
-								);
-					console.log($("#lemma-annotation-source select.types").val());
-					annoContainer.find(".sidebar-category-content").append($annotation_form);
+									).addClass("annotation-vote");
+							annoContainer.find(".sidebar-category-content").append(anno);
+						});	
+
+						/*Adding new annotation form*/
+						$annotation_form = 
+							$navstack.
+								clone().
+								addClass("new-annotation").
+								attr("data-target", item["id_lemma"]).
+								attr("data-table", "lemma").
+								append(
+										$("<div />", {
+											"class" : "nav-4"
+										})
+										.append(
+											$("#lemma-annotation-source select.types").clone()
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<div />", {
+												"class" : "target-type"
+											})
+												.append(
+														$("#lemma-annotation-source .value[data-target='" + $("#lemma-annotation-source select.types").val() + "']")
+														.clone()
+													)
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<button />", {
+												"class" : "nav-stack-input submit",
+												html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+											})
+										)
+									);
+						annoContainer.find(".sidebar-category-content").append($annotation_form);
 
 
-					$("#lemma-sidebar").find(".append-in").append(lemma);
-					$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
-					$("#lemma-sidebar").show();
-				}); //End each
-			}
-		});
+						$("#lemma-sidebar").find(".append-in").append(lemma);
+						$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
+						$("#lemma-sidebar").show();
+					}); //End each
+				}
+			});
+		} else {
+			$("#lemma-sidebar").show();
+		}
 	})
 
 	$("#sidebar").on("change", ".types", function(e) {
