@@ -1,10 +1,19 @@
-<form class="/annotations/" class="form form-horizontal" method="POST">
+<form action="/API/annotations/type" class="form form-horizontal" id="new-type" method="POST">
 	<h2>Add annotation type</h2>
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Name of the new type</label>
 		<div class="col-sm-10">
-			<input class="form-control" placeholder="New type legend" name="type_name" />
+			<input type="text" class="form-control" placeholder="New type legend" name="type_name" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Target of the new type</label>
+		<div class="col-sm-10">
+			<select name="target">
+				<option value="lemma">Lemma</option>
+				<option value="sentence">Sentence</option>
+			</select>
 		</div>
 	</div>
 	<div class="form-group">
@@ -16,7 +25,7 @@
 
 <hr />
 <h2>Annotations available</h2>
-<table class="table table-hover table-bordered">
+<table class="table table-hover table-bordered" id="annotations-list">
 	<thead>
 		<tr>
 			<th>Target of annotation</th>

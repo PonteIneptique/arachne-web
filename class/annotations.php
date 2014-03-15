@@ -213,7 +213,7 @@ class Annotations {
 		/**/
 	}
 
-	static function Type($name, $target) {
+	static function TypeExists($name, $target) {
 		$exec = array("name" => $name, "target" => $target);
 		$query = "
 			SELECT
@@ -235,8 +235,8 @@ class Annotations {
 
 	}
 
-	static function NewType($name, $target, $user) {
-		if(self::Type($name)) {
+	static function TypeNew($name, $target, $user) {
+		if(self::TypeExists($name, $target)) {
 			return false;
 		}
 		switch($target) {
@@ -264,7 +264,7 @@ class Annotations {
 		$query->execute($exec);
 
 		if($query->rowCount() == 1) {
-			return true;
+			return self::DB()->lastInsertId();
 		}
 		return false;
 

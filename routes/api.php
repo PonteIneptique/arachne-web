@@ -58,6 +58,21 @@
 	*/
 
 
+	$app->post("/API/annotations/type", function() use($app) {
+		$type = $app->request->post("type_name");
+		$target = $app->request->post("target");
+
+		if(!isset($_SESSION["user"]) || $type == "" || ($target != "sentence" && $target != "lemma")) {
+			return status("error");
+		}
+		$data = Annotations::TypeNew($type, $target, $_SESSION["user"]["id"]);
+		if($data != false) {
+			json(array("status" => "success", "newtype" => $data), "POST, OPTIONS");
+			return true;
+		}
+		return status("error");
+	});
+
 	$app->post("/API/annotations/:table/:id", function($table, $lemma) use($app) {
 		$type = $app->request->post("type");
 		$value = $app->request->post("value");
