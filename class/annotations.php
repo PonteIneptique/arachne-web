@@ -211,5 +211,62 @@ class Annotations {
 		return false;
 		/**/
 	}
+
+	static function Type($name, $target) {
+		$exec = array("name" => $name, "target" => $target);
+		$query = "
+			SELECT
+				id_annotation_type
+			FROM
+				annotation_type
+			WHERE
+				text_annotation_type = :name AND
+				target_annotation_type = :target
+			LIMIT 1
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		if($query->rowCount() == 1) {
+			return true;
+		}
+		return false;
+
+	}
+
+	static function NewType($name, $target, $user) {
+		if(self::Type($name)) {
+			return false;
+		}
+		switch($target) {
+			case "lemma":
+			case "sentence":
+				continue;
+				break;
+			default:
+				return false;
+		}
+		$exec = array("name" => $name, "target" => $target);
+		$query = "
+			INSERT INTO `clotho_web`.`annotation_type`
+				(`text_annotation_type`,
+				`legend_annotation_type`,
+				`target_annotation_type`)
+			VALUES
+			(
+				:name ,
+				:name ,
+				:target
+			);
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+
+		if($query->rowCount() == 1) {
+			return true;
+		}
+		return false;
+
+	}
 }
 ?>

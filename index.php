@@ -35,6 +35,7 @@
 	require_once("./routes/sentence.php");
 	require_once("./routes/oauth.php");
 	require_once("./routes/profile.php");
+	require_once("./routes/annotations.php");
 	
 
 	#Run
