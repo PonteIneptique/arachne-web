@@ -4,10 +4,9 @@ class Annotations {
 		global $DB;
 		return $DB;
 	}
-	static function Available($target = false, $format = false) {
+	static function Available($target = false, $format = false, $notnull = false) {
 		$exec= array();
 		$where = array();
-		$where[] = "at.id_annotation_type = av.id_annotation_type";
 		if(gettype ($target) == "string") {
 			$exec["target"] = $target;
 			$where[] = "at.target_annotation_type = :target";
@@ -20,10 +19,23 @@ class Annotations {
 			at.id_annotation_type as id_type,
 			at.target_annotation_type as target_type
 		FROM 
-			annotation_value av,
 			annotation_type at
-		WHERE
-			".implode(" AND ", $where)."
+		";
+		if($notnull == true) {
+			$query .= "LEFT JOIN annotation_value av ON (at.id_annotation_type = av.id_annotation_type)";
+		} else {
+			$query .= ", annotation_value av ";
+			$where[] .= " at.id_annotation_type = av.id_annotation_type ";
+		}
+		
+		if(count($where) > 0) {
+			$query .= "
+			WHERE
+				".implode(" AND ", $where)."
+			";
+		}
+		$query .=
+		"
 		ORDER BY
 			at.id_annotation_type
 		;";
@@ -44,7 +56,9 @@ class Annotations {
 				if(!isset($returned[$value["id_type"]])) {
 					$returned[$value["id_type"]] = array("id" => $value["id_type"], "target" => $value["target_type"], "text" => $value["text_type"], "options" => array());
 				}
-				$returned[$value["id_type"]]["options"][] = array("id" => $value["id_value"], "text" => $value["text_value"]);
+				if($value["id_value"] != null) {
+					$returned[$value["id_type"]]["options"][] = array("id" => $value["id_value"], "text" => $value["text_value"]);
+				}
 			}
 		}
 		return $returned;
