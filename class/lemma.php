@@ -194,33 +194,52 @@ class Lemma {
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		return $data;
 	}
-	static function All($lemma = false)  {
+	static function All($lemma = false, $form = false)  {
 		$exec= array();
+		$select = array("COUNT(lf.id_form) as forms", "COUNT(lf.id_sentence) as sentences");
 		$where = array("l.id_lemma = lf.id_lemma");
 		$table = array(
-				"lemma_has_form lf
-				LEFT OUTER JOIN form_vote fv ON (fv.id_lemma_has_form = lf.id_lemma_has_form)",
-				"lemma l");
+				"lemma l"
+				);
+		$groupby = "l.id_lemma";
+
+
+		$select[] = "COALESCE(value, 0) as votes";
+		$table[] = "lemma_has_form lf
+			 LEFT JOIN (SELECT 
+		        id_lemma_has_form, SUM(value) as value
+		    FROM
+		        form_vote
+		    GROUP BY id_lemma_has_form) fv ON (fv.id_lemma_has_form = lf.id_lemma_has_form)";
 
 		if($lemma) { 
 			$exec["idLemma"] = $lemma;
-			$where[] = "(lf.id_lemma = :idLemma OR lf.id_sentence = links.id_sentence)";
-			$table[] = "(SELECT id_sentence FROM lemma_has_form WHERE id_lemma = :idLemma) links";
+			if($form) {
+				$table[] = "form f";
+
+				$select[] = "f.text_form";
+
+				$where[] = "lf.id_lemma = :idLemma";
+				$where[] = "lf.id_form = f.id_form";
+
+				$groupby = "f.text_form , l.id_lemma";
+			} else {
+				$where[] = "(lf.id_lemma = :idLemma OR lf.id_sentence = links.id_sentence)";
+				$table[] = "(SELECT id_sentence FROM lemma_has_form WHERE id_lemma = :idLemma) links";
+			}
 		}
 
 		$query = "
 			SELECT
 				l.id_lemma,
 				l.text_lemma,
-				COUNT(lf.id_form) as sentences,
-				COUNT(lf.id_sentence) as forms,
-				COALESCE(SUM(fv.value), 0) as votes
+				".implode(", ", $select)."
 			FROM 
 				" . implode(" , ", $table) . "
 				
 			WHERE " . implode(" AND ", $where) . "			    
 			GROUP BY
-				l.id_lemma
+				".$groupby."
 		";
 		/*
 		*	Options
