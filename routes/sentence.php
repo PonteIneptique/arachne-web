@@ -10,7 +10,13 @@
 		$data["annotations"]["lemma"] =  Annotations::Available("lemma", $format = true);
 		$data["annotations"]["sentence"] =  Annotations::Available("sentence", $format = true);
 		$data["annotations"]["sentence-applied"] =  Annotations::Get("sentence", $id);
-		display("./pages/sentence.php", $data, $scripts = array("sentence"), $title = "Sentence " . $data["sentence"]["uid"]);
+
+		if(isset($_SESSION["user"])) {
+			$extrascripts = array("sentence-connected");
+		} else {
+			$extrascripts = array("sentence");
+		}
+		display("./pages/sentence.php", $data, $scripts = $extrascripts, $title = "Sentence " . $data["sentence"]["uid"]);
 	});
 
 	$app->get('/sentence/', function () use($app)  {

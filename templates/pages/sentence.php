@@ -11,10 +11,11 @@
 			</p>
 		</section>
 		<aside class="col-md-4" id="sidebar">
+			<?if(count($annotations["sentence-applied"]) > 0):?>
 			<div id="sentence-sidebar">
 				<div id="sentence-container" class="sidebar-category">
 					<div class="sidebar-category-title nav-stack nav-stack-black full">
-						Sentence Annotation
+						Sentence's Annotations
 					</div>
 					<div class="sidebar-category-content" style="display:block;">
 
@@ -36,6 +37,7 @@
 							<? endforeach; ?>
 						</div>
 
+						<?if(isset($_SESSION["user"])):?>
 						<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
 							<div class="nav-5">
 								<select class="types nav-stack-select">
@@ -60,10 +62,12 @@
 								</button>
 							</div>
 						</div>
+						<?endif;?>
 
 					</div>
 				</div>	
 			</div>
+			<?endif;?>
 			<div id="lemma-sidebar" style="display:none;">
 				<div id="forms-container" class="sidebar-category">
 					<div class="sidebar-category-title nav-stack nav-stack-black full">
@@ -71,6 +75,7 @@
 					<div id="forms-lemma" class="sidebar-category-content">
 						<div class="append-in">
 						</div>
+						<?if(isset($_SESSION["user"])):?>
 						<div class="nav-stack nav-stack-grey newlemma">
 							<div class="nav-6">
 								<input type="text" name="newlemma" placeholder="Text of new lemma" class="nav-stack-input" />
@@ -79,6 +84,7 @@
 								<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
 							</div>
 						</div>
+						<?endif;?>
 					</div>
 				</div>
 				<div class="annotations-containers">
@@ -89,6 +95,7 @@
 	</div>
 </article>
 
+<?if(isset($_SESSION["user"])):?>
 <div class="hidden" id="lemma-annotation-source">
 	<select class="types nav-stack-select">
 		<?foreach ($annotations["lemma"] as $key => $value):?>
@@ -113,3 +120,4 @@
 		</select>
 	<?endforeach;?>
 </div>
+<?endif;?>
