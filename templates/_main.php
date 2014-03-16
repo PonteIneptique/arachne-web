@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Lasciva Roma : A crowdsourcing project | <?=$title;?></title>
         <base href="http://<?=$_SERVER['HTTP_HOST']?>/"></base>
         <link rel="stylesheet" media="screen" href="./assets/css/bootstrap.css">
