@@ -26,42 +26,44 @@
 
 									<div class="nav-8"><?=$anno["text_type"];?> : <?=$anno["text_value"];?></div>
 									<div class="nav-4">
-										<a class="annotations-thumbs-up" data-target="<?=$anno["id_annotation"];?>" href="#">
+
+										<?if(isset($_SESSION["user"])) { $CL = "a";} else { $CL = "span"; } ?>
+										<<?=$CL;?> class="annotations-thumbs-up" data-target="<?=$anno["id_annotation"];?>" href="#">
 											<? if($anno["votes"] > 0 ) { echo $anno["votes"]; } else { echo "0"; } ?> <span class="glyphicon glyphicon-thumbs-up"></span>
-										</a> 
-										<a class="annotations-thumbs-down" data-target="<?=$anno["id_annotation"];?>" href="#">
+										</<?=$CL;?>> 
+										<<?=$CL;?> class="annotations-thumbs-down" data-target="<?=$anno["id_annotation"];?>" href="#">
 											<? if($anno["votes"] < 0 ) { echo $anno["votes"]; } else { echo "0"; }  ?> <span class="glyphicon glyphicon-thumbs-down"></span>
-										</a>
+										</<?=$CL;?>>
 									</div>
 								</div>
 							<? endforeach; ?>
 						</div>
 
 						<?if(isset($_SESSION["user"])):?>
-						<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
-							<div class="nav-5">
-								<select class="types nav-stack-select">
-									<?foreach ($annotations["sentence"] as $key => $value):?>
-										<? if (!isset($firstchild)) { $firstchild = $key; } ?>
-										<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
-									<?endforeach;?>
-								</select>
-							</div>
-							<div class="nav-5">
-								<div class="target-type">
-									<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
-										<?foreach ($annotations["sentence"][$firstchild]["options"] as $items):?>
-											<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
+							<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
+								<div class="nav-5">
+									<select class="types nav-stack-select">
+										<?foreach ($annotations["sentence"] as $key => $value):?>
+											<? if (!isset($firstchild)) { $firstchild = $key; } ?>
+											<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
 										<?endforeach;?>
 									</select>
 								</div>
+								<div class="nav-5">
+									<div class="target-type">
+										<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
+											<?foreach ($annotations["sentence"][$firstchild]["options"] as $items):?>
+												<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
+											<?endforeach;?>
+										</select>
+									</div>
+								</div>
+								<div class="nav-2">
+									<button class="nav-stack-input submit">
+										<span class="glyphicon glyphicon-plus-sign"></span>
+									</button>
+								</div>
 							</div>
-							<div class="nav-2">
-								<button class="nav-stack-input submit">
-									<span class="glyphicon glyphicon-plus-sign"></span>
-								</button>
-							</div>
-						</div>
 						<?endif;?>
 
 					</div>
@@ -76,14 +78,14 @@
 						<div class="append-in">
 						</div>
 						<?if(isset($_SESSION["user"])):?>
-						<div class="nav-stack nav-stack-grey newlemma">
-							<div class="nav-6">
-								<input type="text" name="newlemma" placeholder="Text of new lemma" class="nav-stack-input" />
+							<div class="nav-stack nav-stack-grey newlemma">
+								<div class="nav-6">
+									<input type="text" name="newlemma" placeholder="Text of new lemma" class="nav-stack-input" />
+								</div>
+								<div class="nav-6">
+									<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
+								</div>
 							</div>
-							<div class="nav-6">
-								<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
-							</div>
-						</div>
 						<?endif;?>
 					</div>
 				</div>

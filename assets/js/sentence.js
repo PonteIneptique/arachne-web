@@ -29,9 +29,9 @@ $(document).ready(function() {
 								html : function() {
 									vote = annData["votes"];
 									if( vote > 0 ) {
-										return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+										return '<span href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></span><span href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></span>';
 									} else {
-										return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+										return '<span href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></span><span href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></span>';
 									}
 								}
 							})
@@ -135,7 +135,7 @@ $(document).ready(function() {
 							$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
 
 						}
-						
+
 						$("#lemma-sidebar").find(".append-in").append(lemma);
 						$("#lemma-sidebar").show();
 					}); //End each
