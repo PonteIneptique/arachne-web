@@ -17,7 +17,7 @@
 			<tr>
 				<td><a href="/lemma/<?=$lem["id_lemma"];?>"><?=$lem["text_lemma"];?></a></td>
 				<td><?=$lem["votes"];?></td>
-				<td><?=$lem["votes"];?></td>
+				<td><?=$lem["annotations"];?></td>
 				<td><?=$lem["sentences"];?></td>
 				<td><?=$lem["forms"];?></td>
 			</tr>

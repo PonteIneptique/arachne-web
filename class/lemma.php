@@ -196,7 +196,7 @@ class Lemma {
 	}
 	static function All($lemma = false, $form = false)  {
 		$exec= array();
-		$select = array("COUNT(lf.id_form) as forms", "COUNT(lf.id_sentence) as sentences");
+		$select = array("COUNT(DISTINCT lf.id_form) as forms", "COUNT(DISTINCT lf.id_sentence) as sentences", "COUNT(DISTINCT a.id_annotation) as annotations");
 		$where = array("l.id_lemma = lf.id_lemma");
 		$table = array(
 				"lemma l"
@@ -205,12 +205,22 @@ class Lemma {
 
 
 		$select[] = "COALESCE(value, 0) as votes";
-		$table[] = "lemma_has_form lf
-			 LEFT JOIN (SELECT 
-		        id_lemma_has_form, SUM(value) as value
-		    FROM
-		        form_vote
-		    GROUP BY id_lemma_has_form) fv ON (fv.id_lemma_has_form = lf.id_lemma_has_form)";
+		$table[] = "
+			lemma_has_form lf
+			LEFT JOIN 
+				(
+					SELECT 
+						id_lemma_has_form, SUM(value) as value
+				    FROM
+						form_vote
+				GROUP BY id_lemma_has_form
+				) fv 
+				ON (fv.id_lemma_has_form = lf.id_lemma_has_form)
+
+			LEFT JOIN 
+				annotation a 
+				ON (a.id_target_annotation = lf.id_lemma AND a.table_target_annotation = 'lemma')
+		";
 
 		if($lemma) { 
 			$exec["idLemma"] = $lemma;
