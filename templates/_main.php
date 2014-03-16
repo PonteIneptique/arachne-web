@@ -21,6 +21,7 @@
 							<li><a href="/annotations">Annotations</a></li>
 							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>
+							<li><a href="/sentence/<?=rand(0,200)?>">Start annotating !</a></li>
 						</ul>
 					</div>
 				</div>
