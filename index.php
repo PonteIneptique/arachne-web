@@ -21,6 +21,7 @@
 	#Requires class
 	require_once("./display.php");
 	
+	require_once("./class/gamification.php");
 	require_once("./class/logs.php");
 	require_once("./class/lemma.php");
 	require_once("./class/forms.php");

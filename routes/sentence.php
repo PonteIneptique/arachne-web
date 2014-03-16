@@ -11,8 +11,15 @@
 		$data["annotations"]["sentence"] =  Annotations::Available("sentence", $format = true);
 		$data["annotations"]["sentence-applied"] =  Annotations::Get("sentence", $id);
 
+
+
 		if(isset($_SESSION["user"])) {
-			$extrascripts = array("sentence-connected");
+
+			$options = Logs::Related("id_sentence", $id);
+			$options[]=  array("table" => "sentence", "target" => $id);
+			$data["logs"] = Logs::Count($options, $_SESSION["user"]["id"]);
+
+			$extrascripts = array("sentence-connected", "knob");
 		} else {
 			$extrascripts = array("sentence");
 		}

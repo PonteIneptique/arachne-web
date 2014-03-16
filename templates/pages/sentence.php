@@ -1,100 +1,119 @@
 <article>
-	<div class="row">
-		<section class="col-md-8">
+	<section class="col-md-8">
 		<header>
 			<h2 class="sentence-book"><?=$sentence["metadata"]["dc:Title"]?></h2>
 			<h3 class="sentence-author"><?=$sentence["metadata"]["dc:Creator"]?></h3>
 			<a href="http://www.perseus.tufts.edu/hopper/text?doc=<?=$sentence["document"];?>" target="_blank" class="sentence-link">See on Perseus</a>
 		</header>
-			<p class="sentence-text" data-id="<?=$sentence["uid"];?>">
-				<?=$sentence["processed"];?>
-			</p>
-		</section>
-		<aside class="col-md-4" id="sidebar">
-			<?if(count($annotations["sentence-applied"]) > 0 || isset($_SESSION["user"])):?>
-			<div id="sentence-sidebar">
-				<div id="sentence-container" class="sidebar-category">
-					<div class="sidebar-category-title nav-stack nav-stack-black full">
-						Sentence's Annotations
-					</div>
-					<div class="sidebar-category-content" style="display:block;">
+		<p class="sentence-text" data-id="<?=$sentence["uid"];?>">
+			<?=$sentence["processed"];?>
+		</p>
 
-						<div class="annotations-container">
-							<? foreach ($annotations["sentence-applied"] as &$anno): ?>
-							
-								<div class="nav-stack nav-stack-grey annotation-vote">
+		<?if(isset($_SESSION["user"])):?>
+			<hr />
+			<div class="gamification">
+				<table>
+					<tr>
+						<td valign="middle">
+							<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$logs["user"]?>" data-max="<?=$logs["total"]?>" data-readOnly="true">
+						</td>
+						<td valign="middle" style="text-indent:10px;">
+							actions made by you here !
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
+					</tr>
+				</table>
+			</div>
+		<?endif;?>
 
-									<div class="nav-8"><?=$anno["text_type"];?> : <?=$anno["text_value"];?></div>
-									<div class="nav-4">
+	</section>
+	<aside class="col-md-4" id="sidebar">
+		<?if(count($annotations["sentence-applied"]) > 0 || isset($_SESSION["user"])):?>
+		<div id="sentence-sidebar">
+			<div id="sentence-container" class="sidebar-category">
+				<div class="sidebar-category-title nav-stack nav-stack-black full">
+					Sentence's Annotations
+				</div>
+				<div class="sidebar-category-content" style="display:block;">
 
-										<?if(isset($_SESSION["user"])) { $CL = "a";} else { $CL = "span"; } ?>
-										<<?=$CL;?> class="annotations-thumbs-up" data-target="<?=$anno["id_annotation"];?>" href="#">
-											<? if($anno["votes"] > 0 ) { echo $anno["votes"]; } else { echo "0"; } ?> <span class="glyphicon glyphicon-thumbs-up"></span>
-										</<?=$CL;?>> 
-										<<?=$CL;?> class="annotations-thumbs-down" data-target="<?=$anno["id_annotation"];?>" href="#">
-											<? if($anno["votes"] < 0 ) { echo $anno["votes"]; } else { echo "0"; }  ?> <span class="glyphicon glyphicon-thumbs-down"></span>
-										</<?=$CL;?>>
-									</div>
+					<div class="annotations-container">
+						<? foreach ($annotations["sentence-applied"] as &$anno): ?>
+						
+							<div class="nav-stack nav-stack-grey annotation-vote">
+
+								<div class="nav-8"><?=$anno["text_type"];?> : <?=$anno["text_value"];?></div>
+								<div class="nav-4">
+
+									<?if(isset($_SESSION["user"])) { $CL = "a";} else { $CL = "span"; } ?>
+									<<?=$CL;?> class="annotations-thumbs-up" data-target="<?=$anno["id_annotation"];?>" href="#">
+										<? if($anno["votes"] > 0 ) { echo $anno["votes"]; } else { echo "0"; } ?> <span class="glyphicon glyphicon-thumbs-up"></span>
+									</<?=$CL;?>> 
+									<<?=$CL;?> class="annotations-thumbs-down" data-target="<?=$anno["id_annotation"];?>" href="#">
+										<? if($anno["votes"] < 0 ) { echo $anno["votes"]; } else { echo "0"; }  ?> <span class="glyphicon glyphicon-thumbs-down"></span>
+									</<?=$CL;?>>
 								</div>
-							<? endforeach; ?>
-						</div>
+							</div>
+						<? endforeach; ?>
+					</div>
 
-						<?if(isset($_SESSION["user"])):?>
-							<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
-								<div class="nav-5">
-									<select class="types nav-stack-select">
-										<?foreach ($annotations["sentence"] as $key => $value):?>
-											<? if (!isset($firstchild)) { $firstchild = $key; } ?>
-											<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
+					<?if(isset($_SESSION["user"])):?>
+						<div class="nav-stack nav-stack-grey new-annotation" data-table="sentence" data-target="<?=$sentence["uid"];?>">
+							<div class="nav-5">
+								<select class="types nav-stack-select">
+									<?foreach ($annotations["sentence"] as $key => $value):?>
+										<? if (!isset($firstchild)) { $firstchild = $key; } ?>
+										<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
+									<?endforeach;?>
+								</select>
+							</div>
+							<div class="nav-5">
+								<div class="target-type">
+									<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
+										<?foreach ($annotations["sentence"][$firstchild]["options"] as $items):?>
+											<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
 										<?endforeach;?>
 									</select>
 								</div>
-								<div class="nav-5">
-									<div class="target-type">
-										<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
-											<?foreach ($annotations["sentence"][$firstchild]["options"] as $items):?>
-												<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
-											<?endforeach;?>
-										</select>
-									</div>
-								</div>
-								<div class="nav-2">
-									<button class="nav-stack-input submit">
-										<span class="glyphicon glyphicon-plus-sign"></span>
-									</button>
-								</div>
 							</div>
-						<?endif;?>
-
-					</div>
-				</div>	
-			</div>
-			<?endif;?>
-			<div id="lemma-sidebar" style="display:none;">
-				<div id="forms-container" class="sidebar-category">
-					<div class="sidebar-category-title nav-stack nav-stack-black full">
-					</div>
-					<div id="forms-lemma" class="sidebar-category-content">
-						<div class="append-in">
+							<div class="nav-2">
+								<button class="nav-stack-input submit">
+									<span class="glyphicon glyphicon-plus-sign"></span>
+								</button>
+							</div>
 						</div>
-						<?if(isset($_SESSION["user"])):?>
-							<div class="nav-stack nav-stack-grey newlemma">
-								<div class="nav-6">
-									<input type="text" name="newlemma" placeholder="Text of new lemma" class="nav-stack-input" />
-								</div>
-								<div class="nav-6">
-									<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
-								</div>
-							</div>
-						<?endif;?>
-					</div>
+					<?endif;?>
+
 				</div>
-				<div class="annotations-containers">
-					
+			</div>	
+		</div>
+		<?endif;?>
+		<div id="lemma-sidebar" style="display:none;">
+			<div id="forms-container" class="sidebar-category">
+				<div class="sidebar-category-title nav-stack nav-stack-black full">
+				</div>
+				<div id="forms-lemma" class="sidebar-category-content">
+					<div class="append-in">
+					</div>
+					<?if(isset($_SESSION["user"])):?>
+						<div class="nav-stack nav-stack-grey newlemma">
+							<div class="nav-6">
+								<input type="text" name="newlemma" placeholder="Text of new lemma" class="nav-stack-input" />
+							</div>
+							<div class="nav-6">
+								<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
+							</div>
+						</div>
+					<?endif;?>
 				</div>
 			</div>
-		</aside>
-	</div>
+			<div class="annotations-containers">
+				
+			</div>
+		</div>
+	</aside>
 </article>
 
 <?if(isset($_SESSION["user"])):?>

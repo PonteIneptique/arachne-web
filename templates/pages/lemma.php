@@ -2,6 +2,28 @@
 	<article class="col-md-6" data-target="<?=$lemma["uid"]?>" id="lemma">
 		<div  style="padding:10px;">
 			<h1><?=$lemma["lemma"]?></h1>
+
+
+			<?if(isset($_SESSION["user"])):?>
+				<hr />
+				<div class="gamification">
+					<table>
+						<tr>
+							<td valign="middle">
+								<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$logs["user"]?>" data-max="<?=$logs["total"]?>" data-readOnly="true">
+							</td>
+							<td valign="middle" style="text-indent:10px;">
+								actions made by you here !
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
+						</tr>
+					</table>
+				</div>
+			<?endif;?>
+			
 			<h2>Annotation</h2>
 
 			<? foreach ($annotations as &$anno): ?>
