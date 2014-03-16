@@ -140,6 +140,7 @@ class Forms {
 					id_form_vote = :id_form_vote
 				LIMIT 1
 			";
+			$upd = 1;
 		} else {
 			$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $user, "value" => $value);
 			$query = "
@@ -155,14 +156,12 @@ class Forms {
 				:value
 				)
 			";
+			$upd = 0;
 		}
 		$query = self::DB()->prepare($query);
 		 $query->execute($exec);
 		if($query->rowCount() == 1) {
-			Logs::Save("lemma_has_form", $id_lemma_has_form, "vote", $_SESSION["user"]["id"]);
-			return true;
-		} elseif ($query->rowCount() == 2) {
-			Logs::Save("lemma_has_form", $id_lemma_has_form, "vote", $_SESSION["user"]["id"]);
+			Logs::Save("lemma_has_form", $id_lemma_has_form, "vote", $_SESSION["user"]["id"], $upd);
 			return true;
 		} else {
 			return false;

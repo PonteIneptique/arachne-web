@@ -39,13 +39,19 @@
 
 		}
 
-		public static function Save($table, $target, $action, $user) {
+		public static function Save($table, $target, $action, $user, $update = 0, $secondary = false) {
+			if($secondary == false) {
+				$secondary = time();
+			}
+
 			$exec = array(
 				"table" => $table,
 				"target" => $target,
 				"user" => $user,
 				"time" => time(),
-				"action" => $action
+				"action" => $action,
+				"secondary" => $secondary,
+				"update" => $update
 			);
 
 			$query = "
@@ -55,6 +61,8 @@
 			`target_log`,
 			`time_log`,
 			`action_log`,
+			`secondary_log`,
+			`update_log`,
 			`id_user`
 			)
 			VALUES
@@ -63,6 +71,8 @@
 				:target,
 				:time,
 				:action,
+				:secondary,
+				:update,
 				:user
 			);
 			";
@@ -149,11 +159,12 @@
 
 			$exec = $data[0];
 			$where = array($data[1]);
+			$where[] = " update_log = 0 ";
 
 			if($user == false) {
 				$query = "
 					SELECT
-						COUNT(DISTINCT id_user, target_log, action_log, table_log)
+						COUNT(DISTINCT id_user, target_log, action_log, table_log, secondary_log)
 					FROM
 						log
 					WHERE
@@ -164,14 +175,14 @@
 				$exec["user"] = $user;
 				$query = "
 					SELECT
-						total.count as total,
-						u.count as user,
-						MAX(maxi.count) as max
+						COALESCE(total.count, 100) as total,
+						COALESCE(u.count, 0) as user,
+						COALESCE(MAX(maxi.count), 100) as max
 					FROM
 
 						(
 						SELECT
-							COUNT(DISTINCT id_user, target_log, action_log, table_log) as count
+							COUNT(DISTINCT id_user, action_log, target_log, table_log, secondary_log) as count
 						FROM
 							log
 						WHERE
@@ -180,7 +191,7 @@
 
 						(
 						SELECT
-							COUNT(DISTINCT target_log, action_log, table_log) as count
+							COUNT(DISTINCT target_log, action_log, table_log, secondary_log) as count
 						FROM
 							log
 						WHERE
@@ -194,7 +205,7 @@
 				$query .= "
 						(
 						SELECT
-							COUNT(DISTINCT target_log, action_log, table_log) as count
+							COUNT(DISTINCT target_log, action_log, table_log, secondary_log) as count
 						FROM
 							log
 						WHERE
@@ -206,7 +217,7 @@
 
 			$query = self::DB()->prepare($query);
 			$query->execute($exec);
-			return $query->fetchAll(PDO::FETCH_ASSOC);
+			return $query->fetch(PDO::FETCH_ASSOC);
 
 		}
 	}

@@ -165,6 +165,7 @@ class Annotations {
 					id_annotation_vote = :id_vote
 				LIMIT 1
 			";
+			$upd = 1;
 		} else {
 			$exec = array("target" => $target, "user" => $user, "vote" => $vote);
 			$query = "
@@ -182,15 +183,13 @@ class Annotations {
 					:vote
 				)
 			";
+			$upd = 0;
 		}
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		$rows = $query->rowCount();
 		if($rows == 1) {
-			Logs::Save($targetInfo["table_target"], $targetInfo["id_target"], "vote", $user);
-			return true;
-		} elseif($rows == 2) {
-			Logs::Save($targetInfo["table_target"], $targetInfo["id_target"], "vote", $user);
+			Logs::Save($targetInfo["table_target"], $targetInfo["id_target"], "vote", $user, $upd , $target);
 			return true;
 		} else {
 			return false;
@@ -248,8 +247,8 @@ class Annotations {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		if($query->rowCount() == 1) {
-
-			Logs::Save($target, $id, "annotation", $user);
+			$secondary = self::DB()->lastInsertId();
+			Logs::Save($target, $id, "annotation", $user, 0, $secondary);
 			return true;
 		}
 		return false;
@@ -308,7 +307,7 @@ class Annotations {
 
 		if($query->rowCount() == 1) {
 			$id = self::DB()->lastInsertId();
-			Logs::Save("annotation_type", $id, "new", $user);
+			Logs::Save("annotation_type", $id, "new", $user, 0);
 			return $id;
 		}
 		return false;
@@ -363,7 +362,7 @@ class Annotations {
 
 		if($query->rowCount() == 1) {
 			$id = self::DB()->lastInsertId();
-			Logs::Save("annotation_value", $id, "new", $user);
+			Logs::Save("annotation_value", $id, "new", $user, 0, $type);
 			return $id;
 		}
 		return false;
