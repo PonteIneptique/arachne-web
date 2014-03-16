@@ -19,7 +19,11 @@ class Lemma {
 		");
 		try {
 			$query->execute(array($val));
-			return self::DB()->lastInsertId();
+			$id = self::DB()->lastInsertId();
+
+			Logs::Save("lemma", $id, "new", $_SESSION["user"]["id"]);
+
+			return $id;
 		} catch (Exception $e) {
 			return false;
 		}

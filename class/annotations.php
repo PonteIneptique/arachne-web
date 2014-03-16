@@ -129,8 +129,31 @@ class Annotations {
 		}
 	}
 
+	static function Single($target) {
+		$exec = array($target);
+		$query = "
+			SELECT
+				table_target_annotation as table_target,
+				id_target_annotation as id_target
+			FROM
+				annotation
+			WHERE 
+				id_annotation = ?
+			LIMIT 1
+
+		";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+
+		return $data;
+
+	}
+
 	static function Vote($target, $user, $vote) {
 		$id_vote = self::VoteExists($target, $user);
+		$targetInfo = self::Single($target);
+
 		if($id_vote) {
 			$exec = array("id_vote" => $id_vote, "vote" => $vote);
 			$query = "
@@ -163,7 +186,11 @@ class Annotations {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		$rows = $query->rowCount();
-		if($rows == 1 || $rows == 2) {
+		if($rows == 1) {
+			Logs::Save($targetInfo["table_target"], $targetInfo["id_target"], "vote", $user);
+			return true;
+		} elseif($rows == 2) {
+			Logs::Save($targetInfo["table_target"], $targetInfo["id_target"], "vote", $user);
 			return true;
 		} else {
 			return false;
@@ -201,7 +228,7 @@ class Annotations {
 		}
 		$exec= array("table" => $target, "id" => $id, "type" => $type, "value" => $value, "user" => $user);
 		$query = "
-			INSERT INTO `clotho_web`.`annotation`
+			INSERT INTO `annotation`
 			(
 				`id_annotation_type`,
 				`id_annotation_value`,
@@ -221,6 +248,8 @@ class Annotations {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 		if($query->rowCount() == 1) {
+
+			Logs::Save($target, $id, "annotation", $user);
 			return true;
 		}
 		return false;
@@ -263,7 +292,7 @@ class Annotations {
 		}
 		$exec = array("name" => $name, "target" => $target);
 		$query = "
-			INSERT INTO `clotho_web`.`annotation_type`
+			INSERT INTO `annotation_type`
 				(`text_annotation_type`,
 				`legend_annotation_type`,
 				`target_annotation_type`)
@@ -278,7 +307,9 @@ class Annotations {
 		$query->execute($exec);
 
 		if($query->rowCount() == 1) {
-			return self::DB()->lastInsertId();
+			$id = self::DB()->lastInsertId();
+			Logs::Save("annotation_type", $id, "new", $user);
+			return $id;
 		}
 		return false;
 
@@ -331,7 +362,9 @@ class Annotations {
 		$query->execute($exec);
 
 		if($query->rowCount() == 1) {
-			return self::DB()->lastInsertId();
+			$id = self::DB()->lastInsertId();
+			Logs::Save("annotation_value", $id, "new", $user);
+			return $id;
 		}
 		return false;
 

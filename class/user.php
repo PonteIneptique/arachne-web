@@ -29,7 +29,11 @@
 			$req->execute(array($post["mail"], $pw));
 			
 			if($req->rowCount() == 1) {
-				return array("signin" => true, "data" => $req->fetch(PDO::FETCH_ASSOC));
+				$data = $req->fetch(PDO::FETCH_ASSOC);
+
+				Logs::Save("user", $data["UID"], "login", $data["UID"]);
+
+				return array("signin" => true, "data" => $data);
 			} else {
 				return array("signin" => false, "error" => array("signin" => array("message" => "Account not recognized.")));
 			}
@@ -81,6 +85,8 @@
 
 			if($id == true) {
 				$uid = self::DB()->lastInsertId();
+				
+				Logs::Save("user", $uid, "signup", $uid);
 				$_SESSION["user"] = array("id" => $uid, "name" => $post["name"], "mail" => $post["mail"]);
 				return array("status" => "success", "uid" => $uid);
 			}
@@ -110,6 +116,7 @@
 			if($req->rowCount() >= 1) {
 				$d = $req->fetch(PDO::FETCH_ASSOC);
 				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				Logs::Save("user", $d["UID"], "login", $d["UID"]);
 				return array("signin" => true, "data" => $d);
 			} else {
 				$sign = self::signup(array("mail" => $data["email"], "name" => $data["name"], "password" => time()), true);

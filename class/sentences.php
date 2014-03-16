@@ -177,6 +177,10 @@ class Sentence {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 
-		return array("lemma" => $id_lemma, "form" => $id_form, "sentence" => $sentence, "id_lemma_has_form" => self::DB()->lastInsertId());
+
+ 		$id = self::DB()->lastInsertId();
+		Logs::Save("lemma_has_form", $id, "new", $_SESSION["user"]["id"]);
+
+		return array("lemma" => $id_lemma, "form" => $id_form, "sentence" => $sentence, "id_lemma_has_form" => $id);
 	}
 }

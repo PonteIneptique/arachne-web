@@ -1,6 +1,21 @@
 <?php
 
+	/*
+	*
+	*
+	*	Logs TEST
+	*
+	*
+	*/
 
+	$app->get("/API/logs/sentence/:idSentence", function($idSentence) use ($app) {
+
+		$options = Logs::Related("id_sentence", $idSentence);
+		$options[]=  array("table" => "sentence", "target" => $idSentence);
+
+		$data = Logs::Count($options, $_SESSION["user"]["id"]);
+		json($data, $methods = "POST, OPTIONS");
+	});
 
 	/*
 	*

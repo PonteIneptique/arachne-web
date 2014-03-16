@@ -19,7 +19,12 @@ class Forms {
 		");
 		try {
 			$query->execute(array($val));
-			return self::DB()->lastInsertId();
+			$id = self::DB()->lastInsertId();
+
+			Logs::Save("form", $id, "new", $_SESSION["user"]["id"]);
+
+
+			return $id;
 		} catch (Exception $e) {
 			return false;
 		}
@@ -153,7 +158,11 @@ class Forms {
 		}
 		$query = self::DB()->prepare($query);
 		 $query->execute($exec);
-		if($query->rowCount() == 1 || $query->rowCount() == 2) {
+		if($query->rowCount() == 1) {
+			Logs::Save("lemma_has_form", $id_lemma_has_form, "vote", $_SESSION["user"]["id"]);
+			return true;
+		} elseif ($query->rowCount() == 2) {
+			Logs::Save("lemma_has_form", $id_lemma_has_form, "vote", $_SESSION["user"]["id"]);
 			return true;
 		} else {
 			return false;

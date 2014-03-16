@@ -11,7 +11,7 @@
 			</p>
 		</section>
 		<aside class="col-md-4" id="sidebar">
-			<?if(count($annotations["sentence-applied"]) > 0):?>
+			<?if(count($annotations["sentence-applied"]) > 0 || isset($_SESSION["user"])):?>
 			<div id="sentence-sidebar">
 				<div id="sentence-container" class="sidebar-category">
 					<div class="sidebar-category-title nav-stack nav-stack-black full">
