@@ -129,7 +129,7 @@ class Forms {
 	static function Vote($id_lemma_has_form, $value, $user = 0) {
 		$id_form_vote = self::VoteExists($id_lemma_has_form, $user);
 		if($id_form_vote != false) {
-			$exec= array("id_form_vote" => $id_form_vote, "id_user" => $user, "value" => $value);
+			$exec= array("id_form_vote" => $id_form_vote, "id_user" => $_SESSION["user"]["id"], "value" => $value);
 			$query = "
 				UPDATE
 					form_vote
@@ -142,7 +142,7 @@ class Forms {
 			";
 			$upd = 1;
 		} else {
-			$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $user, "value" => $value);
+			$exec= array("id_lemma_has_form" => $id_lemma_has_form, "id_user" => $_SESSION["user"]["id"], "value" => $value);
 			$query = "
 				INSERT INTO `form_vote`
 				(
