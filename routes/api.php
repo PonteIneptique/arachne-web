@@ -158,11 +158,24 @@
 
 	$app->post('/API/sentence/lemma', function () use($app)  {
 		$data = array();
+
+		//Getting request params
 		$req = $app->request();
+		$lemma = $req->post("lemma");
+		$form = $req->post("form");
+		$sentence = $req->post("sentence");
+
+		//Checking them
+		if(!isset($_SESSION["user"]) || $lemma === "" || $form === "" || $sentence === "") {
+			return status("error");
+		}
 		$data["status"] = "success";
-		$data["results"] = Sentence::NewForm($req->post("lemma"),$req->post("form"),$req->post("sentence"));
-		if($data["results"] == false) { $data["status"] = "error"; }
-		$data["parameters"] = array("lemma" => $req->post("lemma"),"sentence" => $req->post("sentence"),"form" => $req->post("form"));
+		$data["results"] = Sentence::NewForm($lemma, $form, $sentence);
+
+		if($data["results"] == false) { 
+			return status("error");
+		}
+		$data["parameters"] = array("lemma" => $lemma,"sentence" => $sentence,"form" => $form);
 		
 		json($data, $methods = "OPTIONS, POST");
 	});
