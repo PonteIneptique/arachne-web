@@ -10,7 +10,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="image-container"><img src="/assets/images/badges/<?=Gamification::Image($logs["user"], $logs["total"], $logs["max"]);?>" alt="" /></td>
+			<td class="image-container"><?=Gamification::Image($logs["user"], $logs["total"], $logs["max"]);?></td>
 			<td style="text-indent:10px;"><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
 		</tr>
 	</table>

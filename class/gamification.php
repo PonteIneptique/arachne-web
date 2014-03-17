@@ -18,7 +18,7 @@
 		}
 		public static function Image($user, $total, $max) {
 			$rank = self::Rank($user, $total, $max);
-			return strtolower($rank).".png";
+			return '<img src="/assets/images/badges/'.strtolower($rank).'.png" alt="'.$rank.'" />';
 		}
 		public static function Message($user, $total, $max) {
 			$rank = self::Rank($user, $total, $max);
