@@ -124,7 +124,8 @@
 					$req = self::DB()->prepare("INSERT INTO user_oauth VALUES (NULL, ?, ?, ?)");
 					$req->execute(array($sign["uid"], $provider, $data["uid"]));
 					$_SESSION["user"] = array("id" => $sign["uid"], "name" => $data["name"], "mail" => $data["email"]);
-					return array("signin" => true, "data" => array("UID" => $sign, "Name" => $data["name"], "Mail" => $data["email"]));
+
+					return array("signin" => true, "data" => array("UID" => $sign["uid"], "Name" => $data["name"], "Mail" => $data["email"]));
 				} else {
 					return array("signin" => false, "status" => "error", "message" => $sign["message"]);
 				
