@@ -131,6 +131,16 @@
 				//Option has array("table" => table, "target" => target)
 				$ex = "table" . $key;
 				switch($option["table"]) {
+					case "notuser":
+						$string = "(table_log != 'user' )";
+
+						if($option["target"] != false) {
+							$exec[$ex] = $option["target"];
+							$string .= "AND id_user = :table" . $key . " ";
+						}
+
+						$where[] = $string;
+						break;
 					case "lemma_has_form":
 						$exec[$ex] = $option["target"];
 						$where[] = "(table_log = 'lemma_has_form' AND target_log = :table" . $key . " )";
@@ -214,7 +224,7 @@
 					
 				";
 			}
-
+			
 			$query = self::DB()->prepare($query);
 			$query->execute($exec);
 			return $query->fetch(PDO::FETCH_ASSOC);

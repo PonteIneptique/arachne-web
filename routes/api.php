@@ -8,6 +8,16 @@
 	*
 	*/
 
+
+	$app->get("/API/logs/user", function() use ($app) {
+
+		$options = array();
+		$options[] = array("table" => "notuser", "target" => false);
+
+		$data = Logs::Count($options, $_SESSION["user"]["id"]);
+		json($data, $methods = "POST, OPTIONS");
+	});
+
 	$app->get("/API/logs/sentence/:idSentence", function($idSentence) use ($app) {
 
 		$options = Logs::Related("id_sentence", $idSentence);

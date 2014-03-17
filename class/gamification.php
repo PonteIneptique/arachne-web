@@ -36,7 +36,7 @@
 
 			} elseif ($rank == "Citizen"){
 
-				return "You are a Citizen here here !  Let's try to work enough to be a Rhetor";
+				return "You are a Citizen here !  Let's try to work enough to be a Rhetor";
 
 			} else {
 

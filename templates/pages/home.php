@@ -1,3 +1,24 @@
+<?if(isset($_SESSION["user"])):?>
+<div class="gamification">
+	<table>
+		<tr>
+			<td valign="middle">
+				<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$logs["user"]?>" data-max="<?=$logs["total"]?>" data-readOnly="true">
+			</td>
+			<td valign="middle" style="text-indent:10px;">
+				actions made by you here !
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
+		</tr>
+	</table>
+</div>
+<hr />
+<?endif;?>
+
+
 <h1>Welcome to Lasciva Roma</h1>
 
 <h2>What is Lasciva Roma ?</h2>
