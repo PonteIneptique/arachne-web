@@ -13,8 +13,12 @@
 			} elseif ($user > 0){
 				return "Citizen";
 			} else {
-				return "Slave";
+				return "Student";
 			}
+		}
+		public static function Image($user, $total, $max) {
+			$rank = self::Rank($user, $total, $max);
+			return strtolower($rank).".png";
 		}
 		public static function Message($user, $total, $max) {
 			$rank = self::Rank($user, $total, $max);
@@ -40,7 +44,7 @@
 
 			} else {
 
-				return "You are only a slave here. Maybe we should do something about that... Like a vote or an annotation ?";
+				return "You are only a student here. Maybe we should do something about that... Like a vote or an annotation ?";
 
 			}
 		}

@@ -2,7 +2,7 @@
 <div class="gamification">
 	<table>
 		<tr>
-			<td valign="middle">
+			<td valign="middle" class="image-container">
 				<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$logs["user"]?>" data-max="<?=$logs["total"]?>" data-readOnly="true">
 			</td>
 			<td valign="middle" style="text-indent:10px;">
@@ -10,8 +10,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
+			<td class="image-container"><img src="/assets/images/badges/<?=Gamification::Image($logs["user"], $logs["total"], $logs["max"]);?>" alt="" /></td>
+			<td style="text-indent:10px;"><?=Gamification::Message($logs["user"], $logs["total"], $logs["max"]);?></td>
 		</tr>
 	</table>
 </div>
