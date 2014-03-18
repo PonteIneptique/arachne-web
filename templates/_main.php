@@ -18,15 +18,6 @@
 					
 					<div class="col-md-9">
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
-							<li><a href="/sentence/<?=Sentence::Random();?>">
-								<?if(isset($_SESSION["user"])):?>
-									Start annotating !</a></li>
-									<li>
-									<a href="/sentence/last">Last sentence
-								<?else:?>
-									Random sentence
-								<?endif;?>
-							</a></li>
 							<li><a href="/annotations">Annotations</a></li>
 							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>
@@ -51,8 +42,11 @@
 						</div>
 						<div class="badges">
 							<?if(isset($_SESSION["user"])):?>
-								<table class="gamification">
+								<table class="gamification pull-right">
 									<tr>
+										<td valign="middle" style="color:white;">
+											Your Stats
+										</td>
 										<td valign="middle" class="image-container">
 											<a class="image-container"><?=$_SESSION["user"]["game"]["image"];?></a>
 										</td>
@@ -61,9 +55,22 @@
 										</td>
 									</tr>
 								</table>
-
-							</span>
 							<?endif;?>
+							<table class="gamification">
+								<tr>
+									<td valign="middle" style="color:white;">
+										Shortcuts
+									</td>
+									<td valign="middle" class="image-container">
+										<a class="image-container" href="/sentence/<?=Sentence::Random();?>" title="Random sentence"><img src="/assets/images/random.png" alt="Random sentence" /></a>
+									</td>
+									<?if(isset($_SESSION["user"])):?>
+									<td valign="middle" class="image-container">
+										<a class="image-container" href="/sentence/last" title="Last sentence"><img src="/assets/images/last.png" alt="Last sentence" /></a>
+									</td>
+									<?endif;?>
+								</tr>
+							</table>
 							<!--<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
 							-->
 						</div>

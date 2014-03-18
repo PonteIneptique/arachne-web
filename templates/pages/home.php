@@ -1,5 +1,19 @@
 <h1>Welcome to Lasciva Roma</h1>
 
+
+<div class="text-center">
+	<?if(isset($_SESSION["user"])):?>
+	<a class="btn btn-success" href="/sentence/<?=Sentence::Random();?>" >
+		Start annotating
+	</a>
+	<?else:?>
+	<a class="btn btn-success" href="/account/login" >
+		Sign-up or login before starting contributing
+	</a>
+	<?endif;?>
+</div>
+
+
 <h2>What is Lasciva Roma ?</h2>
 <p>This whole project aims to annotate the Latin lexical field of sexuality. One of the problems we have doing that in onomastic is our unability to have a wider point of view, this tries to fill the hole.</p>
 

@@ -412,12 +412,12 @@ body > .container {
 @media (min-width: 992px) {
   #page-title .badges {
     float: left;
-    width: 66.66666666666666%;
+    width: 75%;
   }
 }
 @media (min-width: 992px) {
   #page-title .badges {
-    right: 33.33333333333333%;
+    right: 25%;
   }
 }
 #page-title .badges table.gamification {
@@ -436,12 +436,12 @@ body > .container {
 @media (min-width: 992px) {
   #page-title .account {
     float: left;
-    width: 33.33333333333333%;
+    width: 25%;
   }
 }
 @media (min-width: 992px) {
   #page-title .account {
-    left: 66.66666666666666%;
+    left: 75%;
   }
 }
 #page-title .login-link {
