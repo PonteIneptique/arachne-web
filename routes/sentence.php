@@ -2,6 +2,16 @@
 	
 	#DONE
 	$app->get('/sentence/:id', function ($id) use($app)  {
+		if(!is_numeric($id)) {
+			if($id == "last") {
+				$id = Logs::LastSentence();
+				if($id === false ) {
+					$id = Sentence::Random();
+				}
+			} else {
+				$id = Sentence::Random();
+			}
+		}
 		$data = array();
 		$data["sentence"] = Sentence::Get($id);
 		$data["sentence"]["metadata"] = Sentence::Metadata($data["sentence"]["document"]);

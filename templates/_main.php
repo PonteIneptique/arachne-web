@@ -62,7 +62,7 @@
 										Shortcuts
 									</td>
 									<td valign="middle" class="image-container">
-										<a class="image-container" href="/sentence/<?=Sentence::Random();?>" title="Random sentence"><img src="/assets/images/random.png" alt="Random sentence" /></a>
+										<a class="image-container" href="/sentence/random" title="Random sentence"><img src="/assets/images/random.png" alt="Random sentence" /></a>
 									</td>
 									<?if(isset($_SESSION["user"])):?>
 									<td valign="middle" class="image-container">

@@ -16,6 +16,45 @@
 		}
 
 
+		public static function LastSentence() {
+			$exec = array($_SESSION["user"]["id"]);
+			$query = "
+			SELECT 
+				table_log, target_log
+			FROM
+				log
+			WHERE 
+				id_user = ? AND
+				(table_log = 'lemma_has_form' OR table_log = 'sentence')	
+			ORDER BY time_log DESC
+			LIMIT 1
+			";
+			$query = self::DB()->prepare($query);
+			$query->execute($exec);
+			if($query->rowCount() == 1) {
+				$data = $query->fetch(PDO::FETCH_ASSOC);
+				if($data["table_log"] == "sentence") {
+					return $data["target_log"];
+				} else {
+					$exec = array($data["target_log"]);
+					$query = "
+						SELECT
+							id_sentence
+						FROM
+							lemma_has_form
+						WHERE 
+							id_lemma_has_form = ?
+						LIMIT 1
+					";
+					$query->execute($exec);
+					$data = $query->fetch(PDO::FETCH_ASSOC);
+					return $data["id_sentence"];
+				}
+			}
+			return false;
+
+		}
+
 		public static function Related($field, $value) {
 			$returned = array();
 			$exec = array($value);
