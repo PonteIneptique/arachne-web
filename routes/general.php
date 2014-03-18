@@ -3,12 +3,7 @@
 		$data = array();
 		
 		if(isset($_SESSION["user"])) {
-
-			$options = array();
-			$options[] = array("table" => "notuser", "target" => false);
-
-			$data["logs"] = Logs::Count($options, $_SESSION["user"]["id"]);
-			$extrascripts = array("home", "knob");
+			$extrascripts = array();
 		} else {
 			$extrascripts = array();
 		}

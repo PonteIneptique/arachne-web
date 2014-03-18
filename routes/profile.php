@@ -56,7 +56,7 @@
 			
 			if($data["signin"] == true) {
 				$d = $data["data"];				
-				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"], "game" => User::rank($d["UID"]));
 				display("pages/home.php", $data, array(), "Home");
 			} else {
 				display("pages/login.php", $data, array(), "login");

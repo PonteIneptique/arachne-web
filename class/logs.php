@@ -79,6 +79,10 @@
 
 			$query = self::DB()->prepare($query);
 			$query->execute($exec);
+
+			if($table != "user" && isset($_SESSION["user"])) {
+				$_SESSION["user"]["game"] = User::Rank();
+			}
 		}
 
 		public static function Get($table, $target, $user = false, $max = false) {

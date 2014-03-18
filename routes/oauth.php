@@ -14,7 +14,7 @@
 		if(isset($data["Location"])) {
 			if($data["signin"] == true) {
 				$d = $data["data"];
-				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"], "game" => User::rank($d["UID"]));
 				$app->redirect($data["Location"]);
 			} else {
 				display("pages/login.php", array("status" => "error", "message" => $data["message"]));

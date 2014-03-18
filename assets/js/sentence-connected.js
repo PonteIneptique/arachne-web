@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-	$(".dial").knob();
-
 	$('a.sentence-lemma').
 	on("click", function(e) { 
 		e.preventDefault();

@@ -1,7 +1,7 @@
 <?php
 	class Gamification {
 
-		private static function Rank($user, $total, $max) {
+		public static function Rank($user, $total, $max) {
 			if ((($user == $max) || ($user > 0.9*$total)) && ($user > 5)){
 				return "Consul";
 			} elseif (($user > 0.75*$total) && ($total > 5)){
@@ -18,7 +18,7 @@
 		}
 		public static function Image($user, $total, $max) {
 			$rank = self::Rank($user, $total, $max);
-			return '<img src="/assets/images/badges/'.strtolower($rank).'.png" alt="'.$rank.'" />';
+			return '<img src="/assets/images/badges/'.strtolower($rank).'.png" title="'.$rank.'" alt="'.$rank.'" />';
 		}
 		public static function Message($user, $total, $max) {
 			$rank = self::Rank($user, $total, $max);

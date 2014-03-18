@@ -20,7 +20,9 @@
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
 							<li><a href="/sentence/<?=Sentence::Random();?>">
 								<?if(isset($_SESSION["user"])):?>
-									Start annotating !
+									Start annotating !</a></li>
+									<li>
+									<a href="/sentence/last">Last sentence
 								<?else:?>
 									Random sentence
 								<?endif;?>
@@ -33,21 +35,37 @@
 				</div>
 
 			</div>
-			<div id="page-title" style="background-color:#360f4f;">
+			<div id="page-title">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-4 col-md-push-8 text-right">
+						<div class="account">
 							<?if(isset($_SESSION["user"])):?>
 								<div class="login-link">
-									<a href="/account/profile"><?=$_SESSION["user"]["name"]?></a>
+									<a href="/account/profile">Profile</a>
+									<a href="/history">History</a>
 									<a href="/account/signout">Sign out</a>
 								</div>
 							<?else:?>
 								<a href="/account/login" class="login-link">Login</a>
 							<?endif;?>
 						</div>
-						<div class="col-md-8 col-md-pull-4">
-							<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
+						<div class="badges">
+							<?if(isset($_SESSION["user"])):?>
+								<table class="gamification">
+									<tr>
+										<td valign="middle" class="image-container">
+											<a class="image-container"><?=$_SESSION["user"]["game"]["image"];?></a>
+										</td>
+										<td valign="middle" class="image-container">
+											<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$_SESSION["actions"]["user"];?>" data-max="<?=$_SESSION["actions"]["total"]?>" data-readOnly="true">
+										</td>
+									</tr>
+								</table>
+
+							</span>
+							<?endif;?>
+							<!--<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
+							-->
 						</div>
 					</div>
 				</div>
@@ -63,6 +81,8 @@
 
         <script src="./assets/js/jquery.min.js" type="text/javascript"></script>
         <script src="./assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="./assets/js/home.js" type="text/javascript"></script>
+        <script src="./assets/js/knob.js" type="text/javascript"></script>
         <?foreach($scripts as $script):?>
         	<script src="./assets/js/<?=$script;?>.js" type="text/javascript"></script>
         <?endforeach;?>
