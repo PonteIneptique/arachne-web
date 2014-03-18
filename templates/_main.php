@@ -18,7 +18,13 @@
 					
 					<div class="col-md-9">
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
-							<li><a href="/sentence/<?=rand(0,200)?>">Start annotating !</a></li>
+							<li><a href="/sentence/<?=Sentence::Random();?>">
+								<?if(isset($_SESSION["user"])):?>
+									Start annotating !
+								<?else:?>
+									Random sentence
+								<?endif;?>
+							</a></li>
 							<li><a href="/annotations">Annotations</a></li>
 							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>

@@ -5,6 +5,21 @@ class Sentence {
 		return $DB;
 	}
 
+	static function Random() {
+		$exec = array();
+		$query = "
+			SELECT 
+				s.id_sentence
+			FROM 
+				sentence s
+			ORDER BY RAND()
+			LIMIT 1";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+		return $data["id_sentence"];
+	}
+
 	static function Get($id = false) {
 		$exec = array();
 		$query = "
