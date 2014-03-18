@@ -46,6 +46,7 @@
 							id_lemma_has_form = ?
 						LIMIT 1
 					";
+					$query = self::DB()->prepare($query);
 					$query->execute($exec);
 					$data = $query->fetch(PDO::FETCH_ASSOC);
 					return $data["id_sentence"];
