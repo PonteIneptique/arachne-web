@@ -22,6 +22,19 @@
 		 * @param $post["mail"]			Mail identifier
 		 * @return Status
 		 */
+
+		static function rank($user = false) {
+			if($user == false) { $user = $_SESSION["user"]["id"]; }
+			$options = array();
+			$options[] = array("table" => "notuser", "target" => false);
+			$_SESSION["actions"] = Logs::Count($options, $user);
+			return array(
+					"rank" => Gamification::Rank($_SESSION["actions"]["user"], $_SESSION["actions"]["total"], $_SESSION["actions"]["max"]),
+					"image" => Gamification::Image($_SESSION["actions"]["user"], $_SESSION["actions"]["total"], $_SESSION["actions"]["max"]),
+					"message" => Gamification::Message($_SESSION["actions"]["user"], $_SESSION["actions"]["total"], $_SESSION["actions"]["max"])
+				);
+		}
+
 		static function login($post) {
 			$pw = hash('sha256', $post["password"]);
 
@@ -29,7 +42,11 @@
 			$req->execute(array($post["mail"], $pw));
 			
 			if($req->rowCount() == 1) {
-				return array("signin" => true, "data" => $req->fetch(PDO::FETCH_ASSOC));
+				$data = $req->fetch(PDO::FETCH_ASSOC);
+
+				Logs::Save("user", $data["UID"], "login", $data["UID"]);
+
+				return array("signin" => true, "data" => $data);
 			} else {
 				return array("signin" => false, "error" => array("signin" => array("message" => "Account not recognized.")));
 			}
@@ -81,6 +98,8 @@
 
 			if($id == true) {
 				$uid = self::DB()->lastInsertId();
+				
+				Logs::Save("user", $uid, "signup", $uid);
 				$_SESSION["user"] = array("id" => $uid, "name" => $post["name"], "mail" => $post["mail"]);
 				return array("status" => "success", "uid" => $uid);
 			}
@@ -109,15 +128,17 @@
 			$req->execute(array($provider, $data["uid"]));
 			if($req->rowCount() >= 1) {
 				$d = $req->fetch(PDO::FETCH_ASSOC);
-				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				//$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"], "game" => self::rank($d["UID"]));
+				Logs::Save("user", $d["UID"], "login", $d["UID"]);
 				return array("signin" => true, "data" => $d);
 			} else {
 				$sign = self::signup(array("mail" => $data["email"], "name" => $data["name"], "password" => time()), true);
 				if($sign["status"] == "success") {
 					$req = self::DB()->prepare("INSERT INTO user_oauth VALUES (NULL, ?, ?, ?)");
 					$req->execute(array($sign["uid"], $provider, $data["uid"]));
-					$_SESSION["user"] = array("id" => $sign["uid"], "name" => $data["name"], "mail" => $data["email"]);
-					return array("signin" => true, "data" => array("UID" => $sign, "Name" => $data["name"], "Mail" => $data["email"]));
+					//$_SESSION["user"] = array("id" => $sign["uid"], "name" => $data["name"], "mail" => $data["email"], "game" => self::rank($sign["uid"]));
+
+					return array("signin" => true, "data" => array("UID" => $sign["uid"], "Name" => $data["name"], "Mail" => $data["email"]));
 				} else {
 					return array("signin" => false, "status" => "error", "message" => $sign["message"]);
 				

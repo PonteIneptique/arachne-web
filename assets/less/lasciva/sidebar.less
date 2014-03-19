@@ -1,0 +1,69 @@
+#sidebar {
+	border-radius:0;
+	padding:4px;
+
+	/* Sidebars */
+
+	.sidebar-category {
+		border-top:1px solid white;
+		&:first-child {
+			border-top:0px solid white;
+		}
+
+
+
+		.sidebar-category-title {
+			background-color:@ehri-darkest-grey;
+			color:white;
+			font-size:1.2em;
+			font-variant:small-caps;
+			border-radius:0;
+			text-align:center;
+			text-decoration:none;
+			&:hover {
+				text-decoration:none;
+			}
+		}
+		
+		.sidebar-category-content {
+			/* ??? */
+			display:none;
+		}
+		#forms-lemma {
+			display:block;
+		}
+	}
+
+/*
+	.sidebar-category-form {
+		&.popover-category-lemmas {
+			display:block;
+		}
+	}
+*/
+	/* Votes and anchors */
+
+	.annotation-vote {
+		text-align:center;
+		a, a:hover, a:focus, a:visited {
+			color:white;
+			
+		}
+	}
+
+	a.lemma {
+		color:white;
+	}
+	a.thumbs-up, a.thumbs-down, a.annotations-thumbs-up,  a.annotations-thumbs-down {
+		display:inline!important;
+		&:after {
+			content : " ";
+		}
+	}
+	.active {
+		a.lemma {
+			text-decoration:underline;
+			font-weight:bold;
+		}
+	}
+}

@@ -1,16 +1,24 @@
 <?php
-	$app->get('/account/profile', function () {
-		display("./pages/login.php", array());
-	});
+
+	if(isset($_SESSION["user"])) {
+		$app->get('/account/profile', function () {
+			display("./pages/login.php", array());
+		});
+	
+		$app->get('/account/history', function () {
+			display("./pages/history.php", array("history" => Logs::History()), array(), $title = "History");
+		});
+
+		$app->get('/account/signout', function () use ($app) { 
+			unset($_SESSION["user"]);
+			session_destroy();
+			display("pages/home.php", array());
+		} );
+	}
+
 	$app->get('/account/login', function () {
 		display("./pages/login.php", array(), array(), $title = "Login");
 	});
-
-	$app->get('/account/signout', function () use ($app) { 
-		unset($_SESSION["user"]);
-		session_destroy();
-		display("pages/home.php", array());
-	} );
 
 	$app->post('/account/signup', function () use ($app) {
 		$input = $app->request->post();
@@ -55,8 +63,9 @@
 			$data = User::login($input);
 			
 			if($data["signin"] == true) {
-				$d = $data["data"];				
-				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"]);
+				$d = $data["data"];
+				$_SESSION["user"] = array("id" => $d["UID"], "name" => $d["Name"], "mail" => $d["Mail"], "game" => User::rank($d["UID"]));
+
 				display("pages/home.php", $data, array(), "Home");
 			} else {
 				display("pages/login.php", $data, array(), "login");

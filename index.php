@@ -20,11 +20,14 @@
 	
 	#Requires class
 	require_once("./display.php");
-	require_once("./class/elements.php");
+	
+	require_once("./class/gamification.php");
+	require_once("./class/logs.php");
 	require_once("./class/lemma.php");
 	require_once("./class/forms.php");
 	require_once("./class/sentences.php");
 	require_once("./class/user.php");
+	require_once("./class/annotations.php");
 	
 	require_once("./routes/general.php");
 	require_once("./routes/lemma.php");
@@ -33,6 +36,7 @@
 	require_once("./routes/sentence.php");
 	require_once("./routes/oauth.php");
 	require_once("./routes/profile.php");
+	require_once("./routes/annotations.php");
 	
 
 	#Run

@@ -5,6 +5,21 @@ class Sentence {
 		return $DB;
 	}
 
+	static function Random() {
+		$exec = array();
+		$query = "
+			SELECT 
+				s.id_sentence
+			FROM 
+				sentence s
+			ORDER BY RAND()
+			LIMIT 1";
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+		return $data["id_sentence"];
+	}
+
 	static function Get($id = false) {
 		$exec = array();
 		$query = "
@@ -78,6 +93,7 @@ class Sentence {
             SELECT
 				l.id_lemma,
 				l.text_lemma,
+				lf.id_lemma_has_form,
 				COALESCE(SUM(fv.value), 0) as votes
 			FROM
 				lemma l,
@@ -176,6 +192,10 @@ class Sentence {
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 
-		return array("lemma" => $id_lemma, "form" => $id_form, "sentence" => $sentence, "id_lemma_has_form" => self::DB()->lastInsertId());
+
+ 		$id = self::DB()->lastInsertId();
+		Logs::Save("lemma_has_form", $id, "new", $_SESSION["user"]["id"]);
+
+		return array("lemma" => $id_lemma, "form" => $id_form, "sentence" => $sentence, "id_lemma_has_form" => $id);
 	}
 }
