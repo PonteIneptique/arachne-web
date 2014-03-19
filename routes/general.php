@@ -10,6 +10,11 @@
 
 		display("./pages/home.php", $data, $extrascripts);
 	});
+	$app->get('/about', function () use($app)  {
+		$data = array();
+
+		display("./pages/about.php", $data);
+	});
 
 	$app->notFound(function () use ($app) {
 		display("./pages/home.php");

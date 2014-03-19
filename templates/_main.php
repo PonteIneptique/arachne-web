@@ -21,6 +21,7 @@
 							<li><a href="/annotations">Annotations</a></li>
 							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>
+							<li><a href="/about">About</a></li>
 						</ul>
 					</div>
 				</div>
