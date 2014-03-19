@@ -56,6 +56,41 @@
 
 		}
 
+		public static function History($user = false) {
+			if($user == false) {
+				$user = $_SESSION["user"]["id"];
+			}
+			$exec = array($user);
+			$query = "
+			SELECT 
+			    l.time_log,
+			    l.action_log,
+			    l.table_log,
+			    COALESCE(lf.id_lemma, le.id_lemma) as id_lemma,
+			    le.text_lemma,
+			    COALESCE(lf.id_sentence, s.id_sentence) as id_sentence,
+			    s.text_sentence
+			FROM 
+			    log l
+			    LEFT JOIN lemma_has_form lf ON (l.target_log = lf.id_lemma_has_form AND table_log='lemma_has_form')
+			    LEFT JOIN lemma le ON ((le.id_lemma = l.target_log AND l.table_log = 'lemma') OR (lf.id_lemma = le.id_lemma AND l.table_log = 'lemma_has_form'))
+			    LEFT JOIN sentence s ON ((s.id_sentence = l.target_log AND table_log = 'sentence') OR (lf.id_sentence = s.id_sentence AND table_log='lemma_has_form'))
+			WHERE
+			    l.table_log != 'user'
+			    AND l.id_user = ?
+			GROUP BY
+			    time_log
+			ORDER BY time_log DESC, action_log ASC
+			LIMIT 30";
+
+			$query = self::DB()->prepare($query);
+			$query->execute($exec);
+
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+
+
+		}
+
 		public static function Related($field, $value) {
 			$returned = array();
 			$exec = array($value);

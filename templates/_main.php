@@ -33,7 +33,7 @@
 							<?if(isset($_SESSION["user"])):?>
 								<div class="login-link">
 									<a href="/account/profile">Profile</a>
-									<a href="/history">History</a>
+									<a href="/account/history">History</a>
 									<a href="/account/signout">Sign out</a>
 								</div>
 							<?else:?>

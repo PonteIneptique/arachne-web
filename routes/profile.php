@@ -1,16 +1,24 @@
 <?php
-	$app->get('/account/profile', function () {
-		display("./pages/login.php", array());
-	});
+
+	if(isset($_SESSION["user"])) {
+		$app->get('/account/profile', function () {
+			display("./pages/login.php", array());
+		});
+	
+		$app->get('/account/history', function () {
+			display("./pages/history.php", array("history" => Logs::History()), array(), $title = "History");
+		});
+
+		$app->get('/account/signout', function () use ($app) { 
+			unset($_SESSION["user"]);
+			session_destroy();
+			display("pages/home.php", array());
+		} );
+	}
+
 	$app->get('/account/login', function () {
 		display("./pages/login.php", array(), array(), $title = "Login");
 	});
-
-	$app->get('/account/signout', function () use ($app) { 
-		unset($_SESSION["user"]);
-		session_destroy();
-		display("pages/home.php", array());
-	} );
 
 	$app->post('/account/signup', function () use ($app) {
 		$input = $app->request->post();
