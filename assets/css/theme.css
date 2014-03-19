@@ -412,19 +412,13 @@ body > .container {
 @media (min-width: 992px) {
   #page-title .badges {
     float: left;
-    width: 75%;
+    width: 50%;
   }
 }
 @media (min-width: 992px) {
   #page-title .badges {
-    right: 25%;
+    right: 50%;
   }
-}
-#page-title .badges table.gamification {
-  height: 100%;
-}
-#page-title .badges table.gamification td {
-  padding-right: 5px;
 }
 #page-title .account {
   position: relative;
@@ -436,16 +430,43 @@ body > .container {
 @media (min-width: 992px) {
   #page-title .account {
     float: left;
-    width: 25%;
+    width: 50%;
   }
 }
 @media (min-width: 992px) {
   #page-title .account {
-    left: 75%;
+    left: 50%;
   }
 }
 #page-title .login-link {
   display: block;
+  color: white;
+  font-variant: small-caps;
+  font-weight: bold;
+  height: 60px;
+}
+#page-title .login-link table.gamification {
+  height: 100%;
+  margin-left: 30px;
+}
+#page-title .login-link table.gamification td {
+  padding-right: 5px;
+}
+#page-title .login-link > a {
+  line-height: 60px;
+  color: white;
+}
+#page-title .login-link > a:hover {
+  text-decoration: none;
+}
+#page-title .login-link > a:after {
+  content: " | ";
+}
+#page-title .login-link > a:last-child:after,
+#page-title .login-link > a:nth-child(3):after {
+  content: "" !important;
+}
+#page-title .badges > .shortcuts {
   color: white;
   font-variant: small-caps;
   font-weight: bold;
@@ -454,24 +475,24 @@ body > .container {
   line-height: 20px;
   margin-top: 20px;
 }
-#page-title .login-link a {
+#page-title .badges > .shortcuts > a {
   color: white;
 }
-#page-title .login-link a:hover {
+#page-title .badges > .shortcuts > a:hover {
   text-decoration: none;
 }
-#page-title .login-link a:after {
+#page-title .badges > .shortcuts > a:after {
   content: " | ";
 }
-#page-title .login-link a:last-child:after {
+#page-title .badges > .shortcuts > a:last-child:after {
   content: "" !important;
 }
 header#top {
-  padding-top: 30px;
+  padding-top: 5px;
   background-color: #333333;
 }
 header#top .top-menu {
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 header#top li {
   border-right: 0!important;
