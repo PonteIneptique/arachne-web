@@ -317,6 +317,26 @@ $(document).ready(function() {
 		});
 	});
 
+	$("#lemma-sidebar").on("click", ".new-relationship .submit", function(e) {
+		e.preventDefault();
+		parent = $(this).parents(".new-relationship");
+
+		target = parent.find(".lemma-query").val();
+		value = parent.find(".relationships").val();
+		source = $("a.sentence-lemma[data-active='1']").attr("data-link");
+
+		$.post("/API/relationship", {
+			"target" : target,
+			"val" : value,
+			"source" : source
+		}, function(data) {
+			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
+				a = $("a.sentence-lemma[data-active='1']");
+				a.trigger("click");
+			}
+		});
+	});
+
 
 
 

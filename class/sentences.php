@@ -66,7 +66,7 @@ class Sentence {
 		return $data;
 	}
 
-	static private function href($form, $id_form, $count, $query) {
+	static private function href($form, $id_form, $count, $query, $link) {
 		//Color switch
 		if($count == 0 || $count > 1) {
 			$class = "red";
@@ -78,7 +78,7 @@ class Sentence {
 			$class .= " query-lemma ";
 		}
 
-		$form = '<a href="#" title="' . $form . '" class="sentence-lemma ' . $class . '" data-id="' . $id_form . '">' . $form . '</a>';
+		$form = '<a href="#" title="' . $form . '" class="sentence-lemma ' . $class . '" data-id="' . $id_form . '" data-link="' . $link . '">' . $form . '</a>';
 		return $form;
 
 	}
@@ -88,7 +88,7 @@ class Sentence {
 
 		$sentence = preg_replace("(\\w+)", "<a class='sentence-lemma neutral' title='$0' data-id='0'>$0</a>", $sentence);
 		foreach($forms as $id => $form) {
-			$sentence = str_replace("<a class='sentence-lemma neutral' title='".$form["text_form"]."' data-id='0'>".$form["text_form"]."</a>", self::href($form["text_form"], $form["id_form"], $form["count_lemma"], $form["query_lemma"]), $sentence);
+			$sentence = str_replace("<a class='sentence-lemma neutral' title='".$form["text_form"]."' data-id='0'>".$form["text_form"]."</a>", self::href($form["text_form"], $form["id_form"], $form["count_lemma"], $form["query_lemma"], $form["id_lemma_has_form"]), $sentence);
 		}
 
 		return $sentence;

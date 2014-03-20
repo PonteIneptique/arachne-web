@@ -3,11 +3,45 @@
 	/*
 	*
 	*
+	*		Relationships
+	*
+	*/
+
+	$app->post("/API/relationship", function() use ($app) {
+
+		if(!isset($_SESSION["user"])) {
+			return status("error");
+		}
+
+		$req = $app->request();
+
+		if(!is_numeric($req->post("source"))) {
+			return status("error");
+		}
+		if(!is_numeric($req->post("val"))) {
+			return status("error");
+		}
+		if(!is_numeric($req->post("target"))) {
+			return status("error");
+		}
+
+
+		$data = Relationship::Insert($_SESSION["user"]["id"], $req->post("source"), $req->post("target"), $req->post("val"));
+		if($data == true) {
+			status("success", $methods = "POST, OPTIONS");
+		} else {
+			status("error", $methods = "POST, OPTIONS");
+		}
+	});
+
+	/*
+	*
+	*
 	*	Logs TEST
 	*
 	*
 	*/
-
+/*
 
 	$app->get("/API/logs/user", function() use ($app) {
 
@@ -26,6 +60,7 @@
 		$data = Logs::Count($options, $_SESSION["user"]["id"]);
 		json($data, $methods = "POST, OPTIONS");
 	});
+*/
 
 	/*
 	*
@@ -187,6 +222,7 @@
 		foreach($data as $key => &$value) {
 			$value["annotations"] = Annotations::Get("lemma", $value["id_lemma"]);
 			$value["context"] = Annotations::Get("lemma_has_form",  $value["id_lemma_has_form"]);
+			$value["relationships"] = Relationship::Get($value["id_lemma_has_form"]);
 		}
 		json($data,$methods = "OPTIONS, GET");
 	});
