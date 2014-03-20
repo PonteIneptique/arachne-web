@@ -18,11 +18,58 @@
 // --------------------------------------------------
 body {
 	background-color:@ehri-light-grey;
-	font-family:@ehri-font;
+	//font-family:@ehri-font;
+	font-family: 'Gafata', sans-serif;
+	#main {
+		.box-shadow(0px 6px 15px 0px rgba(50, 50, 50, 0.64));
+	}
+	&.home {
+		#main {
+			background-color:transparent;
+			.box-shadow(none);
+		}
+	}
 }
 
 body > .container {
 	background-color:@content-color;
+}
+#main {
+	margin-top:20px;
+	padding-bottom:10px;
+	margin-bottom:10px;
+
+	.background-like {
+		text-align:center;
+		display:block;
+		background-color:@ehri-light-grey;
+		padding:5px 0;
+		margin:0 -15px;
+		z-index:1;
+ 		position: relative;
+	}
+
+	.shadow-content {
+		display:block;
+		background-color:@content-color;
+		padding:5px 0;
+		margin:0 -15px;
+		.box-shadow(0px 6px 15px 0px rgba(50, 50, 50, 0.64));
+		position:relative;
+		z-index:2;
+
+		.img-circle {
+			height:150px;
+			width:150px;
+		}
+		.caption h3 {
+			text-align:center;
+			margin-top:0;
+		}
+		p {
+			padding:0 15px;
+		}
+	}
 }
 #page-title {
 	background-color:#360f4f;
@@ -53,7 +100,7 @@ body > .container {
 		font-variant: small-caps;
 		font-weight: bold;
 		height:60px;
-		> a {
+		& > a {
 		 	line-height:60px;
 		 	color:white;
 		 	&:hover {
@@ -69,6 +116,7 @@ body > .container {
 		 	}
 		 }
 	}
+
 	.badges > .shortcuts {
 		color:white; 
 		font-variant: small-caps;

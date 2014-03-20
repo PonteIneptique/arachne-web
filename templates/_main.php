@@ -3,11 +3,12 @@
     <head>
     	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Lasciva Roma : A crowdsourcing project | <?=$title;?></title>
-        <base href="http://<?=$_SERVER['HTTP_HOST']?>/"></base>
+        <base href="http://<?=$_SERVER['HTTP_HOST']?>/">
+        <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" media="screen" href="./assets/css/bootstrap.css">
         <link rel="stylesheet" media="screen" href="./assets/css/theme.css">
     </head>
-    <body>
+    <body class="<?=preg_replace('/\W+/','',strtolower(strip_tags($title)));;?>">
 		<header id="top">
 			<div class="container">
 				<div class="row top-menu">
@@ -64,14 +65,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
 		</header>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12" id="main">
-					<?=$content;?>
-				</div>
-			</div>
+		<div class="container" id="main">
+			<?=$content;?>
 		</div>
 
         <script src="./assets/js/jquery.min.js" type="text/javascript"></script>

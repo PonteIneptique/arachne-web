@@ -1,22 +1,31 @@
-<h1>Welcome to Lasciva Roma</h1>
+<h1 class="background-like"><img src="/assets/images/text-black.png" alt="Lasciva Roma" style="height:50px;" /></h1>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3" style="padding-top: 10px;">
+		<div class="shadow-content ">
+			<p class="text-center">
+				Find name of persons and places next to a member of the Latin semantic field of sexuality, annotate and lemmatize them, tell us about their relationship with this member.
+			</p>
 
 
-<div class="text-center">
-	<?if(isset($_SESSION["user"])):?>
-	<a  style="margin-top: 20px; margin-bottom: 20px;" class="btn btn-success" href="/sentence/<?=Sentence::Random();?>" >
-		Start annotating
-	</a>
-	<?else:?>
-	<a style="margin-top: 20px; margin-bottom: 20px;" class="btn btn-success" href="/account/login" >
-		Sign-up or login before starting contributing
-	</a>
-	<?endif;?>
+			<div class="text-center">
+				<?if(isset($_SESSION["user"])):?>
+				<a  style="margin-bottom: 10px;" class="btn btn-success" href="/sentence/<?=Sentence::Random();?>" >
+					Start annotating
+				</a>
+				<?else:?>
+				<a style="margin-bottom: 10px;" class="btn btn-success" href="/account/login" >
+					Sign-up or login before starting contributing
+				</a>
+				<?endif;?>
+			</div>
+		</div>
+	</div>
 </div>
 
+<div class="background-like">&nbsp;</div>
 
-<h2>What is Lasciva Roma ?</h2>
-<p>This whole project aims to annotate the Latin lexical field of sexuality. One of the problems we have doing that in onomastic is our unability to have a wider point of view, this tries to fill the hole.</p>
-
+<div class="shadow-content">
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="thumbnail" style="height:100%; border:0; margin:0 auto;">
@@ -49,7 +58,10 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-<div class="text-right">
-	<a href="/about" class="btn btn-warning">Learn more about the project</a>
+<div class="background-like" style="padding-top:20px; padding-bottom:20px;">
+	<div class="text-center">
+		<a href="/about" class="btn btn-warning">Learn more about the project</a>
+	</div>
 </div>

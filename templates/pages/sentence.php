@@ -1,7 +1,7 @@
 <article>
 	<section class="col-md-8">
 		<header>
-			<a class="pull-right" href="/sentence/<?=($sentence["uid"] + 1);?>"><span class="badge">Next Sentence</span>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			<a class="pull-right badge" href="/sentence/<?=($sentence["uid"] + 1);?>" style="margin-left:10px;"><span>Next Sentence</span></a>
 			<h2 class="sentence-book"><?=$sentence["metadata"]["dc:Title"]?></h2>
 			<h3 class="sentence-author"><?=$sentence["metadata"]["dc:Creator"]?></h3>
 			<a href="http://www.perseus.tufts.edu/hopper/text?doc=<?=$sentence["document"];?>" target="_blank" class="sentence-link">See on Perseus</a>
