@@ -96,69 +96,102 @@ $(document).ready(function() {
 						);
 						
 
-							annoContainer = $("<div />", {
-								"class" :"sidebar-category"
-							}).append($("<a />", {
-								"class" : "nav-stack nav-stack-black full sidebar-category-title",
-								"href" : "#",
-								"text" : 'Annotation for ' + item["text_lemma"]
-								})
-							);
-							
-							annoContainer.append($("<div />", { "class" : "sidebar-category-content" }));
-							$navstack = $("<div />", {
-								"class" : "nav-stack nav-stack-grey"
-							});
+						annoContainer = $("<div />", {
+							"class" :"sidebar-category"
+						}).append($("<a />", {
+							"class" : "nav-stack nav-stack-black full sidebar-category-title",
+							"href" : "#",
+							"text" : 'Annotation for ' + item["text_lemma"]
+							})
+						);
+						
+						annoContainer.append($("<div />", { "class" : "sidebar-category-content" }));
+						$navstack = $("<div />", {
+							"class" : "nav-stack nav-stack-grey"
+						});
 
 
-							if(typeof item["annotations"] !== "undefined" && item["annotations"].length > 0) {
-								$.each(item["annotations"], function(i, annData) {
-									anno = $navstack.clone().append(
-												$("<div/>", {
-													"class" : "nav-8",
-													html : annData["text_type"] + " : " + annData["text_value"]
-												})
-											).append(
-												$("<div/>", {
-													"class" : "nav-4",
-													html : function() {
-														vote = annData["votes"];
-														if( vote > 0 ) {
-															return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
-														} else {
-															return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
-														}
+						if(typeof item["annotations"] !== "undefined" && item["annotations"].length > 0) {
+							$.each(item["annotations"], function(i, annData) {
+								anno = $navstack.clone().append(
+											$("<div/>", {
+												"class" : "nav-8",
+												html : annData["text_type"] + " : " + annData["text_value"]
+											})
+										).append(
+											$("<div/>", {
+												"class" : "nav-4",
+												html : function() {
+													vote = annData["votes"];
+													if( vote > 0 ) {
+														return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-down"></span></a>';
+													} else {
+														return '<a href="#" class="annotations-thumbs-up" data-target="' + annData["id_annotation"] + '">0 <span class="glyphicon glyphicon-thumbs-up"></span></a><a href="#" class="annotations-thumbs-down" data-target="' + annData["id_annotation"] + '">' + vote + ' <span class="glyphicon glyphicon-thumbs-down"></span></a>';
 													}
-												})
-											).addClass("annotation-vote");
-									annoContainer.find(".sidebar-category-content").append(anno);
-								});	
-							}
+												}
+											})
+										).addClass("annotation-vote");
+								annoContainer.find(".sidebar-category-content").append(anno);
+							});	
+						}
 
-							/*Adding new annotation form*/
-							$annotation_form = 
+						/*Adding new annotation form*/
+						$annotation_form = 
+							$navstack.
+								clone().
+								addClass("new-annotation").
+								attr("data-target", item["id_lemma"]).
+								attr("data-table", "lemma").
+								append(
+										$("<div />", {
+											"class" : "nav-4"
+										})
+										.append(
+											$("#lemma-annotation-source select.types").clone()
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<div />", {
+												"class" : "target-type"
+											})
+												.append(
+														$("#lemma-annotation-source .value[data-target='" + $("#lemma-annotation-source select.types").val() + "']")
+														.clone()
+													)
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<button />", {
+												"class" : "nav-stack-input submit",
+												html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+											})
+										)
+									);
+						annoContainer.find(".sidebar-category-content").append($annotation_form);
+
+						if(!that.hasClass("query-lemma")) {
+							$relationship_form = 
 								$navstack.
 									clone().
-									addClass("new-annotation").
-									attr("data-target", item["id_lemma"]).
-									attr("data-table", "lemma").
+									addClass("new-relationship").
+									attr("data-source", item["id_lemma"]).
 									append(
 											$("<div />", {
 												"class" : "nav-4"
 											})
 											.append(
-												$("#lemma-annotation-source select.types").clone()
+												$("#lemma-annotation-source select.relationships").clone()
 											)
 										).append($("<div />", {
 												"class" : "nav-4"
 											})
 											.append($("<div />", {
 													"class" : "target-type"
-												})
-													.append(
-															$("#lemma-annotation-source .value[data-target='" + $("#lemma-annotation-source select.types").val() + "']")
-															.clone()
-														)
+												}).append(
+													$("#lemma-annotation-source select.lemma-query").clone()
+												)
 											)
 										).append($("<div />", {
 												"class" : "nav-4"
@@ -169,8 +202,9 @@ $(document).ready(function() {
 												})
 											)
 										);
-							annoContainer.find(".sidebar-category-content").append($annotation_form);
-							$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
+							annoContainer.find(".sidebar-category-content").append($relationship_form);
+						}
+						$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
 
 						$("#lemma-sidebar").find(".append-in").append(lemma);
 						$("#lemma-sidebar").show();
@@ -295,7 +329,7 @@ $(document).ready(function() {
 	*/
 	$("#sidebar").on("click", ".sidebar-category-title", function(e) {
 		e.preventDefault();
-		$(".sidebar-category-content").hide();
-		$(this).parents(".sidebar-category").find(".sidebar-category-content").show();
+		//$(".sidebar-category-content").hide();
+		$(this).parents(".sidebar-category").find(".sidebar-category-content").toggle();
 	});
 });

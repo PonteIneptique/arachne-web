@@ -119,24 +119,36 @@
 
 <?if(isset($_SESSION["user"])):?>
 <div class="hidden" id="lemma-annotation-source">
+	<select class="relationships nav-stack-select">
+		<option value="-1">Opposed to</option>
+		<option value="0">Neutral to</option>
+		<option value="1">Qualifying/ied by</option>
+	</select>
+	<select class="lemma-query nav-stack-select">
+		<?foreach ($forms as &$value):?>
+			<?if($value["query_lemma"] == 1):?>
+				<option value="<?=$value["id_lemma"];?>"><?=$value["text_form"];?></option>
+			<?endif;?>
+		<?endforeach;?>
+	</select>
 	<select class="types nav-stack-select">
-		<?foreach ($annotations["lemma"] as $key => $value):?>
+		<?foreach ($annotations["lemma"] as &$value):?>
 			<option value="<?=$value["id"];?>"><?=$value["text"];?></option>
 		<?endforeach;?>
 	</select>
 
-	<?foreach ($annotations["lemma"] as $value):?>
+	<?foreach ($annotations["lemma"] as &$value):?>
 		<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
-			<?foreach ($value["options"] as $items):?>
+			<?foreach ($value["options"] as &$items):?>
 				<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
 			<?endforeach;?>
 		</select>
 	<?endforeach;?>
 </div>
 <div class="hidden" id="sentence-annotation-source">
-	<?foreach ($annotations["sentence"] as $value):?>
+	<?foreach ($annotations["sentence"] as &$value):?>
 		<select class="value nav-stack-select" data-target="<?=$value["id"];?>">
-			<?foreach ($value["options"] as $items):?>
+			<?foreach ($value["options"] as &$items):?>
 				<option value="<?=$items["id"];?>"><?=$items["text"];?></option>
 			<?endforeach;?>
 		</select>

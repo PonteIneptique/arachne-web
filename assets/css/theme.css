@@ -295,7 +295,6 @@ hr {
 }
 #sidebar .sidebar-category .sidebar-category-content {
   /* ??? */
-  display: none;
 }
 #sidebar .sidebar-category #forms-lemma {
   display: block;
@@ -342,6 +341,10 @@ hr {
 }
 .sentence-lemma.neutral {
   color: black;
+}
+.sentence-lemma.query-lemma {
+  text-decoration: underline;
+  font-weight: bold;
 }
 .thumbs-up,
 .thumbs-down {
