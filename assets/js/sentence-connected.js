@@ -8,6 +8,45 @@ $(document).ready(function() {
 		$(this).trigger("json");
 	});
 
+	var $lemmaSearch = $("#lemmaSearch");
+	var $lemmaSearchBH = new Bloodhound(
+		{
+			datumTokenizer: function (d) {
+				return Bloodhound.tokenizers.whitespace(d);
+			},
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: 
+			{
+				url : "/API/lemma/?query=%QUERY",
+				filter : function(parsedResponse) {
+					var result = [];
+					if(typeof parsedResponse.length !== "undefined" && parsedResponse.length !== 0) {
+						for (var i=0; i<parsedResponse.length; i++) {
+							//Need to check if item not already in the db
+							result.push({
+								name: parsedResponse[i]["lemma"],
+								value: parsedResponse[i]["lemma"]
+							});
+						}
+					}
+					console.log(result);
+					return result;
+				}
+			}
+		});
+	$lemmaSearchBH.initialize();
+	var $lemmaSearchTemplate = Handlebars.compile('{{name}}');
+	$('#lemmaSearch').typeahead(
+		null,
+		{
+			name: "lemmaSearch",
+			source: $lemmaSearchBH.ttAdapter(),
+			templates: {
+				suggestion : $lemmaSearchTemplate
+			}
+		}
+	);
+
 	$("#sentence-sidebar").on("json", function() {
 		that = $(this);
 		annoContainer = that.find(".annotations-container");
@@ -260,7 +299,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		parent = $(this).parents(".newlemma");
 
-		lemma = parent.find("input[type='text']").val();
+		lemma = parent.find("#lemmaSearch").val();
 		sentence = $(".sentence-text").attr("data-id");
 		form = $("a.sentence-lemma[data-active='1']").text();
 

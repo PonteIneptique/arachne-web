@@ -29,7 +29,7 @@
 			$options[]=  array("table" => "sentence", "target" => $id);
 			$data["logs"] = Logs::Count($options, $_SESSION["user"]["id"]);
 
-			$extrascripts = array("sentence-connected", "knob");
+			$extrascripts = array("jquery.typeahead.bundle.min", "handlebars", "sentence-connected", "knob");
 		} else {
 			$extrascripts = array("sentence");
 		}

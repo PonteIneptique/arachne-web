@@ -157,7 +157,18 @@
 		if(strlen($query) > 0) {
 			$options["query"] = $query;
 		}
-		$data = Lemma::Get($options);
+		$data = Lemma::Get(false, $options);
+		json($data, $methods = "POST, GET, OPTIONS");
+	});
+
+	$app->get('/API/lemma/', function () use($app)  {
+
+		$query = $app->request->get("query");
+		$options = array("count" => false, "list" => true);
+		if(strlen($query) > 0) {
+			$options["query"] = $query;
+		}
+		$data = Lemma::Get(false, $options);
 		json($data, $methods = "POST, GET, OPTIONS");
 	});
 

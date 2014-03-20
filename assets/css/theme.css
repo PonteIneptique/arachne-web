@@ -395,6 +395,41 @@ h3 {
   width: 50px;
   height: 50px;
 }
+/*<-- Twitter typeahead */
+.twitter-typeahead {
+  display: block !important;
+}
+.tt-suggestions,
+.tt-dropdown-menu {
+  width: 100%;
+  z-index: 9000;
+}
+.tt-suggestions {
+  background-color: #FFFFFF;
+  color: black;
+  -webkit-box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  -moz-box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  box-sizing: border-box;
+  border: 1px solid #999999;
+}
+.tt-suggestion {
+  padding: 0;
+  margin: 0;
+  line-height: 20px;
+  height: 20px;
+  color: white!important;
+}
+.tt-suggestion:hover,
+.tt-suggestion:focus,
+.tt-cursor {
+  cursor: pointer;
+  background-color: #333333;
+}
+.tt-dropdown-menu {
+  box-sizing: border-box;
+}
+/*--> End Twitter typeahead */
 body {
   background-color: #ecedee;
   font-family: 'Gafata', sans-serif;
