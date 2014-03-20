@@ -5,7 +5,7 @@ class Relationship {
 		return $DB;
 	}
 
-	public function Get($source) {
+	public static function Get($source) {
 		if(!isset($_SESSION["user"])) {
 			return array();
 		}
@@ -21,7 +21,7 @@ class Relationship {
 		}
 		return array();
 	}
-	public function Exists($user, $source, $target) {
+	public static function Exists($user, $source, $target) {
 		$exec = array( $source, $target, $user);
 		$query = "SELECT id_relationship FROM relationship WHERE id_lemma_has_form = ? AND id_lemma = ? AND id_user = ? LIMIT 1";
 		
@@ -33,7 +33,7 @@ class Relationship {
 		}
 		return false;
 	}
-	public function Insert($user, $source, $target, $val){
+	public static function Insert($user, $source, $target, $val){
 		$id = self::Exists($user, $source, $target);
 		if(is_numeric($id)) {
 			return self::Update($id, $val, $source);
@@ -67,7 +67,7 @@ class Relationship {
 			return false;
 		}
 	}
-	public function Update($id, $val, $source){
+	public static function Update($id, $val, $source){
 		$exec = array($val, $id);
 		$query = "
 		UPDATE
