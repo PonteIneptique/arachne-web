@@ -434,56 +434,26 @@ h3 {
   box-sizing: border-box;
 }
 /*--> End Twitter typeahead */
-body {
-  background-color: #ecedee;
-  font-family: 'Gafata', sans-serif;
+header#top {
+  padding-top: 5px;
+  background-color: #333333;
 }
-body #main {
-  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
-  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+header#top .top-menu {
+  margin-bottom: 5px;
 }
-body.home #main {
-  background-color: transparent;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+header#top li {
+  border-right: 0!important;
 }
-body > .container {
-  background-color: #ffffff;
+header#top li a {
+  color: white;
+  text-decoration: none;
+  border-radius: 0;
 }
-#main {
-  margin-top: 20px;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+header#top li a:hover {
+  background-color: #333333;
 }
-#main .background-like {
-  text-align: center;
-  display: block;
-  background-color: #ecedee;
-  padding: 5px 0;
-  margin: 0 -15px;
-  z-index: 1;
-  position: relative;
-}
-#main .shadow-content {
-  display: block;
-  background-color: #ffffff;
-  padding: 5px 0;
-  margin: 0 -15px;
-  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
-  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
-  position: relative;
-  z-index: 2;
-}
-#main .shadow-content .img-circle {
-  height: 150px;
-  width: 150px;
-}
-#main .shadow-content .caption h3 {
-  text-align: center;
-  margin-top: 0;
-}
-#main .shadow-content p {
-  padding: 0 15px;
+header#top form {
+  margin-top: 40px;
 }
 #page-title {
   background-color: #360f4f;
@@ -573,24 +543,80 @@ body > .container {
 #page-title .badges > .shortcuts > a:last-child:after {
   content: "" !important;
 }
-header#top {
-  padding-top: 5px;
-  background-color: #333333;
+body {
+  background-color: #ecedee;
+  font-family: 'Gafata', sans-serif;
 }
-header#top .top-menu {
-  margin-bottom: 5px;
+body.lemma #main,
+body.sentences #main,
+body.profile #main,
+body.history #main,
+body.login #main {
+  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  background-color: #ffffff;
 }
-header#top li {
-  border-right: 0!important;
+body.home #main {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-header#top li a {
-  color: white;
-  text-decoration: none;
-  border-radius: 0;
+#main {
+  margin-top: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
-header#top li a:hover {
-  background-color: #333333;
+#main .background-like {
+  background-color: #ecedee;
+  padding: 5px 0;
+  z-index: 1;
+  position: relative;
 }
-header#top form {
-  margin-top: 40px;
+#main .background-like .help {
+  text-align: right;
+  color: #999999;
+  display: block;
+}
+#main .shadow-content {
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  position: relative;
+  z-index: 2;
+  padding-right: 15px;
+}
+#main .shadow-content.padding {
+  padding: 5px;
+}
+#main .shadow-content.help {
+  display: none;
+}
+#main .shadow-content.help h1 {
+  font-size: 17px;
+  margin: 0;
+}
+#main .shadow-content.help p {
+  margin: 0 5px 2px;
+}
+body.home #main .background-like {
+  text-align: center;
+  display: block;
+  margin: 0 -15px;
+}
+body.home #main .shadow-content {
+  display: block;
+  padding: 5px 0;
+  margin: 0 -15px;
+  padding: 5px;
+}
+body.home #main .shadow-content .img-circle {
+  height: 150px;
+  width: 150px;
+}
+body.home #main .shadow-content .caption h3 {
+  text-align: center;
+  margin-top: 0;
+}
+body.home #main .shadow-content p {
+  padding: 0 15px;
 }

@@ -74,6 +74,7 @@
         <script src="./assets/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="./assets/js/home.js" type="text/javascript"></script>
         <script src="./assets/js/knob.js" type="text/javascript"></script>
+        <script src="./assets/js/jquery.cookie.js" type="text/javascript"></script>
         <?foreach($scripts as $script):?>
         	<script src="./assets/js/<?=$script;?>.js" type="text/javascript"></script>
         <?endforeach;?>

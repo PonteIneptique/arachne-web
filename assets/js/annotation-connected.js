@@ -1,4 +1,18 @@
 $(document).ready(function() {
+	
+	$(".background-like .help").on("click", function(e) {
+		e.preventDefault();
+		$(".shadow-content.help").toggle();
+	});
+	if(typeof $.cookie('help-seen-annotation') === "undefined") {
+		$(".shadow-content.help").show();
+	}
+	$(".shadow-content.help .close").on("click", function(e) {
+		$.cookie('help-seen-annotation', true, { expires: 31 });
+		e.preventDefault();
+		$(this).parent().hide();
+	});
+
 	$("#annotations-list").on("submit", ".new-value", function(e) {
 		e.preventDefault();
 		form = $(this);

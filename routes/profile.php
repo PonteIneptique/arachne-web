@@ -2,7 +2,7 @@
 
 	if(isset($_SESSION["user"])) {
 		$app->get('/account/profile', function () {
-			display("./pages/login.php", array());
+			display("./pages/login.php", array(), array(), "Profile");
 		});
 	
 		$app->get('/account/history', function () {
@@ -12,7 +12,7 @@
 		$app->get('/account/signout', function () use ($app) { 
 			unset($_SESSION["user"]);
 			session_destroy();
-			display("pages/home.php", array());
+			display("pages/home.php", array(), array(), "Home");
 		} );
 	}
 

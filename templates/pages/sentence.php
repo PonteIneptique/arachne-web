@@ -1,4 +1,17 @@
-<article>
+<?if(isset($_SESSION["user"])):?>
+	<div class="shadow-content padding help">
+		<a href="#" class="close"><span class="glyphicon glyphicon-remove-sign"></span></a>
+		<h1>Help</h1>
+		<p><b>Bold and underlined</b> word are member of the semantic field of Sexuality</p>
+		<p><b>Colored word</b> are lemmatized. Words in red have more than one lemma, green have only one. Click on it to annotate it.</p>
+		<p>If a person or place name is in <b>black</b>, click on it and lemmatize it.</p>
+		<p>For each annotation and lemmatization, place your <b>vote</b> to tell if you think they are right or not by clicking <span class="glyphicon glyphicon-thumbs-up"></span> or <span class="glyphicon glyphicon-thumbs-down"></span></p>
+	</div>
+	<div class="background-like">
+		<a href="#" class="help">Help ?</a>
+	</div>
+<?endif;?>
+<article class="shadow-content">
 	<section class="col-md-8">
 		<header>
 			<a class="pull-right badge" href="/sentence/<?=($sentence["uid"] + 1);?>" style="margin-left:10px;"><span>Next Sentence</span></a>
@@ -115,6 +128,7 @@
 			</div>
 		</div>
 	</aside>
+	<span class="clearfix"></span>
 </article>
 
 <?if(isset($_SESSION["user"])):?>

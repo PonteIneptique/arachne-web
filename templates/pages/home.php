@@ -23,7 +23,10 @@
 	</div>
 </div>
 
-<div class="background-like">&nbsp;</div>
+<div class="background-like">
+	<a href="https://twitter.com/lascivaroma" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @lascivaroma</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
 
 <div class="shadow-content">
 	<div class="row">
@@ -53,7 +56,7 @@
 				<div class="caption">
 					<h3>Rate</h3>
 					<p>For each annotation and lemmatization, place your vote to tell if you think they are right or not by clicking <span class="glyphicon glyphicon-thumbs-up"></span> or <span class="glyphicon glyphicon-thumbs-down"></span></p>
-					<p class="text-muted"><span class="glyphicon glyphicon-question-sign"></span> In sentence, words in red have not enough votes and green have enough.</p>
+					<p class="text-muted"><span class="glyphicon glyphicon-question-sign"></span> In sentence, words in red have more than one lemma, green have only one.</p>
 				</div>
 			</div>
 		</div>
