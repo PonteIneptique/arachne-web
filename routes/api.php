@@ -15,18 +15,20 @@
 
 		$req = $app->request();
 
-		if(!is_numeric($req->post("source"))) {
+		if(!is_numeric($req->post("lemma"))) {
 			return status("error");
 		}
 		if(!is_numeric($req->post("val"))) {
 			return status("error");
 		}
-		if(!is_numeric($req->post("target"))) {
+		if(!is_numeric($req->post("form"))) {
+			return status("error");
+		}
+		if(!is_numeric($req->post("sentence"))) {
 			return status("error");
 		}
 
-
-		$data = Relationship::Insert($_SESSION["user"]["id"], $req->post("source"), $req->post("target"), $req->post("val"));
+		$data = Relationship::Insert($_SESSION["user"]["id"], $req->post("form"), $req->post("lemma"), $req->post("sentence"), $req->post("val"));
 		if($data == true) {
 			status("success", $methods = "POST, OPTIONS");
 		} else {
@@ -222,8 +224,12 @@
 		foreach($data as $key => &$value) {
 			$value["annotations"] = Annotations::Get("lemma", $value["id_lemma"]);
 			$value["context"] = Annotations::Get("lemma_has_form",  $value["id_lemma_has_form"]);
-			$value["relationships"] = Relationship::Get($value["id_lemma_has_form"]);
 		}
+		$data = array("lemma" => $data);
+		if(isset($_SESSION["user"])) {
+			$data["relationships"] = Relationship::Get($sentence, $form);
+		}
+
 		json($data,$methods = "OPTIONS, GET");
 	});
 

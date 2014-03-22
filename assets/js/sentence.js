@@ -17,7 +17,7 @@ $(document).ready(function() {
 		});
 
 		var json = $.getJSON("/API/annotations/sentence/" + $(".sentence-text").attr("data-id"), function(data) {
-			$.each(data, function(i, annData) {
+			$.each(data["lemma"], function(i, item) {
 				anno = $navstack.clone().append(
 							$("<div/>", {
 								"class" : "nav-8",

@@ -107,7 +107,7 @@ $(document).ready(function() {
 		if(form != "0") {
 			var json = $.getJSON(url, function(data) {
 				if(typeof data !== "undefined" && data != null) {
-					$.each(data, function(i, item) {
+					$.each(data["lemma"], function(i, item) {
 						vote = parseInt(item["votes"]);
 						if (i === 0) {
 							cl = " active ";
@@ -221,44 +221,75 @@ $(document).ready(function() {
 									);
 						annoContainer.find(".sidebar-category-content").append($annotation_form);
 
-						if(!that.hasClass("query-lemma")) {
-							$relationship_form = 
-								$navstack.
-									clone().
-									addClass("new-relationship").
-									attr("data-source", item["id_lemma"]).
-									append(
-											$("<div />", {
-												"class" : "nav-4"
-											})
-											.append(
-												$("#lemma-annotation-source select.relationships").clone()
-											)
-										).append($("<div />", {
-												"class" : "nav-4"
-											})
-											.append($("<div />", {
-													"class" : "target-type"
-												}).append(
-													$("#lemma-annotation-source select.lemma-query").clone()
-												)
-											)
-										).append($("<div />", {
-												"class" : "nav-4"
-											})
-											.append($("<button />", {
-													"class" : "nav-stack-input submit",
-													html : '<span class="glyphicon glyphicon-plus-sign"></span>'
-												})
-											)
-										);
-							annoContainer.find(".sidebar-category-content").append($relationship_form);
-						}
+
 						$("#lemma-sidebar").find(".annotations-containers").append(annoContainer);
 
 						$("#lemma-sidebar").find(".append-in").append(lemma);
 						$("#lemma-sidebar").show();
-					}); //End each
+					}); //End each	lemma
+
+
+					//Relationships
+					if(!that.hasClass("query-lemma")) {
+						$("#relationships-forms").empty();
+						$.each(data["relationships"], function(i, item) {
+							$relationship_form = $navstack.
+								clone().
+								append(
+										$("<div />", {
+											"class" : "nav-6",
+											"html" : function() {
+												return $("#lemma-annotation-source select.relationships option[value='" + item["value_relationship"] + "']").text();
+											}
+										})
+									).append($("<div />", {
+											"class" : "nav-6",
+											"html" : function() {
+												return $("#lemma-annotation-source select.lemma-query option[value='" + item["id_lemma"] + "']").text();
+											}
+										}
+									));
+							$("#relationships-forms").append($relationship_form);
+						});
+						var $relSelect = $("#lemma-annotation-source select.relationships").clone();
+						var $relQuery = $("#lemma-annotation-source select.lemma-query").clone();
+
+						$relationship_form = 
+							$navstack.
+								clone().
+								addClass("new-relationship").
+								append(
+										$("<div />", {
+											"class" : "nav-4"
+										})
+										.append(
+											$relSelect
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<div />", {
+												"class" : "target-type"
+											}).append(
+												$relQuery
+											)
+										)
+									).append($("<div />", {
+											"class" : "nav-4"
+										})
+										.append($("<button />", {
+												"class" : "nav-stack-input submit",
+												html : '<span class="glyphicon glyphicon-plus-sign"></span>'
+											})
+										)
+									);
+						
+						$("#relationships-forms").append($relationship_form).parent().show();
+
+					} else {
+						$("#relationships-forms").empty().parent().hide();
+					}
+					//End relationships					
 				}
 			});
 		} else {
@@ -332,14 +363,16 @@ $(document).ready(function() {
 		e.preventDefault();
 		parent = $(this).parents(".new-relationship");
 
-		target = parent.find(".lemma-query").val();
+		sentence = $(".sentence-text").attr("data-id");
+		lemma = parent.find(".lemma-query").val();
 		value = parent.find(".relationships").val();
-		source = $("a.sentence-lemma[data-active='1']").attr("data-link");
+		form = $("a.sentence-lemma[data-active='1']").attr("data-id");
 
 		$.post("/API/relationship", {
-			"target" : target,
-			"val" : value,
-			"source" : source
+			"sentence" : sentence,
+			"lemma" : lemma,
+			"form" : form,
+			"val" : value
 		}, function(data) {
 			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
 				a = $("a.sentence-lemma[data-active='1']");

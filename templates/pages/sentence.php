@@ -126,6 +126,13 @@
 			<div class="annotations-containers">
 				
 			</div>
+			<div id="relationships-containers" class="sidebar-category">
+				<div class="sidebar-category-title nav-stack nav-stack-black full">
+					Relationships
+				</div>
+				<div id="relationships-forms" class="sidebar-category-content">
+				</div>
+			</div>
 		</div>
 	</aside>
 	<span class="clearfix"></span>
