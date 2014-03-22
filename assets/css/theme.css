@@ -327,6 +327,10 @@ hr {
   text-decoration: underline;
   font-weight: bold;
 }
+#quicksearch.form-control {
+  margin: 10px;
+  width: 200px;
+}
 .sentence-lemma {
   cursor: pointer;
 }

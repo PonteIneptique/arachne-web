@@ -3,7 +3,9 @@
 	$book = "";
 	$ended = true;
 ?>
-<div>
+<input class="form-control pull-right" id="quicksearch" placeholder="Filter this list" />
+<h1>List of authors and books </h1>
+<div id="sentence-list">
 <?
 	foreach($sentences as $index => $sentence) {
 		
