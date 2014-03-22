@@ -31,16 +31,17 @@ $(document).ready(function() {
 				url : "/API/lemma/?query=%QUERY",
 				filter : function(parsedResponse) {
 					var result = [];
-					if(typeof parsedResponse.length !== "undefined" && parsedResponse.length !== 0) {
-						for (var i=0; i<parsedResponse.length; i++) {
-							//Need to check if item not already in the db
-							result.push({
-								name: parsedResponse[i]["lemma"],
-								value: parsedResponse[i]["lemma"]
-							});
+					if(parsedResponse != null) {
+						if(typeof parsedResponse.length !== "undefined" && parsedResponse.length !== 0) {
+							for (var i=0; i<parsedResponse.length; i++) {
+								//Need to check if item not already in the db
+								result.push({
+									name: parsedResponse[i]["lemma"],
+									value: parsedResponse[i]["lemma"]
+								});
+							}
 						}
 					}
-					console.log(result);
 					return result;
 				}
 			}
