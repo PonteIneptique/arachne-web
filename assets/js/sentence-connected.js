@@ -1,11 +1,11 @@
 $(document).ready(function() {
-	if(typeof $.cookie('help-seen-sentence') === "undefined") {
-		$(".shadow-content.help").show();
-	}
 	$(".background-like .help").on("click", function(e) {
 		e.preventDefault();
 		$(".shadow-content.help").toggle();
 	});
+	if(typeof $.cookie('help-seen-sentence') === "undefined") {
+		$(".shadow-content.help").show();
+	}
 	$(".shadow-content.help .close").on("click", function(e) {
 		$.cookie('help-seen-sentence', true, { expires: 31 });
 		e.preventDefault();
