@@ -61,8 +61,88 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr />
+			<div class="gamification text-center">
+				<table style="margin:0 auto;">
+					<tbody>
+						<tr>
+							<td rowspan="2" valign="middle" style="padding-right:20px;">
+								<h2 style="margin:0; padding:0;">Evolve</h2>
+								By participating, reach the highest rank in the community !
+							</td>
+							<td class="image-container">
+								<img alt="Student" title="Student" src="/assets/images/badges/student.png">
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</td>
+							<td class="image-container">
+								<img alt="Citizen" title="Citizen" src="/assets/images/badges/citizen.png">
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</td>
+							<td class="image-container">
+								<img alt="Rhetor" title="Rhetor" src="/assets/images/badges/rhetor.png">
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</td>
+							<td class="image-container">
+								<img alt="Aedile" title="Aedile" src="/assets/images/badges/aedile.png">
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</td>
+							<td class="image-container">
+								<img alt="Tribune" title="Tribune" src="/assets/images/badges/tribune.png">
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</td>
+							<td class="image-container">
+								<img alt="Consul" title="Consul" src="/assets/images/badges/consul.png">
+							</td>
+						</tr>
+						<tr>
+							<td class="image-container">
+								Student
+							</td>
+							<td>
+							</td>
+							<td class="image-container">
+								Citizen
+							</td>
+							<td>
+								
+							</td>
+							<td class="image-container">
+								Rhetor
+							</td>
+							<td>
+							</td>
+							<td class="image-container">
+								Aedile
+							</td>
+							<td>
+							</td>
+							<td class="image-container">
+								Tribune
+							</td>
+							<td>
+							</td>
+							<td class="image-container">
+								Consul
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
-
 <div class="background-like" style="padding-top:20px; padding-bottom:20px;">
 	<div class="text-center">
 		<a href="/about" class="btn btn-warning">Learn more about the project</a>
