@@ -268,37 +268,64 @@
 
 	#Get data for sigma
 	$app->get('/API/Sigma', function () use($app) {
+
 		$nodes = array();
 		$nodesImport = Lemma::All();
 		$range = Lemma::MaxMin();
-		foreach($nodesImport as $index => $node) {
-			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+		$i = 0;
+		$eq = array();
+		foreach($nodesImport as $index => &$node) {
+			$nodes[] = array("label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"]));
+		
+			$eq[$node["id_lemma"]] = $i;
+			$i += 1;
 		}
 
 		$edges = array();
 		$edgesImport = Lemma::Links();
 		foreach ($edgesImport as $key => &$value) {
+
 			$value["id"] = strval($key + 1);
+			$value["source"] = $eq[$value["source"]];
+			$value["target"] = $eq[$value["target"]];
+			$value["value"] = intval($value["weight"]);
+			unset($value["weight"],$value["id"]);
+
+
 			$edges[] = $value;
 		}
-		json(array("nodes"=>$nodes, "edges" => $edges),$methods = "OPTIONS, GET");
+
+		json(array("nodes"=>$nodes, "links" => $edges), $methods = "OPTIONS, GET");
 	});
 
 	$app->get('/API/Sigma/:lemmaId', function ($lemmaId) use($app) {
 		$nodes = array();
 		$nodesImport = Lemma::All($lemma = $lemmaId);
 		$range = Lemma::MaxMin($lemma = $lemmaId);
-		foreach($nodesImport as $index => $node) {
-			$nodes[] = array("id" => $node["id_lemma"], "label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ), "x"=> rand(), "y" => rand());
+
+		$i = 0;
+		$eq = array();
+		foreach($nodesImport as $index => &$node) {
+			$nodes[] = array("label" => $node["text_lemma"], "size" => Lemma::RelativeWeight($node["sentences"], $range["minimum"], $range["maximum"] ), "color" => Lemma::RelativeColor($node["sentences"], $range["minimum"], $range["maximum"] ));
+			
+			$eq[$node["id_lemma"]] = $i;
+			$i += 1;
 		}
 
 		$edges = array();
 		$edgesImport = Lemma::Links($lemma = $lemmaId);
 		foreach ($edgesImport as $key => &$value) {
+
 			$value["id"] = strval($key + 1);
+			$value["source"] = $eq[$value["source"]];
+			$value["target"] = $eq[$value["target"]];
+			$value["value"] = intval($value["weight"]);
+			unset($value["weight"],$value["id"]);
+
+
 			$edges[] = $value;
 		}
-		json(array("nodes"=>$nodes, "edges" => $edges), $methods = "OPTIONS, GET");
+		json(array("nodes"=>$nodes, "links" => $edges), $methods = "OPTIONS, GET");
 	});
 
 ?>

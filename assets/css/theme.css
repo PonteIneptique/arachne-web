@@ -620,3 +620,11 @@ body.home #main .shadow-content .caption h3 {
 body.home #main .shadow-content p {
   padding: 0 15px;
 }
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}

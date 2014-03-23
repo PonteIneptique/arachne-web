@@ -75,6 +75,7 @@
         <script src="./assets/js/home.js" type="text/javascript"></script>
         <script src="./assets/js/knob.js" type="text/javascript"></script>
         <script src="./assets/js/jquery.cookie.js" type="text/javascript"></script>
+        <script src="//cdn.jsdelivr.net/d3js/3.4.3/d3.min.js" type="text/javascript"></script>
         <?foreach($scripts as $script):?>
         	<script src="./assets/js/<?=$script;?>.js" type="text/javascript"></script>
         <?endforeach;?>

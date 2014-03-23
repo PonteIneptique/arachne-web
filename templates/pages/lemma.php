@@ -7,20 +7,7 @@
 			<h2>Annotation</h2>
 
 			<? foreach ($annotations as &$anno): ?>
-
 				<div><?=$anno["text_type"];?> : <?=$anno["text_value"];?></div>
-				<!--
-				<div class="col-md-4">
-
-					<?if(isset($_SESSION["user"])) { $CL = "span";} else { $CL = "span"; } ?>
-					<<?=$CL;?> class="annotations-thumbs-up" data-target="<?=$anno["id_annotation"];?>" href="#">
-						<? if($anno["votes"] > 0 ) { echo $anno["votes"]; } else { echo "0"; } ?> <span class="glyphicon glyphicon-thumbs-up"></span>
-					</<?=$CL;?>> 
-					<<?=$CL;?> class="annotations-thumbs-down" data-target="<?=$anno["id_annotation"];?>" href="#">
-						<? if($anno["votes"] < 0 ) { echo $anno["votes"]; } else { echo "0"; }  ?> <span class="glyphicon glyphicon-thumbs-down"></span>
-					</<?=$CL;?>>
-				</div>
-				-->
 			<? endforeach; ?>
 
 
@@ -61,7 +48,7 @@
 		</div>
 	</article>
 	<div class="col-md-6">
-		<div id="svg-container" style="min-height: 500px; background-color:white;">
+		<div id="svg-container" style="min-height: 600px; background-color:white;">
 
 		</div>
 	</div>

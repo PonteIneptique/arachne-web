@@ -22,7 +22,6 @@
 		$data["annotations"]["sentence-applied"] =  Annotations::Get("sentence", $id);
 
 
-
 		if(isset($_SESSION["user"])) {
 
 			$options = Logs::Related("id_sentence", $id);
