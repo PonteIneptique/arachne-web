@@ -3,7 +3,7 @@
 	/*
 	*
 	*
-	*		Relationships
+	*		Relationships && Polarity
 	*
 	*/
 
@@ -29,6 +29,29 @@
 		}
 
 		$data = Relationship::Insert($_SESSION["user"]["id"], $req->post("form"), $req->post("lemma"), $req->post("sentence"), $req->post("val"));
+		if($data == true) {
+			status("success", $methods = "POST, OPTIONS");
+		} else {
+			status("error", $methods = "POST, OPTIONS");
+		}
+	});
+
+	$app->post("/API/polarity", function() use ($app) {
+
+		if(!isset($_SESSION["user"])) {
+			return status("error");
+		}
+
+		$req = $app->request();
+
+		if(!is_numeric($req->post("lemma"))) {
+			return status("error");
+		}
+		if(!is_numeric($req->post("val"))) {
+			return status("error");
+		}
+
+		$data = Polarity::Insert($_SESSION["user"]["id"], $req->post("lemma"), $req->post("val"));
 		if($data == true) {
 			status("success", $methods = "POST, OPTIONS");
 		} else {

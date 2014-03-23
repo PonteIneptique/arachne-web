@@ -29,6 +29,7 @@
 	require_once("./class/user.php");
 	require_once("./class/annotations.php");
 	require_once("./class/relationships.php");
+	require_once("./class/polarities.php");
 	
 	require_once("./routes/general.php");
 	require_once("./routes/lemma.php");
