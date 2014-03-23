@@ -103,6 +103,20 @@ hr {
 .nav-stack button {
   display: block;
 }
+.nav-stack input[type="radio"] {
+  display: inline;
+  margin-bottom: 6px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.nav-stack > .nav-12 {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .nav-stack > .nav-6 {
   position: relative;
   float: left;
@@ -295,7 +309,6 @@ hr {
 }
 #sidebar .sidebar-category .sidebar-category-content {
   /* ??? */
-  display: none;
 }
 #sidebar .sidebar-category #forms-lemma {
   display: block;
@@ -328,6 +341,10 @@ hr {
   text-decoration: underline;
   font-weight: bold;
 }
+#quicksearch.form-control {
+  margin: 10px;
+  width: 200px;
+}
 .sentence-lemma {
   cursor: pointer;
 }
@@ -342,6 +359,10 @@ hr {
 }
 .sentence-lemma.neutral {
   color: black;
+}
+.sentence-lemma.query-lemma {
+  text-decoration: underline;
+  font-weight: bold;
 }
 .thumbs-up,
 .thumbs-down {
@@ -392,86 +413,47 @@ h3 {
   width: 50px;
   height: 50px;
 }
-body {
-  background-color: #ecedee;
-  font-family: "news-gothic-std", sans-serif;
+/*<-- Twitter typeahead */
+.twitter-typeahead {
+  display: block !important;
 }
-body > .container {
-  background-color: #ffffff;
+.tt-suggestions,
+.tt-dropdown-menu {
+  width: 100%;
+  z-index: 9000;
 }
-#page-title {
-  background-color: #360f4f;
+.tt-suggestions {
+  background-color: #FFFFFF;
+  color: black;
+  -webkit-box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  -moz-box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  box-shadow: 2px 2px 15px rgba(50, 50, 50, 0.5);
+  box-sizing: border-box;
+  border: 1px solid #999999;
 }
-#page-title .badges {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 60px;
-}
-@media (min-width: 992px) {
-  #page-title .badges {
-    float: left;
-    width: 75%;
-  }
-}
-@media (min-width: 992px) {
-  #page-title .badges {
-    right: 25%;
-  }
-}
-#page-title .badges table.gamification {
-  height: 100%;
-}
-#page-title .badges table.gamification td {
-  padding-right: 5px;
-}
-#page-title .account {
-  position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  text-align: right;
-}
-@media (min-width: 992px) {
-  #page-title .account {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 992px) {
-  #page-title .account {
-    left: 75%;
-  }
-}
-#page-title .login-link {
-  display: block;
-  color: white;
-  font-variant: small-caps;
-  font-weight: bold;
-  margin-bottom: 20px;
-  height: 20px;
+.tt-suggestion {
+  padding: 0;
+  margin: 0;
   line-height: 20px;
-  margin-top: 20px;
+  height: 20px;
+  color: white!important;
 }
-#page-title .login-link a {
-  color: white;
+.tt-suggestion:hover,
+.tt-suggestion:focus,
+.tt-cursor {
+  cursor: pointer;
+  background-color: #333333;
 }
-#page-title .login-link a:hover {
-  text-decoration: none;
+.tt-dropdown-menu {
+  box-sizing: border-box;
 }
-#page-title .login-link a:after {
-  content: " | ";
-}
-#page-title .login-link a:last-child:after {
-  content: "" !important;
-}
+/*--> End Twitter typeahead */
 header#top {
-  padding-top: 30px;
+  padding-top: 5px;
   background-color: #333333;
 }
 header#top .top-menu {
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 header#top li {
   border-right: 0!important;
@@ -486,4 +468,177 @@ header#top li a:hover {
 }
 header#top form {
   margin-top: 40px;
+}
+#page-title {
+  background-color: #360f4f;
+}
+#page-title .badges {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 60px;
+}
+@media (min-width: 992px) {
+  #page-title .badges {
+    float: left;
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  #page-title .badges {
+    right: 50%;
+  }
+}
+#page-title .account {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: right;
+}
+@media (min-width: 992px) {
+  #page-title .account {
+    float: left;
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  #page-title .account {
+    left: 50%;
+  }
+}
+#page-title .login-link {
+  display: block;
+  color: white;
+  font-variant: small-caps;
+  font-weight: bold;
+  height: 60px;
+}
+#page-title .login-link table.gamification {
+  height: 100%;
+  margin-left: 30px;
+}
+#page-title .login-link table.gamification td {
+  padding-right: 5px;
+}
+#page-title .login-link > a {
+  line-height: 60px;
+  color: white;
+}
+#page-title .login-link > a:hover {
+  text-decoration: none;
+}
+#page-title .login-link > a:after {
+  content: " | ";
+}
+#page-title .login-link > a:last-child:after,
+#page-title .login-link > a:nth-child(3):after {
+  content: "" !important;
+}
+#page-title .badges > .shortcuts {
+  color: white;
+  font-variant: small-caps;
+  font-weight: bold;
+  margin-bottom: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 20px;
+}
+#page-title .badges > .shortcuts > a {
+  color: white;
+}
+#page-title .badges > .shortcuts > a:hover {
+  text-decoration: none;
+}
+#page-title .badges > .shortcuts > a:after {
+  content: " | ";
+}
+#page-title .badges > .shortcuts > a:last-child:after {
+  content: "" !important;
+}
+body {
+  background-color: #ecedee;
+  font-family: 'Gafata', sans-serif;
+}
+body.lemma #main,
+body.sentences #main,
+body.profile #main,
+body.history #main,
+body.login #main {
+  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  background-color: #ffffff;
+}
+body.home #main {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#main {
+  margin-top: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+#main .background-like {
+  background-color: #ecedee;
+  padding: 5px 0;
+  z-index: 1;
+  position: relative;
+}
+#main .background-like .help {
+  text-align: right;
+  color: #999999;
+  display: block;
+}
+#main .shadow-content {
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  box-shadow: 0px 6px 15px 0px rgba(50, 50, 50, 0.64);
+  position: relative;
+  z-index: 2;
+  padding-right: 15px;
+}
+#main .shadow-content.padding {
+  padding: 5px;
+}
+#main .shadow-content.help {
+  display: none;
+}
+#main .shadow-content.help h1 {
+  font-size: 17px;
+  margin: 0;
+}
+#main .shadow-content.help p {
+  margin: 0 5px 2px;
+}
+body.home #main .background-like {
+  text-align: center;
+  display: block;
+  margin: 0 -15px;
+}
+body.home #main .shadow-content {
+  display: block;
+  padding: 5px 0;
+  margin: 0 -15px;
+  padding: 5px;
+}
+body.home #main .shadow-content .img-circle {
+  height: 150px;
+  width: 150px;
+}
+body.home #main .shadow-content .caption h3 {
+  text-align: center;
+  margin-top: 0;
+}
+body.home #main .shadow-content p {
+  padding: 0 15px;
+}
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
 }

@@ -41,11 +41,11 @@ class Lemma {
 			if(is_numeric($exec["query"])) {
 				$where[] = " l.id_lemma = :query ";
 			}
-			elseif($options["strict"]) {
+			elseif(isset($options["strict"]) && $options["strict"]) {
 				$where[] = " l.text_lemma = :query ";
 			}
 			else {
-				$exec["query"] = "%".$exec["query"]."%";
+				$exec["query"] = $exec["query"]."%";
 				$where[] = " l.text_lemma LIKE :query ";
 			}
 		}
@@ -63,17 +63,24 @@ class Lemma {
 
 		$query .= "
 			GROUP BY l.id_lemma
-			;";
+			";
+		if(isset($options["list"])) {
+			$query .= "
+				LIMIT 5
+				";
+		}
 
 		$query = self::DB()->prepare($query);
 		$query->execute($exec);
 
-		if($query->rowCount() == 1) {
+		$data = array();
+
+		if($query->rowCount() == 1 && !isset($options["list"])) {
 			$data = $query->fetch(PDO::FETCH_ASSOC);
-		} else {
+		} elseif($query->rowCount() > 1 || isset($options["list"])) {
 			$data = $query->fetchAll(PDO::FETCH_ASSOC);
 		}
-		
+
 		return $data;
 	}
 	static function Weight($options = array(), $name = "lemma") {

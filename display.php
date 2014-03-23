@@ -46,7 +46,7 @@
 		if($status != false) {
 			$app->response()->status($status);
 		}
-		if($variables != false) {
+		if($variables !== false) {
 			echo json_encode($variables);
 		}
 	}

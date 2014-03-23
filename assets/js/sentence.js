@@ -17,7 +17,7 @@ $(document).ready(function() {
 		});
 
 		var json = $.getJSON("/API/annotations/sentence/" + $(".sentence-text").attr("data-id"), function(data) {
-			$.each(data, function(i, annData) {
+			$.each(data, function(i, item) {
 				anno = $navstack.clone().append(
 							$("<div/>", {
 								"class" : "nav-8",
@@ -56,7 +56,7 @@ $(document).ready(function() {
 		if(form != "0") {
 			var json = $.getJSON(url, function(data) {
 				if(typeof data !== "undefined" && data != null) {
-					$.each(data, function(i, item) {
+					$.each(data["lemma"], function(i, item) {
 						vote = parseInt(item["votes"]);
 						if (i === 0) {
 							cl = " active ";

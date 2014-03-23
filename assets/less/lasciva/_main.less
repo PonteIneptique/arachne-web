@@ -1,0 +1,84 @@
+body {
+	background-color:@ehri-light-grey;
+	//font-family:@ehri-font;
+	font-family: 'Gafata', sans-serif;
+	&.lemma, &.sentences, &.profile, &.history, &.login  {
+		#main {
+			.box-shadow(0px 6px 15px 0px rgba(50, 50, 50, 0.64));
+			background-color:@content-color;
+		}
+	}
+	&.home {
+		#main {
+			background-color:transparent;
+			.box-shadow(none);
+		}
+	}
+}
+
+#main {
+	margin-top:20px;
+	padding-bottom:10px;
+	margin-bottom:10px;
+
+	.background-like {
+		background-color:@ehri-light-grey;
+		padding:5px 0;
+		z-index:1;
+ 		position: relative;
+
+ 		.help {
+ 			text-align:right;
+ 			color:@ehri-dark-grey;
+ 			display:block;
+ 		}
+
+	}
+
+	.shadow-content {
+		background-color:@content-color;
+		.box-shadow(0px 6px 15px 0px rgba(50, 50, 50, 0.64));
+		position:relative;
+		z-index:2;
+		padding-right:15px;
+		&.padding {
+			padding:5px;
+		}
+		&.help {
+			display:none;
+			h1 {
+				font-size:17px;
+				margin:0;
+			}
+			p {
+				margin:0 5px 2px;
+			}
+		}
+	}
+}
+body.home #main {
+	.background-like {
+		text-align:center;
+		display:block;
+		margin:0 -15px;
+	}
+
+	.shadow-content {
+		display:block;
+		padding:5px 0;
+		margin:0 -15px;
+		padding:5px;
+
+		.img-circle {
+			height:150px;
+			width:150px;
+		}
+		.caption h3 {
+			text-align:center;
+			margin-top:0;
+		}
+		p {
+			padding:0 15px;
+		}
+	}
+}
