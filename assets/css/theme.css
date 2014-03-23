@@ -600,7 +600,10 @@ body.home #main {
   padding-right: 15px;
 }
 #main .shadow-content.padding {
-  padding: 5px;
+  padding: 10px;
+}
+#main .shadow-content.padding h2 {
+  margin: 0;
 }
 #main .shadow-content.help {
   display: none;
