@@ -103,6 +103,20 @@ hr {
 .nav-stack button {
   display: block;
 }
+.nav-stack input[type="radio"] {
+  display: inline;
+  margin-bottom: 6px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.nav-stack > .nav-12 {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .nav-stack > .nav-6 {
   position: relative;
   float: left;

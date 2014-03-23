@@ -101,7 +101,7 @@ $(document).ready(function() {
 		sentence = $(".sentence-text").attr("data-id");
 		url = "/API/sentence/" + sentence + "/form/" + form;
 		$("#forms-container .sidebar-category-title").text(that.text());
-
+		$("#polarity-forms").empty().parent().hide();
 
 		$("#lemma-sidebar").find(".append-in").empty();
 		$("#lemma-sidebar").find(".annotations-containers").empty();
@@ -227,6 +227,26 @@ $(document).ready(function() {
 
 						$("#lemma-sidebar").find(".append-in").append(lemma);
 						$("#lemma-sidebar").show();
+					
+
+						//Polarity
+						if(!that.hasClass("query-lemma")) {
+							var $polModel = $("#polarity-model")
+												.clone()
+												.attr("id", "polarity-form-" + item["id_lemma"])
+												.attr("data-target", item["id_lemma"]);
+
+							$polModel.find(".lemma-append-text").text(item["text_lemma"]);
+
+							//In polModel, check if there is an attribute for
+							//TODO
+							
+							$("#polarity-forms").append($polModel).parent().show();
+
+						}
+						//End Polarity				
+
+
 					}); //End each	lemma
 
 
@@ -290,7 +310,8 @@ $(document).ready(function() {
 					} else {
 						$("#relationships-forms").empty().parent().hide();
 					}
-					//End relationships					
+					//End relationships	
+
 				}
 			});
 		} else {

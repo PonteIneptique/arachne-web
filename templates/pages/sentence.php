@@ -123,6 +123,14 @@
 					<?endif;?>
 				</div>
 			</div>
+			<div id="polarity-containers" class="sidebar-category">
+				<div class="sidebar-category-title nav-stack nav-stack-black full">
+					Polarity 
+				</div>
+				<div id="polarity-forms" class="sidebar-category-content">
+					
+				</div>
+			</div>
 			<div class="annotations-containers">
 				
 			</div>
@@ -174,5 +182,19 @@
 			<?endforeach;?>
 		</select>
 	<?endforeach;?>
+</div>
+<div class="hidden">
+	<div data-target="" class="nav-stack nav-stack-grey full polarity-form" id="polarity-model">
+		<div class="nav-12">
+			<span class="lemma-append-text"></span>
+			<div class="pull-right">
+				<input type="radio" name="polarity" value="-1"> -1
+				<input type="radio" name="polarity" value="-0.5"> -0.5 
+				<input type="radio" name="polarity" value="0"> 0 
+				<input type="radio" name="polarity" value="0.5"> 0.5 
+				<input type="radio" name="polarity" value="1"> 1
+			</div>
+		</div>
+	</div>
 </div>
 <?endif;?>
