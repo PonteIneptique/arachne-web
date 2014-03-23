@@ -20,7 +20,6 @@
 					<div class="col-md-9">
 						<ul class="nav nav-pills nav-ehri nav-ehri-black nav-justified">
 							<li><a href="/annotations">Annotations</a></li>
-							<li><a href="/lemma">Lemma</a></li>
 							<li><a href="/sentence/">Sentences</a></li>
 							<li><a href="/about">About</a></li>
 						</ul>
@@ -56,9 +55,8 @@
 								<?if(isset($_SESSION["user"])):?>
 									<a href="/sentence/last" title="Last sentence">Last sentence</a>
 								<?endif;?>
+								<a href="/lemma">Browse Lemma</a>
 							</div>
-							<!--<h1 style="color:white; font-variant: small-caps; font-size:30px; font-weight: bold; margin-bottom:20px;"><?=$title;?></h1>
-							-->
 						</div>
 					</div>
 				</div>

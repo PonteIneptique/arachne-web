@@ -113,10 +113,10 @@
 					</div>
 					<?if(isset($_SESSION["user"])):?>
 						<div class="nav-stack nav-stack-grey newlemma">
-							<div class="nav-6">
-								<input type="text" name="newlemma" id="lemmaSearch" placeholder="Text of new lemma" class="nav-stack-input" />
+							<div class="nav-8">
+								<input type="text" name="newlemma" id="lemmaSearch" placeholder="New Lemma (Nominative)" class="nav-stack-input" />
 							</div>
-							<div class="nav-6">
+							<div class="nav-4">
 								<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
 							</div>
 						</div>
