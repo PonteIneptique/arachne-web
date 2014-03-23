@@ -9,8 +9,8 @@
 	define("Wserver", "localhost");
 	define("Wport", "3306");
 	define("Wuser", "root");
-	define("Wpassword", "root");
-	define("Wtable", "clotho_web");
+	define("Wpassword", "");
+	define("Wtable", "clotoweb");
 
 	##
 	#

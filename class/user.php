@@ -108,6 +108,43 @@
 		}
 		
 		/**
+		 *	Sign a user up
+		 *
+		 * @param $post["password"]		User's Password
+		 * @param $post["user"]			User's Identifier
+		 * @param $post["mail"]			User's mail
+		 * @param $post["name"]			User's name
+		 * @return Status
+		 */
+		static function update($post, $id = true) {
+			if(!isset($post["mail"]) || !isset($post["name"])) {
+				return array("status" => "error", "error" => array("signup" => array("message" => "A field is missing")));
+			}
+			
+//			if(!self::userExist($post)){
+//				return array("status" => "error", "error" => array("signup" => array("message" => "The requested account does not exist")));
+//			}
+
+                        if(empty($post['password'])){
+                            $req = "UPDATE user SET name_user = ? ,email_user = ? WHERE id_user = ? ";
+                            $req = self::DB()->prepare($req);
+
+                            $req->execute(array($post["name"], $post["mail"], $id));
+                        }else{
+                            $req = "UPDATE user SET name_user = ? ,email_user = ?, password_user = ? WHERE id_user = ? ";
+                            $req = self::DB()->prepare($req);
+
+                            $req->execute(array($post["name"], $post["mail"], hash("sha256", $post["password"]), $id));
+                        }
+			
+			if($req->rowCount() > 1) {
+				return array("status" => "error", "error" => array("signup" => array("message" => "Error during sign up. Please contact thibault.clerice[at]kcl.ac.uk or retry.")));
+			}
+				
+			return array("status" => "success", "error" => array("signup" => array("message" => "You have now update your account")));
+		}
+		
+		/**
 		 *	Sign a user in using oAuth. Sign up the user if he doesnt exist.
 		 *
 		 * @param $provider				Provider Identifier
