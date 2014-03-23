@@ -43,9 +43,6 @@
 												<td valign="middle" class="image-container">
 													<a class="image-container"><?=$_SESSION["user"]["game"]["image"];?></a>
 												</td>
-												<td valign="middle" class="image-container">
-													<input type="text" class="dial" data-width="50" data-height="50" data-min="0" value="<?=$_SESSION["actions"]["user"];?>" data-max="<?=$_SESSION["actions"]["total"]?>" data-readOnly="true">
-												</td>
 											</tr>
 										</table>
 								<?else:?>
