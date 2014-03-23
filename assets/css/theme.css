@@ -575,6 +575,13 @@ body.home #main {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+#sharing {
+  text-align: right;
+  opacity: 0.4;
+}
+#sharing:hover {
+  opacity: 1;
+}
 #main {
   margin-top: 20px;
   padding-bottom: 10px;

@@ -23,12 +23,19 @@
 	</ul>
 </div>
 
-<h2 class="background-like">About the developer</h2>
+<h2 class="background-like">About the team</h2>
 <div class="shadow-content ">
-<img src="/assets/images/pictures/thibaultclerice.png" alt=" " class="img-circle pull-left" style="margin:0 10px;" />
-	<b>Thibault Clerice</b>
+	<img src="/assets/images/pictures/thibaultclerice.png" alt=" " class="img-circle pull-left" style="height:100px; width:100px; margin:0 10px;" />
+	<b>Thibault Clerice</b>, Project Leader
     <p>Research Developer at the Center for e-Research, Kings College London, and MA student at the Ecole des Chartes ( Paris ). Thibault’s works focuses on both crowd-sourcing and Ancient Rome genders and sexuality. His current MA Thesis topic tries to enlight the possibilities of digital methods in Latin onomastics and anthropology.</p>
     <a href="https://twitter.com/PonteIneptique" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @PonteIneptique</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     <span class="clearfix"></span>
+	<img src="/assets/images/pictures/anthonyglaise.png" alt=" " class="img-circle pull-left" style="height:100px; width:100px; margin:0 10px;" />
+	<b>Anthony Glaise</b>, Project Researcher
+    <p>Former MA student at Paris-IV Sorbonne, preparing Agrégation’s exams at Paris IV-Sorbonne and at Ecole Normale Supérieure. Anthony worked on the Greek Christian literature of the 4th century and more precisely on anti-Judaic works by John Chrysostom.</p>
+    <span class="clearfix"></span> 
+	<img src="/assets/images/pictures/pierrelejeune.png" alt=" " class="img-circle pull-left" style="height:100px; width:100px; margin:0 10px;" />
+	<b>Pierre Lejeune</b>, Project Developer
+    <span class="clearfix"></span> 
 </div>
