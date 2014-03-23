@@ -237,6 +237,10 @@ $(document).ready(function() {
 												.attr("data-target", item["id_lemma"]);
 
 							$polModel.find(".lemma-append-text").text(item["text_lemma"]);
+							$polModel.find("input[type='radio']").attr("name", "polarity-" + item["id_lemma"]);
+							if(item["polarity"] !== null) {
+								$polModel.find("input[value='" + item["polarity"] + "']").attr("checked", "checked");
+							}
 
 							//In polModel, check if there is an attribute for
 							//TODO
@@ -401,7 +405,25 @@ $(document).ready(function() {
 				a.trigger("click");
 			}
 		});
-	});
+	})
+
+	$("#lemma-sidebar").on("click", ".polarity-form input[type='radio']", function(e) {
+		//e.preventDefault();
+		parent = $(this).parents(".polarity-form");
+
+		lemma = parent.attr("data-target");
+		value = parent.find("input[type='radio']:checked").val();
+
+		$.post("/API/polarity", {
+			"lemma" : lemma,
+			"val" : value
+		}, function(data) {
+			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
+				a = $("a.sentence-lemma[data-active='1']");
+				a.trigger("click");
+			}
+		});
+	});;
 
 
 

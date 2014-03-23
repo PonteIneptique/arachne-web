@@ -5,6 +5,19 @@ class Polarity {
 		return $DB;
 	}
 
+	public static function Get($user, $lemma) {
+		$exec = array($lemma, $user);
+		$query = "SELECT value_polarity FROM polarity WHERE id_lemma = ? AND id_user = ? LIMIT 1";
+		
+		$query = self::DB()->prepare($query);
+		$query->execute($exec);
+		if($query->rowCount() == 1) {
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			return $data["value_polarity"];
+		}
+		return null;
+	}
+
 	public static function Exists($user, $lemma) {
 		$exec = array($lemma, $user);
 		$query = "SELECT id_polarity FROM polarity WHERE id_lemma = ? AND id_user = ? LIMIT 1";
@@ -22,7 +35,7 @@ class Polarity {
 		if($id_polarity != false) {
 			return self::Update($id_polarity, $val);
 		}
-		$exec = array($lemma, $val, $user);
+		$exec = array($lemma, $user, $val);
 
 		$query = "
 		INSERT INTO 
@@ -59,7 +72,7 @@ class Polarity {
 		";
 		$query = self::DB()->prepare($query);
 		$query->execute(array($val, $id));
-		$count += $query->rowCount();
+		$count = $query->rowCount();
 
 		if($count > 0) {
 			//Logs::Save("lemma_has_form", $source, "relationUpdate", $_SESSION["user"]["id"]);

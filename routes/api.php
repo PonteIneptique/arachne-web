@@ -240,13 +240,16 @@
 	*
 	*/
 
-	#Gets data about vote on a specific sentence and form
+	#Gets data about vote, annotations and stuff on a specific sentence and form
 	$app->get('/API/sentence/:sentence/form/:form', function ($sentence, $form)  use($app) {
 		$data = Sentence::Lemma($sentence, $form);
 
 		foreach($data as $key => &$value) {
 			$value["annotations"] = Annotations::Get("lemma", $value["id_lemma"]);
 			$value["context"] = Annotations::Get("lemma_has_form",  $value["id_lemma_has_form"]);
+			if(isset($_SESSION["user"])) {
+				$value["polarity"] = Polarity::Get($_SESSION["user"]["id"], $value["id_lemma"]);
+			}
 		}
 		$data = array("lemma" => $data);
 		if(isset($_SESSION["user"])) {
