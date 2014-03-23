@@ -557,9 +557,15 @@ header#top form {
 #page-title .badges > .shortcuts > a:last-child:after {
   content: "" !important;
 }
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
 body {
   background-color: #ecedee;
   font-family: 'Gafata', sans-serif;
+  margin-bottom: 0;
 }
 body.lemma #main,
 body.sentences #main,
@@ -575,6 +581,24 @@ body.home #main {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+footer.navbar {
+  margin-top: 80px;
+  border-radius: 0;
+  margin-bottom: 0;
+  border-left: 0;
+  border-bottom: 0;
+  border-right: 0;
+}
+footer.navbar:before,
+footer.navbar:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+footer.navbar:after {
+  clear: both;
+}
 #sharing {
   text-align: right;
   opacity: 0.4;
@@ -586,6 +610,7 @@ body.home #main {
   margin-top: 20px;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  min-height: 80%;
 }
 #main .background-like {
   background-color: #ecedee;

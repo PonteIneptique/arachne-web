@@ -38,4 +38,8 @@
 	<img src="/assets/images/pictures/pierrelejeune.png" alt=" " class="img-circle pull-left" style="height:100px; width:100px; margin:0 10px;" />
 	<b>Pierre Lejeune</b>, Project Developer
     <span class="clearfix"></span> 
+    <img src="/assets/images/pictures/ugodallemagne.jpg" alt=" " class="img-circle pull-left" style="height:100px; width:100px; margin:0 10px;" />
+    <b>Ugo Dallemagne</b>, Project Legal Adviser
+    <p>Student of the LL.M. Law and Technology at Tilburg University. Ugo is actually researching, in the course of his program, on the challenges due to the autonomy of Personal Domestic Robots in the field of civil liability.</p>
+    <span class="clearfix"></span> 
 </div>

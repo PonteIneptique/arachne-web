@@ -1,3 +1,7 @@
+html, body {
+	height:100%;
+	width:100%;
+}
 body {
 	background-color:@ehri-light-grey;
 	//font-family:@ehri-font;
@@ -14,8 +18,14 @@ body {
 			.box-shadow(none);
 		}
 	}
+	margin-bottom:0;
 }
-
+footer.navbar {
+	margin-top:80px;
+	.clearfix();
+	border-radius:0; 
+	margin-bottom:0; border-left:0; border-bottom:0; border-right:0;
+}
 #sharing {
 	text-align:right;
 	opacity:0.4;
@@ -27,6 +37,7 @@ body {
 	margin-top:20px;
 	padding-bottom:10px;
 	margin-bottom:10px;
+	min-height:80%;
 
 	.background-like {
 		background-color:@ehri-light-grey;
