@@ -16,7 +16,7 @@
 		<header>
 			<a class="pull-right badge" href="/sentence/<?=($sentence["uid"] + 1);?>" style="margin-left:10px;"><span>Next Sentence</span></a>
 			<h2 class="sentence-book"><?=$sentence["metadata"]["dc:Title"]?></h2>
-			<h3 class="sentence-author"><?=$sentence["metadata"]["dc:Creator"]?></h3>
+			<h3 class="sentence-author"><?php if(isset($sentence["metadata"]["dc:Creator"])) { echo $sentence["metadata"]["dc:Creator"]; } ?></h3>
 			<a href="http://www.perseus.tufts.edu/hopper/text?doc=<?=$sentence["document"];?>" target="_blank" class="sentence-link">See on Perseus</a>
 		</header>
 		<p class="sentence-text" data-id="<?=$sentence["uid"];?>">

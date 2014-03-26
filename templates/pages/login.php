@@ -41,7 +41,9 @@
 					<?=$error["signup"]["message"];?>
 				</div>
 			<?endif;?>
-
+			<div class="checkPolicies">
+				<p><input type="checkbox" id="checkPolicies" />By checking this box and suscribing you agree with the policies of the website (<a target="_blank" href="/policies">learn more</a>)</p>
+			</div>
 			<div class="form-group  field">
 				<label for="name" class="control-label">Name</label>
 				<div class="input">

@@ -13,7 +13,7 @@
 		ob_start();
 		$app->render($template, $variables);
 		$content = ob_get_clean();
-		      
+		
 		$app->render('_main.php', array('content' => $content, "title" => $title, 'scripts' => $scripts));
 	}
 	

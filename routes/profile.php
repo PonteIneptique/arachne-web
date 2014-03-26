@@ -50,7 +50,7 @@ if (isset($_SESSION["user"])) {
 }
 
 $app->get('/account/login', function () {
-    display("./pages/login.php", array(), array(), $title = "Login");
+    display("./pages/login.php", array(), $scripts = array("signup"), $title = "Login");
 });
 
 $app->post('/account/signup', function () use ($app) {
@@ -68,11 +68,11 @@ $app->post('/account/signup', function () use ($app) {
 
     if (count($data["error"]["signup"]) >= 1) {
 
-        display("pages/login.php", $data, array(), "Login");
+        display("pages/login.php", $data, $scripts = array("signup"), "Login");
     } elseif ($input["confirm"] != $input["password"]) {
 
         $data["errors"]["signup"]["confirm"] = "Passwords are not equal";
-        display("pages/login.php", $data, array(), "Login");
+        display("pages/login.php", $data, $scripts = array("signup"), "Login");
     } else {
 
         $data = User::signup($input);
@@ -80,7 +80,7 @@ $app->post('/account/signup', function () use ($app) {
         if (isset($data["status"]) && $data["status"] == "success") {
             display("pages/home.php", $data, array(), "Home");
         } else {
-            display("pages/login.php", $data, array(), "Login");
+            display("pages/login.php", $data, $scripts = array("signup"), "Login");
         }
     }
 });
@@ -98,10 +98,10 @@ $app->post('/account/signin', function () use ($app) {
 
             display("pages/home.php", $data, array(), "Home");
         } else {
-            display("pages/login.php", $data, array(), "login");
+            display("pages/login.php", $data, $scripts = array("signup"), "login");
         }
     } else {
-        display("pages/login.php", array("status" => "error", "error" => array("signup" => array("message" => "Missing fields."))), array(), "Login");
+        display("pages/login.php", array("status" => "error", "error" => array("signup" => array("message" => "Missing fields."))), $scripts = array("signup"), "Login");
     }
 });
 ?>

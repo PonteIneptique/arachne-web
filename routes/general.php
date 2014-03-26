@@ -15,6 +15,12 @@
 
 		display("./pages/about.php", $data);
 	});
+	
+	$app->get('/policies', function () use($app)  {
+		$data = array();
+
+		display("./pages/policies.php", $data);
+	});
 
 	$app->notFound(function () use ($app) {
 		display("./pages/home.php");
