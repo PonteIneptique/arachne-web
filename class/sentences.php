@@ -85,10 +85,9 @@ class Sentence {
 
 	static function Process($sentence, $forms) {
 		$sentence = $sentence["sentence"];
-
 		$sentence = preg_replace("(\\w+)", "<a class='sentence-lemma neutral' title='$0' data-id='0'>$0</a>", $sentence);
 		foreach($forms as $id => $form) {
-			$sentence = str_replace("<a class='sentence-lemma neutral' title='".$form["text_form"]."' data-id='0'>".$form["text_form"]."</a>", self::href($form["text_form"], $form["id_form"], $form["count_lemma"], $form["query_lemma"], $form["id_lemma_has_form"]), $sentence);
+			$sentence = str_ireplace("<a class='sentence-lemma neutral' title='".$form["text_form"]."' data-id='0'>".$form["text_form"]."</a>", self::href($form["text_form"], $form["id_form"], $form["count_lemma"], $form["query_lemma"], $form["id_lemma_has_form"]), $sentence);
 		}
 
 		return $sentence;

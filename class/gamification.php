@@ -1,5 +1,65 @@
 <?php
 	class Gamification {
+	 
+		/**
+		 *	Get the DB in a PDO way, can be called through self::DB()->PdoFunctions
+		 * @return PDO php object
+		 */
+		private static function DB() {
+			global $DB;
+			return $DB;
+		}
+
+
+		public static function Progress() {
+			$return = array();
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as forms FROM form");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["forms"] = $data["forms"];
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as lemma_query FROM lemma WHERE query_lemma = 1");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["lemma_query"] = $data["lemma_query"];
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as lemmas FROM lemma WHERE query_lemma = 0");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["lemmas"] = $data["lemmas"];
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as sentences FROM sentence");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["sentences"] = $data["sentences"];
+
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as votes FROM annotation_vote;");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["votes"] = $data["votes"];
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as form_votes FROM form_vote WHERE id_user != 0;");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["form_votes"] = $data["form_votes"];
+
+			$query = self::DB()->prepare("SELECT COUNT(*) as annotation FROM annotation;");
+			$query->execute();
+			$data = $query->fetch(PDO::FETCH_ASSOC);
+			$return["annotation"] = $data["annotation"];
+
+			//10% missed lemma and forms
+			//2 Annotations / sentence or lemma
+			//2 Votes / form or annotation
+			$return["target"] = (($return["lemmas"] + $return["forms"]) * 1.1 + $return["sentences"])*3*2;
+			$return["done"] = $return["annotation"] + $return["form_votes"] + $return["votes"];
+			$return["percent"] = floor($return["done"] / $return["target"] * 100);
+
+			return $return;
+
+		}
 
 		public static function Rank($user, $total, $max) {
 			if ((($user == $max) || ($user > 0.9*$total)) && ($user > 5)){

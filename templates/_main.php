@@ -4,7 +4,7 @@
     	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Lasciva Roma : A crowdsourcing project | <?=$title;?></title>
         <base href="http://<?=$_SERVER['HTTP_HOST']?>/">
-        <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
+        <!--<link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>-->
         <link rel="stylesheet" media="screen" href="./assets/css/bootstrap.css">
         <link rel="stylesheet" media="screen" href="./assets/css/theme.css">
     </head>
@@ -36,7 +36,7 @@
 										<a href="/account/profile">Profile</a>
 										<a href="/account/history">History</a>
 										<a href="/account/signout">Sign out</a>
-
+										<?if(isset($_SESSION["user"]["game"])):?>
 										<table class="gamification pull-right">
 											<tr>
 												<td valign="middle" class="image-container">
@@ -44,6 +44,7 @@
 												</td>
 											</tr>
 										</table>
+										<?endif;?>
 								<?else:?>
 									<a href="/account/login" class="login-link">Login</a>
 								<?endif;?>
@@ -78,12 +79,12 @@
         <script src="./assets/js/home.js" type="text/javascript"></script>
         <script src="./assets/js/knob.js" type="text/javascript"></script>
         <script src="./assets/js/jquery.cookie.js" type="text/javascript"></script>
-        <script src="//cdn.jsdelivr.net/d3js/3.4.3/d3.min.js" type="text/javascript"></script>
-
-		<script type="text/javascript">var switchTo5x=true;</script>
-		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-		<script type="text/javascript">stLight.options({publisher: "8e5574e7-39ce-4eca-9a79-a86908641eb5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-
+        <!--
+        	<script src="//cdn.jsdelivr.net/d3js/3.4.3/d3.min.js" type="text/javascript"></script>
+			<script type="text/javascript">var switchTo5x=true;</script>
+			<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+			<script type="text/javascript">stLight.options({publisher: "8e5574e7-39ce-4eca-9a79-a86908641eb5", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+		-->
 
         <?foreach($scripts as $script):?>
         	<script src="./assets/js/<?=$script;?>.js" type="text/javascript"></script>

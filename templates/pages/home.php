@@ -1,13 +1,34 @@
-<h1 class="background-like"><img src="/assets/images/text-black.png" alt="Lasciva Roma" style="height:50px;" /></h1>
+<div class="background-like">
+	<img src="/assets/images/text-black.png" alt="Lasciva Roma" style="height:50px;" />
 
-<div class="row">
-	<div class="col-md-6 col-md-offset-3" style="padding-top: 10px;">
+</div>
+
+<div class="row" style="padding-top: 10px;">
+	<div class="col-md-8 col-md-offset-2">
 		<div class="shadow-content ">
 			<p class="text-center">
 				Find name of persons and places next to a member of the Latin semantic field of sexuality, annotate and lemmatize them, tell us about their relationship with this member.
 			</p>
 
 
+			<?php if(isset($progress)):?>
+
+				<!--<?=$progress["percent"];?>% of the project done !
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="<?=$progress["percent"];?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$progress["percent"];?>%;">
+						
+					</div>
+				</div>-->
+
+				<p class="text-center">
+					<b>Available for annotation:</b> 
+					<?=$progress["sentences"];?> Sentences,
+					<?=$progress["lemma_query"];?> Words of the semantic field of Sexuality,
+					<?=$progress["forms"];?> Identified forms,
+					<?=$progress["lemmas"];?> Potential Entities
+				</p>
+
+			<?php endif;?>
 			<div class="text-center">
 				<?if(isset($_SESSION["user"])):?>
 				<a  style="margin-bottom: 10px;" class="btn btn-success" href="/sentence/<?=Sentence::Random();?>" >
@@ -19,6 +40,9 @@
 				</a>
 				<?endif;?>
 			</div>
+
+
+
 		</div>
 	</div>
 </div>

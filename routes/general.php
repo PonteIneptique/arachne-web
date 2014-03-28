@@ -1,6 +1,6 @@
 <?php
 	$app->get('/', function () use($app)  {
-		$data = array();
+		$data = array("progress" => Gamification::Progress());
 		
 		if(isset($_SESSION["user"])) {
 			$extrascripts = array();

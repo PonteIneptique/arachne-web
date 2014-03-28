@@ -20,7 +20,7 @@
 			<a href="http://www.perseus.tufts.edu/hopper/text?doc=<?=$sentence["document"];?>" target="_blank" class="sentence-link">See on Perseus</a>
 		</header>
 		<p class="sentence-text" data-id="<?=$sentence["uid"];?>">
-			<?=$sentence["processed"];?>
+			<?=nl2br($sentence["processed"]);?>
 		</p>
 
 		<?if(isset($_SESSION["user"])):?>

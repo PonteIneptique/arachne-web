@@ -6,7 +6,7 @@
 			<br />or
 		</p>
 
-		<form action="/account/signin" method="POST" class="login-form signup-form" role="form">
+		<form action="/account/signin" method="POST" class="login-form" role="form">
 
 			<?if(isset($error["signin"]) && isset($error["signin"]["message"]) ):?>
 				<div class="alert alert-warning">
@@ -14,13 +14,13 @@
 				</div>
 			<?endif;?>
 
-			<div class="form-group  field">
+			<div class="form-group field">
 				<label for="mail" class="control-label">Email</label>
 				<div class="input">
 					<input class="form-control" placeholder=" Email" type="email" id="mail" name="mail" value="" >
 				</div>
 			</div>
-			<div class="form-group  field">
+			<div class="form-group field">
 				<label for="password" class="control-label">Password</label>
 				<div class="input">
 					<input class="form-control" placeholder=" Password" type="password" id="password" name="password" >

@@ -107,16 +107,16 @@
 
 		if($id_lemma_has_form == false) {
 			//Exit if we dont retrieve anything
-			return status("error", "POST, OPTIONS");
+			return status("error-id", "POST, OPTIONS");
 		} else {
 			//Inserting vote
-			$status = Forms::Vote($id_lemma_has_form, $req->post("value", $_SESSION["user"]["id"]));
+			$status = Forms::Vote($id_lemma_has_form, $req->post("value"), $_SESSION["user"]["id"]);
 
 			//Returning values
 			if($status == true) {
 				return status("success", "POST, OPTIONS");
 			} else {
-				return status("error", "POST, OPTIONS");
+				return status("error-status", "POST, OPTIONS");
 			}
 			json($data, $methods = "POST, OPTIONS");
 		}
