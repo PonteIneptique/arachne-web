@@ -28,6 +28,7 @@
 			display("./pages/lemma.php", $data, $extrascripts, $title = "Lemma ".$data["lemma"]["lemma"]);
 		} else {
 			//Redirect or do something
+			$app->redirect("/lemma");
 		}	
 	});
 ?>

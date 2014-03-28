@@ -31,7 +31,7 @@ class Lemma {
 	
 	static function Get($lemmaid = false, $options = array("query" => false, "strict" => false, "count" => true), $name = "lemma") {
 		$exec= array();
-		$where = array();
+		$where = array(" id_lemma != -1 ");
 		if($lemmaid) { 
 			$exec["lemmaId"] = $lemmaid; 
 			$where[] = " l.id_lemma = :lemmaId ";
@@ -208,7 +208,7 @@ class Lemma {
 	static function All($lemma = false, $form = false)  {
 		$exec= array();
 		$select = array("COUNT(DISTINCT lf.id_form) as forms", "COUNT(DISTINCT lf.id_sentence) as sentences", "COUNT(DISTINCT a.id_annotation) as annotations");
-		$where = array("l.id_lemma = lf.id_lemma");
+		$where = array("l.id_lemma = lf.id_lemma", "l.id_lemma != -1");
 		$table = array(
 				"lemma l"
 				);
