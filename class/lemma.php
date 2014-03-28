@@ -31,20 +31,18 @@ class Lemma {
 	
 	static function Get($lemmaid = false, $options = array("query" => false, "strict" => false, "count" => true), $name = "lemma") {
 		$exec= array();
-		$where = array(" id_lemma != -1 ");
+		$where = array();
 		if($lemmaid) { 
 			$exec["lemmaId"] = $lemmaid; 
 			$where[] = " l.id_lemma = :lemmaId ";
 		}
 		if($options["query"]) {
 			$exec["query"] = $options["query"];
-			if(is_numeric($exec["query"])) {
+			if(is_numeric($exec["query"]) || $exec["query"] == "-1" || $exec["query"] == -1) {
 				$where[] = " l.id_lemma = :query ";
-			}
-			elseif(isset($options["strict"]) && $options["strict"]) {
+			} elseif(isset($options["strict"]) && $options["strict"]) {
 				$where[] = " l.text_lemma = :query ";
-			}
-			else {
+			} else {
 				$exec["query"] = $exec["query"]."%";
 				$where[] = " l.text_lemma LIKE :query ";
 			}
