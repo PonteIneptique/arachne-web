@@ -165,6 +165,9 @@ hr {
   padding-left: 15px;
   padding-right: 15px;
 }
+.nav-stack > a {
+  display: block;
+}
 .nav-stack > .nav-6,
 .nav-stack > .nav-3,
 .nav-stack > .nav-8,
@@ -208,47 +211,38 @@ hr {
 .nav-stack.nav-stack-border-top {
   border-top: 1px solid #e6e6e6;
 }
-.nav-stack.nav-stack-black * {
+.nav-stack.nav-stack-black > *,
+.nav-stack.nav-stack-black input,
+.nav-stack.nav-stack-black select,
+.nav-stack.nav-stack-black button {
   background-color: #333333;
   color: #ffffff;
 }
-.nav-stack.nav-stack-black .dropdown-menu {
-  background-color: #333333;
-  border-color: #333333;
+.nav-stack.nav-stack-black > a:hover {
+  background-color: #4d4d4d;
 }
-.nav-stack.nav-stack-black .dropdown-menu a {
-  color: #ffffff;
-}
-.nav-stack.nav-stack-black .dropdown-menu a:hover {
-  color: #333333;
-}
-.nav-stack.nav-stack-grey * {
+.nav-stack.nav-stack-grey > *,
+.nav-stack.nav-stack-grey input,
+.nav-stack.nav-stack-grey select,
+.nav-stack.nav-stack-grey button {
   background-color: #4d4d4d;
   color: #ffffff;
 }
-.nav-stack.nav-stack-grey .dropdown-menu {
-  background-color: #4d4d4d;
-  border-color: #4d4d4d;
+.nav-stack.nav-stack-grey > a:hover {
+  background-color: #666666;
 }
-.nav-stack.nav-stack-grey .dropdown-menu a {
-  color: #ffffff;
-}
-.nav-stack.nav-stack-grey .dropdown-menu a:hover {
-  color: #333333;
-}
-.nav-stack.nav-stack-light-grey * {
+.nav-stack.nav-stack-light-grey > *,
+.nav-stack.nav-stack-light-grey input,
+.nav-stack.nav-stack-light-grey select,
+.nav-stack.nav-stack-light-grey button {
   background-color: #666666;
   color: #ffffff;
 }
-.nav-stack.nav-stack-light-grey .dropdown-menu {
-  background-color: #666666;
-  border-color: #666666;
+.nav-stack.nav-stack-light-grey > a:hover {
+  background-color: #808080;
 }
-.nav-stack.nav-stack-light-grey .dropdown-menu a {
-  color: #ffffff;
-}
-.nav-stack.nav-stack-light-grey .dropdown-menu a:hover {
-  color: #333333;
+.nav-stack > a {
+  display: block;
 }
 .nav-stack a:hover,
 .nav-stack a:focus,
@@ -340,6 +334,10 @@ hr {
 #sidebar .active a.lemma {
   text-decoration: underline;
   font-weight: bold;
+}
+#sidebar .falsePositive {
+  height: 40px;
+  line-height: 40px;
 }
 #quicksearch.form-control {
   margin: 10px;

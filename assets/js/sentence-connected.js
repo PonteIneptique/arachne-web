@@ -94,7 +94,7 @@ $(document).ready(function() {
 	});
 
 	$(".sentence-text").on("json", "a.sentence-lemma", function(e) {
-
+		var showFP = true;
 		//Attributes
 		that = $(this)
 		form = that.attr("data-id");
@@ -110,6 +110,8 @@ $(document).ready(function() {
 				if(typeof data !== "undefined" && data != null) {
 					$.each(data["lemma"], function(i, item) {
 						vote = parseInt(item["votes"]);
+						id_lemma = parseInt(item["id_lemma"]);
+						if(id_lemma === -1) { showFP = false;}
 						if (i === 0) {
 							cl = " active ";
 						} else {
@@ -317,7 +319,13 @@ $(document).ready(function() {
 					//End relationships	
 
 				}
+				if(showFP === true) {
+					$(".falsePositive").show();
+				} else {
+					$(".falsePositive").hide();
+				}
 			});
+		
 		} else {
 			$("#lemma-sidebar").show();
 		}
@@ -381,6 +389,28 @@ $(document).ready(function() {
 				a.attr("data-id", data["results"]["form"]);
 				a.removeClass("neutral").addClass("red");
 				a.trigger("click");
+			}
+		});
+	});
+
+	$("#lemma-sidebar").on("click", ".falsePositive", function(e) {
+		e.preventDefault();
+		that = $(this);
+
+		lemma = -1;
+		sentence = $(".sentence-text").attr("data-id");
+		form = $("a.sentence-lemma[data-active='1']").text();
+
+		$.post("/API/sentence/lemma", {
+			"lemma" : lemma,
+			"form" : form,
+			"sentence" : sentence
+		}, function(data) {
+			if(typeof data["status"] !== "undefined" && data["status"] == "success") {
+				a = $("a.sentence-lemma[data-active='1']");
+				a.attr("data-id", data["results"]["form"]);
+				a.trigger("click");
+				//sideBarFalsePositive();
 			}
 		});
 	});

@@ -20,7 +20,9 @@
 	> .nav-8 {		.make-xs-column(8);	}
 	> .nav-2 {		.make-xs-column(2);	}
 	> .nav-5 {		.make-xs-column(5);	}
-
+	> a {
+		display:block;
+	}
 	> .nav-6, 	> .nav-3,	> .nav-8,	> .nav-4,	&.full {
 		height:40px;
 		line-height:40px;
@@ -59,52 +61,34 @@
 		Theming the navbar
 	*/
 	&.nav-stack-black {
-		* {
+		> *, input, select, button {
 			background-color:@ehri-darkest-grey;
 			color:@content-color;
 		}
-		.dropdown-menu {
-			background-color:@ehri-darkest-grey;
-			border-color:@ehri-darkest-grey;
-			a {
-				color:@content-color;
-				&:hover {
-					color:@ehri-darkest-grey;
-				}
-			}
+		> a:hover {
+			background-color:lighten(@ehri-darkest-grey, 10%);
 		}
 	}
 	&.nav-stack-grey {
-		* {
+		> *, input, select, button {
 			background-color:lighten(@ehri-darkest-grey, 10%);
 			color:@content-color;
 		}
-		.dropdown-menu {
-			background-color:lighten(@ehri-darkest-grey, 10%);
-			border-color:lighten(@ehri-darkest-grey, 10%);
-			a {
-				color:@content-color;
-				&:hover {
-					color:@ehri-darkest-grey;
-				}
-			}
+		> a:hover {
+			background-color:lighten(@ehri-darkest-grey, 20%);
 		}
 	}
 	&.nav-stack-light-grey {
-		* {
+		> *, input, select, button {
 			background-color:lighten(@ehri-darkest-grey, 20%);
 			color:@content-color;
 		}
-		.dropdown-menu {
-			background-color:lighten(@ehri-darkest-grey, 20%);
-			border-color:lighten(@ehri-darkest-grey, 20%);
-			a {
-				color:@content-color;
-				&:hover {
-					color:@ehri-darkest-grey;
-				}
-			}
+		> a:hover {
+			background-color:lighten(@ehri-darkest-grey, 30%);
 		}
+	}
+	> a {
+		display:block;
 	}
 	a:hover, a:focus, a { text-decoration:none!important; }
 }

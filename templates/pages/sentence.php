@@ -120,9 +120,13 @@
 								<input type="button" name="Send" value="Save" class="nav-stack-input submit" />
 							</div>
 						</div>
+						<div class="nav-stack nav-stack-grey falsePositive text-center" data-target="" style="cursor:pointer; diplay:block;">
+							<a style="display:block;" href="#" title="Marking as false positive means this word is not the name of a Person or a Place">Mark as False positive</a>
+						</div>
 					<?endif;?>
 				</div>
 			</div>
+			<?if(isset($_SESSION["user"])):?>
 			<div id="polarity-containers" class="sidebar-category">
 				<div class="sidebar-category-title nav-stack nav-stack-black full">
 					Polarity 
@@ -131,6 +135,7 @@
 					
 				</div>
 			</div>
+			<?endif;?>
 			<div class="annotations-containers">
 				
 			</div>
